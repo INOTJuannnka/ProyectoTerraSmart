@@ -1,6 +1,7 @@
 from django.urls import path
-from .views.views import HolaMundo
+from TerraSmart.views.views import vista_inicio
+
 
 urlpatterns = [
-    path('', HolaMundo),
+    path('', vista_inicio, name='inicio'),
 ]
