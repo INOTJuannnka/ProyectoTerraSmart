@@ -35,21 +35,26 @@
       <p class="fw-medium">Último registro</p>
   
       <div class="record-box">
+        {% if ultimo_registro %}
         <div class="row">
-          <div class="col">Nitrogeno<br><strong>00</strong></div>
-          <div class="col">PH<br><strong>00</strong></div>
-          <div class="col">Fósforo<br><strong>00</strong></div>
+          <div class="col">Nitrógeno<br><strong>{{ ultimo_registro.Nitrogeno }}</strong></div>
+          <div class="col">PH<br><strong>{{ ultimo_registro.ph }}</strong></div>
+          <div class="col">Fósforo<br><strong>{{ ultimo_registro.Fosforo }}</strong></div>
         </div>
         <div class="row mt-3">
-          <div class="col">Humedad<br><strong>00</strong></div>
-          <div class="col">Potasio<br><strong>00</strong></div>
+          <div class="col">Humedad<br><strong>{{ ultimo_registro.humedad }}</strong></div>
+          <div class="col">Potasio<br><strong>{{ ultimo_registro.potasio }}</strong></div>
         </div>
+        {% else %}
+        <p>No hay registros aún.</p>
+        {% endif %}
       </div>
     </div>
   
     <!-- Botón abajo -->
     <div class="mt-4">
-      <button class="btn footer-btn">HISTORIAL</button>
+      <!--Ir a la vista historial-->
+      <a href="{% url 'historial' %}" class="btn footer-btn">VER HISTORIAL</a>
     </div>
   
   </div>

@@ -19,8 +19,8 @@
           <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
         </h2>
       </div>
-      <button class="btn">INICIO</button>
-      <button class="btn">MEDICIONES</button>
+      <a href="{% url 'inicio' %}" class="btn">INICIO</a>
+      <button class="btn">MEDICIONES</button> 
       <button class="btn">RECOMENDACIONES</button>
       <button class="btn">CONFIGURACION</button>
     </div>
@@ -34,30 +34,31 @@
 
         <div class="table-responsive">
             <table class="table text-center table-bordered w-100 historial-table">
-
-            <thead>
               <tr>
-                <th>Nitrogeno</th>
+                <th>Fecha</th>
+                <th>Nitrógeno</th>
                 <th>Humedad</th>
-                <th>PH</th>
+                <th>pH</th>
                 <th>Potasio</th>
                 <th>Fósforo</th>
               </tr>
-            </thead>
-            <tbody>
-              <tr><td>45</td><td>32</td><td>6</td><td>22</td><td>45</td></tr>
-              <tr><td>00</td><td>00</td><td>00</td><td>00</td><td>00</td></tr>
-              <tr><td>00</td><td>00</td><td>00</td><td>00</td><td>00</td></tr>
-              <tr><td>00</td><td>00</td><td>00</td><td>00</td><td>00</td></tr>
-              <tr><td>00</td><td>00</td><td>00</td><td>00</td><td>00</td></tr>
-            </tbody>
+              {% for registro in registros %}
+              <tr>
+                <td>{{ registro.fecha }}</td>
+                <td>{{ registro.Nitrogeno }}</td>
+                <td>{{ registro.humedad }}</td>
+                <td>{{ registro.ph }}</td>
+                <td>{{ registro.potasio }}</td>
+                <td>{{ registro.Fosforo }}</td>
+              </tr>
+              {% endfor %}
           </table>
         </div>
       </div>
 
       <!-- Botón al fondo -->
       <div class="mt-4">
-        <button class="btn footer-btn">Volver al Inicio</button>
+        <a href="{% url 'inicio' %}" class="btn footer-btn">VOLVER AL INICIO</a>
       </div>
     </div>
 
