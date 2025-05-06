@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TeRra-Smart Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-md-4 col-lg-3 sidebar d-flex flex-column align-items-center py-4">
+        <!-- Logo -->
+        <div class="text-center logo">
+            <h2 class="fw-bold">
+                <span class="green">T</span><span class="black">e</span><span class="brown">R</span><span class="black">ra-</span><span class="blue">S</span><span class="black">mart</span>
+                <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
+            </h2>
+        </div>
+      <button class="btn">INICIO</button>
+      <button class="btn">MEDICIONES</button>
+      <button class="btn">RECOMENDACIONES</button>
+      <button class="btn">CONFIGURACION</button>
+    </div>
+
+    <!-- Main Content -->
+<div class="col-md-8 col-lg-9 main-content bg-white d-flex flex-column" style="min-height: 100vh;">
+
+    <!-- Contenido superior -->
+    <div class="flex-grow-1">
+      <h2 class="fw-bold">INICIO</h2>
+      <p class="fw-medium">Último registro</p>
+  
+      <div class="record-box">
+        {% if ultimo_registro %}
+        <div class="row">
+          <div class="col">Nitrógeno<br><strong>{{ ultimo_registro.Nitrogeno }}</strong></div>
+          <div class="col">PH<br><strong>{{ ultimo_registro.ph }}</strong></div>
+          <div class="col">Fósforo<br><strong>{{ ultimo_registro.Fosforo }}</strong></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">Humedad<br><strong>{{ ultimo_registro.humedad }}</strong></div>
+          <div class="col">Potasio<br><strong>{{ ultimo_registro.potasio }}</strong></div>
+        </div>
+        {% else %}
+        <p>No hay registros aún.</p>
+        {% endif %}
+      </div>
+    </div>
+  
+    <!-- Botón abajo -->
+    <div class="mt-4">
+      <!--Ir a la vista historial-->
+      <a href="{% url 'historial' %}" class="btn footer-btn">VER HISTORIAL</a>
+    </div>
+  
+  </div>
+  
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+<style>
+    body {
+      background-color: #f0f0f0;
+    }
+    .sidebar {
+      background-color: #7ED957;
+      min-height: 100vh;
+    }
+    .sidebar .btn {
+      background-color: #009F53;
+      color: white;
+      margin: 10px 0;
+      width: 100%;
+    }
+    .sidebar .btn:hover {
+      background-color: #008e3c;
+    }
+    .main-content {
+  padding: 30px;
+    }
+    .footer-btn {
+    background-color: #00b050;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+    }
+    .footer-btn:hover {
+    background-color: #008e3c;
+    }
+    .record-box {
+      border: 2px solid black;
+      padding: 20px;
+      text-align: center;
+    }
+    .record-box .row {
+      margin-top: 10px;
+    }
+    
+    .logo .green { color: #01FF00; }
+    .logo .black { color: black; }
+    .logo .brown { color: #7F6000; }
+    .logo .blue { color: blue; }
+
+    .footer-btn {
+      background-color: #00b050;
+      color: white;
+      width: 100%;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .footer-btn:hover {
+      background-color: #008e3c;
+    }
+    .logo h2 {
+    font-size: 40px; 
+    font-weight: bold;
+    margin: px 0;
+    }
+
+    
+  </style>
+</html>

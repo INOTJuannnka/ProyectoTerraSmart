@@ -19,4 +19,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(
+        # This is a workaround for the issue with the 'manage.py' script not being able to find the 'project_core' module.
+
+        
+    )
