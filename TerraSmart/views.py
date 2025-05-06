@@ -45,4 +45,4 @@ def vista_mediciones(request):
     except Exception as e:
         messages.error(request, f'Error al guardar el registro: {e}')
         return render(request, 'mediciones.html')
-    return render(request, 'mediciones.html')
+    return render(request, 'recomendaciones.html')
