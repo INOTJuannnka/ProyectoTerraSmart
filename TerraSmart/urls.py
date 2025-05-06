@@ -1,8 +1,10 @@
 from django.urls import path
-from TerraSmart.views.views import vista_inicio, vista_historial
-
+from . import views
 
 urlpatterns = [
-    path('', vista_inicio, name='inicio'),
-    path('historial/', vista_historial, name='historial'),
+    path('', views.inicio, name='inicio'),
+    path('mediciones/', views.mediciones, name='mediciones'),
+    path('recomendaciones/', views.recomendaciones, name='recomendaciones'),
+    path('configuracion/', views.configuracion, name='configuracion'),
+    path('historial/', views.historial, name='historial'),
 ]
