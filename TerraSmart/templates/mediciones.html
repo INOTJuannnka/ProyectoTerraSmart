@@ -19,38 +19,41 @@
           <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
         </h2>
       </div>
-      <a href="inicio.html" class="btn">INICIO</a>
-      <a href="mediciones.html" class="btn">MEDICIONES</a>
-      <a href="recomendaciones.html" class="btn">RECOMENDACIONES</a>
-      <a href="configuracion.html" class="btn">CONFIGURACION</a>
+      <a href="{% url 'inicio' %}" class="btn btn-success w-100 my-2">INICIO</a>
+      <a href="{% url 'mediciones' %}" class="btn btn-success w-100 my-2">MEDICIONES</a>
+      <a href="{% url 'recomendaciones' %}" class="btn btn-success w-100 my-2">RECOMENDACIONES</a> 
+      <a href="{% url 'configuracion' %}" class="btn btn-success w-100 my-2">CONFIGURACION</a>
     </div>
 
     <!-- Main Content -->
     <div class="col-md-8 col-lg-9 main-content bg-white d-flex flex-column" style="min-height: 100vh;">
       <h2 class="fw-bold">MEDICIONES</h2>
 
-      <form class="record-box">
+      <form class="record-box" method="post" action="{% url 'mediciones' %}">
+        {% csrf_token %}
         <div class="mb-3">
           <label for="nitrogeno" class="form-label">Nitrogeno</label>
-          <input type="text" class="form-control" id="nitrogeno">
+          <input type="text" class="form-control" id="nitrogeno" name="nitrogeno">
         </div>
         <div class="mb-3">
           <label for="humedad" class="form-label">Humedad</label>
-          <input type="text" class="form-control" id="humedad">
+          <input type="text" class="form-control" id="humedad" name="humedad">
         </div>
         <div class="mb-3">
           <label for="ph" class="form-label">PH</label>
-          <input type="text" class="form-control" id="ph">
+          <input type="text" class="form-control" id="ph" name="ph">
         </div>
         <div class="mb-3">
           <label for="potasio" class="form-label">Potasio</label>
-          <input type="text" class="form-control" id="potasio">
+          <input type="text" class="form-control" id="potasio" name="potasio">
         </div>
         <div class="mb-3">
           <label for="fosforo" class="form-label">Fósforo</label>
-          <input type="text" class="form-control" id="fosforo">
+          <input type="text" class="form-control" id="fosforo" name="fosforo">
         </div>
-        <button type="button" class="btn footer-btn mb-2">SUBIR DATOS</button>
+        <!-- Botones de acción -->
+         
+        <button type="submit" class="btn footer-btn mb-2">SUBIR DATOS</button>
         <button type="button" class="btn footer-btn">LECTURA AUTOMÁTICA</button>
       </form>
 
