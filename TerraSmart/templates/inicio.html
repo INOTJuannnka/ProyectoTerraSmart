@@ -20,10 +20,10 @@
                 <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
             </h2>
         </div>
-      <button class="btn">INICIO</button>
-      <button class="btn">MEDICIONES</button>
-      <button class="btn">RECOMENDACIONES</button>
-      <button class="btn">CONFIGURACION</button>
+        <a href="inicio.html" class="btn btn-success w-100 my-2">INICIO</a>
+        <a href="mediciones.html" class="btn btn-success w-100 my-2">MEDICIONES</a>
+        <a href="recomendaciones.html" class="btn btn-success w-100 my-2">RECOMENDACIONES</a>
+        <a href="configuracion.html" class="btn btn-success w-100 my-2">CONFIGURACION</a>        
     </div>
 
     <!-- Main Content -->
@@ -53,8 +53,7 @@
   
     <!-- Botón abajo -->
     <div class="mt-4">
-      <!--Ir a la vista historial-->
-      <a href="{% url 'historial' %}" class="btn footer-btn">VER HISTORIAL</a>
+      <a href="historial.html" class="btn footer-btn">HISTORIAL</a>
     </div>
   
   </div>
@@ -91,6 +90,9 @@
     color: white;
     width: 100%;
     font-weight: bold;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
     }
     .footer-btn:hover {
     background-color: #008e3c;
