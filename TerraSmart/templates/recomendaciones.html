@@ -19,10 +19,10 @@
           <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
         </h2>
       </div>
-      <a href="inicio.html" class="btn">INICIO</a>
-      <a href="mediciones.html" class="btn">MEDICIONES</a>
-      <a href="recomendaciones.html" class="btn">RECOMENDACIONES</a>
-      <a href="configuracion.html" class="btn">CONFIGURACION</a>
+      <a href="{% url 'inicio' %}" class="btn btn-success w-100 my-2">INICIO</a>
+      <a href="{% url 'mediciones' %}" class="btn btn-success w-100 my-2">MEDICIONES</a>
+      <a href="{% url 'recomendaciones' %}" class="btn btn-success w-100 my-2">RECOMENDACIONES</a> 
+      <a href="{% url 'configuracion' %}" class="btn btn-success w-100 my-2">CONFIGURACION</a>
     </div>
 
     <!-- Main Content -->
