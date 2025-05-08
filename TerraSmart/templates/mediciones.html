@@ -51,11 +51,30 @@
           <label for="fosforo" class="form-label">Fósforo</label>
           <input type="text" class="form-control" id="fosforo" name="fosforo">
         </div>
+        <button type="submit" name="accion" value="subir_manual" class="btn footer-btn mb-2">SUBIR DATOS</button>
+        <div class="mb-3">
+          <label for="archivo_mediciones" class="form-label">Subir archivo de mediciones</label>
+          <input type="file" class="form-control" id="archivo_mediciones" name="archivo_mediciones" accept=".csv,.xlsx,.xls">
+          <small class="form-text text-muted">Formatos aceptados: CSV, Excel</small>
+        </div>
         <!-- Botones de acción -->
-         
-        <button type="submit" class="btn footer-btn mb-2">SUBIR DATOS</button>
-        <button type="button" class="btn footer-btn">LECTURA AUTOMÁTICA</button>
+        
+        <button type="submit" name="accion" value="subir_archivo" class="btn footer-btn mb-2">PROCESAR ARCHIVO</button>
       </form>
+      
+      <!-- Mostrar mensajes de error o éxito -->
+      {% if messages %}
+      <div class="messages mt-3">
+          {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+      </div>
+      {% endif %}
+      </form>
+
 
     </div>
   </div>
