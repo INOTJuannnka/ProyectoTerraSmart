@@ -46,6 +46,7 @@ def vista_mediciones(request):
                     )
                     nuevo_registro.save()
                     messages.success(request, 'Registro guardado exitosamente.')
+                    return render(request, 'recomendaciones.html')
                 except Exception as e:
                     messages.error(request, f'Error al guardar el registro: {e}')
             
