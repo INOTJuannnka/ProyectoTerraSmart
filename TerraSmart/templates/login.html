@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<style>
+  .login-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-left, .login-right {
+    flex: 1 1 300px;
+    margin: 15px;
+  }
+
+  .login-form h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #7ED957;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .login-form .extras {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  .login-right a.social {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .fblogin { background-color: #3b5998; }
+  .twlogin { background-color: #1da1f2; }
+  .gplogin { background-color: #db4437; }
+
+  .login-right small {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+
+  @media (max-width: 768px) {
+    .login-container {
+      flex-direction: column;
+      padding: 20px;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="login-container">
+    <!-- Login form -->
+    <div class="login-left">
+      <form method="POST" class="login-form">
+        {% csrf_token %}
+        <h4>Acceda a su cuenta</h4>
+        <input type="text" name="username" placeholder="User Name" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="iniciar sesión">
+        <div class="extras">
+          <label><input type="checkbox" name="remember"> Recuerda me</label>
+          <a href="#">Olvido su constraseña ?</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Social login -->
+    <div class="login-right">
+      <small>No tienes cuenta ? <a href="{% url 'registro' %}">Registrate!</a></small>
+      <a href="#" class="social fblogin"><i class="fab fa-facebook"></i> Registrarse con Facebook</a>
+      <a href="#" class="social twlogin"><i class="fab fa-twitter"></i>  Registrarse con Twitter</a>
+      <a href="#" class="social gplogin"><i class="fab fa-google-plus"></i>  Registrarse con Google</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
