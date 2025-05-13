@@ -128,3 +128,9 @@ def vista_mediciones(request):
         
         # Si la solicitud no es POST
     return render(request, 'mediciones.html')
+
+def login_view(request):
+    return render(request, 'login.html')
+
+def registro_view(request):
+    return render(request, 'registro.html')
