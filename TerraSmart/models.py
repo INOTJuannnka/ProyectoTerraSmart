@@ -9,7 +9,7 @@ class Medicion(models.Model):
     ph = models.FloatField(null=True, blank=True)
     humedad = models.FloatField(null=True, blank=True)
     class Meta:
-        managed = False  
+        managed = False
         db_table = 'medicion'  
 
 

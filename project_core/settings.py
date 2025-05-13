@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'project_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'terraSmart',
+        'NAME': 'terrasmart',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306', 
     }
