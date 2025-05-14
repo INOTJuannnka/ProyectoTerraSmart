@@ -91,7 +91,7 @@ def vista_mediciones(request):
                         df.columns = [col.lower().strip() for col in df.columns]
                         
                         # Verificar columnas necesarias
-                        columnas_requeridas = ['nitrogeno', 'humedad', 'ph', 'potasio', 'fosforo']
+                        columnas_requeridas = ['ph', 'materiaorganica', 'fosforo', 'azufre', 'calcio', 'magnesio', 'potasio', 'sodio', 'hierro', 'cobre', 'manganeso', 'zinc']
                         
                         # Verificar si todas las columnas requeridas están presentes
                         columnas_faltantes = [col for col in columnas_requeridas if col not in df.columns]
@@ -104,20 +104,33 @@ def vista_mediciones(request):
                         
                         for index, fila in df.iterrows():
                             try:
-                                # Convertir valores a float y manejar valores nulos
-                                nitrogeno_val = float(fila['nitrogeno']) if pd.notna(fila['nitrogeno']) else None
-                                humedad_val = float(fila['humedad']) if pd.notna(fila['humedad']) else None
                                 ph_val = float(fila['ph']) if pd.notna(fila['ph']) else None
-                                potasio_val = float(fila['potasio']) if pd.notna(fila['potasio']) else None
+                                materiaOrganica_val = float(fila['materiaorganica']) if pd.notna(fila['materiaorganica']) else None
                                 fosforo_val = float(fila['fosforo']) if pd.notna(fila['fosforo']) else None
-                                
+                                azufre_val = float(fila['azufre']) if pd.notna(fila['azufre']) else None
+                                calcio_val = float(fila['calcio']) if pd.notna(fila['calcio']) else None
+                                magnesio_val = float(fila['magnesio']) if pd.notna(fila['magnesio']) else None
+                                potasio_val = float(fila['potasio']) if pd.notna(fila['potasio']) else None
+                                sodio_val = float(fila['sodio']) if pd.notna(fila['sodio']) else None
+                                hierro_val = float(fila['hierro']) if pd.notna(fila['hierro']) else None
+                                cobre_val = float(fila['cobre']) if pd.notna(fila['cobre']) else None
+                                manganeso_val = float(fila['manganeso']) if pd.notna(fila['manganeso']) else None
+                                zinc_val = float(fila['zinc']) if pd.notna(fila['zinc']) else None
+                                               
                                 # Crear y guardar nuevo registro
                                 nuevo_registro = postMediciones(
-                                    nitrogeno=nitrogeno_val,
-                                    fosforo=fosforo_val,
-                                    potasio=potasio_val,
-                                    ph=ph_val,
-                                    humedad=humedad_val,
+                                    PH=ph_val,
+                                    MateriaOrganica=materiaOrganica_val,
+                                    Fosforo=fosforo_val,
+                                    Azufre=azufre_val,
+                                    Calcio=calcio_val,
+                                    Magnesio=magnesio_val,
+                                    Potasio=potasio_val,
+                                    Sodio=sodio_val,
+                                    Hierro=hierro_val,
+                                    Cobre=cobre_val,
+                                    Manganeso=manganeso_val,
+                                    Zinc=zinc_val,
                                     fecha=timezone.now()
                                 )
                                 nuevo_registro.save()
