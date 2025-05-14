@@ -10,23 +10,37 @@
   <table class="table text-center table-bordered w-100 historial-table">
     <thead>
       <tr>
-        <th>Fecha</th>
-        <th>Nitrógeno</th>
-        <th>Humedad</th>
-        <th>pH</th>
-        <th>Potasio</th>
+        <th>fecha</th>
+        <th>PH</th>
+        <th>Materia Organica</th>
         <th>Fósforo</th>
+        <th>Azufre</th>
+        <th>Calcio</th>
+        <th>Magnesio</th>
+        <th>Potasio</th>
+        <th>Sodio</th>
+        <th>Hierro</th>
+        <th>Cobre</th>
+        <th>Manganeso</th>
+        <th>Zinc</th>
       </tr>
     </thead>
     <tbody>
       {% for registro in registros %}
       <tr>
         <td>{{ registro.fecha }}</td>
-        <td>{{ registro.nitrogeno }}</td>
-        <td>{{ registro.humedad }}</td>
-        <td>{{ registro.ph }}</td>
-        <td>{{ registro.potasio }}</td>
-        <td>{{ registro.fosforo }}</td>
+        <td>{{ registro.PH}}</td>
+        <td>{{ registro.MateriaOrganica}}</td>
+        <td>{{ registro.Fosforo}}</td>
+        <td>{{ registro.Azufre}}</td>
+        <td>{{ registro.Calcio }}</td>
+        <td>{{ registro.Magnesio }}</td>
+        <td>{{ registro.Potasio }}</td>
+        <td>{{ registro.Sodio }}</td>
+        <td>{{ registro.Hierro }}</td>
+        <td>{{ registro.Cobre }}</td>
+        <td>{{ registro.Manganeso }}</td>
+        <td>{{ registro.Zinc }}</td>
       </tr>
       {% endfor %}
     </tbody>
