@@ -8,15 +8,45 @@
 
 <div class="record-box">
   {% if ultimo_registro %}
-  <div class="row">
-    <div class="col">Nitrógeno<br><strong>{{ ultimo_registro.nitrogeno }}</strong></div>
-    <div class="col">PH<br><strong>{{ ultimo_registro.ph }}</strong></div>
-    <div class="col">Fósforo<br><strong>{{ ultimo_registro.fosforo }}</strong></div>
-  </div>
-  <div class="row mt-3">
-    <div class="col">Humedad<br><strong>{{ ultimo_registro.humedad }}</strong></div>
-    <div class="col">Potasio<br><strong>{{ ultimo_registro.potasio }}</strong></div>
-  </div>
+  <div class="table-responsive">
+  <table class="table text-center table-bordered w-100 historial-table">
+    <thead>
+      <tr>
+        <th>fecha</th>
+        <th>PH</th>
+        <th>Materia Organica</th>
+        <th>Fósforo</th>
+        <th>Azufre</th>
+        <th>Calcio</th>
+        <th>Magnesio</th>
+        <th>Potasio</th>
+        <th>Sodio</th>
+        <th>Hierro</th>
+        <th>Cobre</th>
+        <th>Manganeso</th>
+        <th>Zinc</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ ultimo_registro.fecha }}</td>
+        <td>{{ ultimo_registro.PH}}</td>
+        <td>{{ ultimo_registro.MateriaOrganica}}</td>
+        <td>{{ ultimo_registro.Fosforo}}</td>
+        <td>{{ ultimo_registro.Azufre}}</td>
+        <td>{{ ultimo_registro.Calcio }}</td>
+        <td>{{ ultimo_registro.Magnesio }}</td>
+        <td>{{ ultimo_registro.Potasio }}</td>
+        <td>{{ ultimo_registro.Sodio }}</td>
+        <td>{{ ultimo_registro.Hierro }}</td>
+        <td>{{ ultimo_registro.Cobre }}</td>
+        <td>{{ ultimo_registro.Manganeso }}</td>
+        <td>{{ ultimo_registro.Zinc }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   {% else %}
   <p>No hay registros aún.</p>
   {% endif %}

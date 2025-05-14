@@ -29,19 +29,34 @@ def vista_mediciones(request):
             # Si es subida manual de datos
             if accion == 'subir_manual':
                 # Obtener datos del formulario
-                nitrogeno = request.POST.get('nitrogeno')
-                humedad = request.POST.get('humedad')
                 ph = request.POST.get('ph')
-                potasio = request.POST.get('potasio')
+                materiaOrganica = request.POST.get('materiaOrganica')
                 fosforo = request.POST.get('fosforo')
+                azufre = request.POST.get('azufre')
+                calcio = request.POST.get('calcio')
+                magnesio = request.POST.get('magnesio')
+                potasio = request.POST.get('potasio')
+                sodio = request.POST.get('sodio')
+                hierro = request.POST.get('hierro')
+                cobre = request.POST.get('cobre')
+                manganeso = request.POST.get('manganeso')
+                zinc = request.POST.get('zinc')
+                
                 
                 try:
                     nuevo_registro = postMediciones(
-                        nitrogeno=nitrogeno,
-                        fosforo=fosforo,
-                        potasio=potasio,
-                        ph=ph,
-                        humedad=humedad,
+                        PH=ph,
+                        MateriaOrganica=materiaOrganica,
+                        Fosforo=fosforo,
+                        Azufre=azufre,
+                        Calcio=calcio,
+                        Magnesio=magnesio,
+                        Potasio=potasio,
+                        Sodio=sodio,
+                        Hierro=hierro,
+                        Cobre=cobre,
+                        Manganeso=manganeso,
+                        Zinc=zinc,
                         fecha=timezone.now()
                     )
                     nuevo_registro.save()
