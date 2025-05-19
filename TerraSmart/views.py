@@ -21,7 +21,7 @@ def vista_inicio(request):
     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
 
 def vista_historial(request):
-    registros = Medicion.objects.all()
+    registros = obtener_mediciones_firestore()
     return render(request, 'historial.html', {'registros': registros})
 
 def vista_mediciones(request):
@@ -43,6 +43,7 @@ def vista_mediciones(request):
                 cobre = request.POST.get('cobre')
                 manganeso = request.POST.get('manganeso')
                 zinc = request.POST.get('zinc')
+                fecha = timezone.now()
                 
                 
                 try:
@@ -59,9 +60,27 @@ def vista_mediciones(request):
                         Cobre=cobre,
                         Manganeso=manganeso,
                         Zinc=zinc,
-                        fecha=timezone.now()
+                        fecha=fecha
                     )
                     nuevo_registro.save()
+
+                     # Guardar en Firestore
+                    db.collection("medicion").add({
+                        "PH": ph,
+                        "MateriaOrganica": materiaOrganica,
+                        "Fosforo": fosforo,
+                        "Azufre": azufre,
+                        "Calcio": calcio,
+                        "Magnesio": magnesio,
+                        "Potasio": potasio,
+                        "Sodio": sodio,
+                        "Hierro": hierro,
+                        "Cobre": cobre,
+                        "Manganeso": manganeso,
+                        "Zinc": zinc,
+                        "fecha": fecha.isoformat()
+                    })
+
                     messages.success(request, 'Registro guardado exitosamente.')
                     return render(request, 'recomendaciones.html')
                 except Exception as e:
@@ -158,6 +177,14 @@ def vista_mediciones(request):
         
         # Si la solicitud no es POST
     return render(request, 'mediciones.html')
+#Función para obtener mediciones desde Firestore
+def obtener_mediciones_firestore():
+    mediciones = []
+    docs = db.collection("medicion").order_by("fecha", direction="DESCENDING").stream()
+    for doc in docs:
+        data = doc.to_dict()
+        mediciones.append(data)
+    return mediciones
 
 def login_view(request):
     if request.method == "POST":
