@@ -1,8 +1,10 @@
-from django.shortcuts import render 
+from django.shortcuts import render ,redirect
 from django.http import HttpResponse
 from TerraSmart.models import Medicion, postMediciones
 from django.utils import timezone
 from django.contrib import messages
+from .firebase_config import db
+from django.contrib.auth import login, logout
 import pandas as pd
 
 def recomendaciones(request):
@@ -130,7 +132,52 @@ def vista_mediciones(request):
     return render(request, 'mediciones.html')
 
 def login_view(request):
-    return render(request, 'login.html')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        users_ref = db.collection("user")
+        query = users_ref.where("username", "==", username).where("password", "==", password).get()
+        if query:
+            # Aquí podrías crear una sesión personalizada si no usas el sistema de auth de Django
+            request.session["usuario"] = username
+            messages.success(request, "Inicio de sesión exitoso.")
+            return redirect("inicio")
+        else:
+            messages.error(request, "Usuario o contraseña incorrectos.")
+            return render(request, "login.html")
+
+    return render(request, "login.html")
 
 def registro_view(request):
-    return render(request, 'registro.html')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password1 = request.POST.get("password1")
+        password2 = request.POST.get("password2")
+
+        if password1 != password2:
+            messages.error(request, "Las contraseñas no coinciden.")
+            return render(request, "registro.html")
+
+        # Verifica si el usuario ya existe en Firestore
+        users_ref = db.collection("user")
+        existing = users_ref.where("email", "==", email).get()
+        if existing:
+            messages.error(request, "El correo ya está registrado.")
+            return render(request, "registro.html")
+
+        # Agrega el usuario a Firestore
+        users_ref.add({
+            "username": username,
+            "email": email,
+            "password": password1  # En producción, nunca guardes contraseñas en texto plano
+        })
+        messages.success(request, "Usuario registrado con éxito.")
+        return redirect("login")
+
+    return render(request, "registro.html")
+
+def logout_view(request):
+    request.session.flush()
+    return redirect('login')

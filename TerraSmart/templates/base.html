@@ -92,14 +92,13 @@
 
         <!-- Popup emergente -->
         <div id="userPopup" class="dropdown-menu-custom">
-          {% if user.is_authenticated %}
-            <p class="dropdown-header fw-bold text-center">{{ user.username }}</p>
-            <a href="{% url 'configuracion' %}" class="dropdown-item">⚙️ Settings</a>
-            <a href="#" class="dropdown-item">✉️ Contact us</a>
-            <a href="{% url 'logout' %}" class="dropdown-item text-danger">↩️ Log out</a>
+          {% if request.session.usuario %}
+            <p class="dropdown-header fw-bold text-center">{{ request.session.usuario }}</p>
+            <a href="#" class="dropdown-item">✉️ Contactanos</a>
+            <a href="{% url 'logout' %}" class="dropdown-item text-danger">↩️ Cerrar sesión</a>
           {% else %}
-            <a href="{% url 'login' %}" class="dropdown-item">🔐 Login</a>
-            <a href="{% url 'registro' %}" class="dropdown-item">📝 Register</a>
+            <a href="{% url 'login' %}" class="dropdown-item">🔐 Iniciar Sesión</a>
+            <a href="{% url 'registro' %}" class="dropdown-item">📝 Registrate</a>
           {% endif %}
         </div>
       </div>
