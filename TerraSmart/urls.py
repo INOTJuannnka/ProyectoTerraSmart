@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from TerraSmart import views
 
 urlpatterns = [
@@ -9,4 +9,6 @@ urlpatterns = [
     path('historial/', views.vista_historial, name='historial'),
     path('login/', views.login_view, name='login'),
     path('registro/', views.registro_view, name='registro'),
+    path('logout/', views.logout_view, name='logout'),
+    
 ]

@@ -67,6 +67,20 @@
   .twlogin { background-color: #1da1f2; }
   .gplogin { background-color: #db4437; }
 
+  .gplogin {
+    background-color: #db4437; /* Color oficial de Google */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+}
+.gplogin:hover {
+    background-color: #c1351d;
+}
+
   .login-right small {
     display: block;
     text-align: right;
@@ -84,6 +98,7 @@
 
 <div class="container mt-5">
   <div class="login-container">
+
     <!-- Login form -->
     <div class="login-left">
       <form method="POST" class="login-form">
@@ -97,14 +112,14 @@
           <a href="#">Olvido su constraseña ?</a>
         </div>
       </form>
+      
     </div>
-
     <!-- Social login -->
     <div class="login-right">
       <small>No tienes cuenta ? <a href="{% url 'registro' %}">Registrate!</a></small>
       <a href="#" class="social fblogin"><i class="fab fa-facebook"></i> Registrarse con Facebook</a>
       <a href="#" class="social twlogin"><i class="fab fa-twitter"></i>  Registrarse con Twitter</a>
-      <a href="#" class="social gplogin"><i class="fab fa-google-plus"></i>  Registrarse con Google</a>
+<a href="/accounts/google/login/" class="social gplogin"><i class="fab fa-google"></i> Registrarse con Google</a>
     </div>
   </div>
 </div>
