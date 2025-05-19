@@ -6,6 +6,9 @@ from django.contrib import messages
 from .firebase_config import db
 from django.contrib.auth import login, logout
 import pandas as pd
+import numpy as np
+import joblib
+
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -236,3 +239,136 @@ def registro_view(request):
 def logout_view(request):
     request.session.flush()
     return redirect('login')
+
+model = joblib.load('modelo\my_random_forest.joblib')
+
+
+recomendaciones_tecnicas = {
+    'pH agua:suelo 2,5:1,0': {
+        'bajo': "Aplicar cal agrícola o dolomita para elevar el pH.",
+        'alto': "Aplicar azufre elemental o fertilizantes acidificantes como sulfato de amonio."
+    },
+    'Materia orgánica (MO) %': {
+        'bajo': "Incorporar compost, estiércol bien descompuesto o abonos verdes.",
+        'alto': "Monitorear salinidad y evitar acumulación excesiva de nutrientes."
+    },
+    'Fósforo (P) Bray II mg/kg': {
+        'bajo': "Aplicar fosfato monoamónico (MAP), superfosfato triple o rocas fosfóricas.",
+        'alto': "Evitar aplicaciones adicionales de fósforo, monitorear fijación en el suelo."
+    },
+    'Azufre (S) Fosfato monocalcico mg/kg': {
+        'bajo': "Aplicar sulfato de amonio, yeso agrícola o azufre elemental.",
+        'alto': "Reducir fertilización con azufre; verificar fuentes orgánicas del suelo."
+    },
+    'Calcio (Ca) intercambiable cmol(+)/kg': {
+        'bajo': "Aplicar cal dolomítica o yeso agrícola.",
+        'alto': "Evitar aplicaciones de cal o yeso; controlar exceso para prevenir antagonismo con Mg y K."
+    },
+    'Magnesio (Mg) intercambiable cmol(+)/kg': {
+        'bajo': "Aplicar dolomita o fertilizantes como sulfato de magnesio.",
+        'alto': "Evitar fuentes ricas en Mg; controlar balance con Ca y K."
+    },
+    'Potasio (K) intercambiable cmol(+)/kg': {
+        'bajo': "Aplicar cloruro de potasio (KCl) o sulfato de potasio (SOP).",
+        'alto': "Evitar sobreaplicación; niveles altos pueden interferir con absorción de Mg y Ca."
+    },
+    'Sodio (Na) intercambiable cmol(+)/kg': {
+        'bajo': "Normalmente no requiere corrección.",
+        'alto': "Aplicar yeso agrícola y mejorar el drenaje para reducir salinidad."
+    },
+    'Hierro (Fe) disponible olsen mg/kg': {
+        'bajo': "Aplicar quelatos de hierro (Fe-EDDHA) o sulfato ferroso.",
+        'alto': "Evitar aplicaciones; exceso puede inhibir absorción de fósforo y manganeso."
+    },
+    'Cobre (Cu) disponible mg/kg': {
+        'bajo': "Aplicar sulfato de cobre (CuSO₄·5H₂O) o quelatos de cobre.",
+        'alto': "Evitar fertilizantes cúpricos; monitorear por toxicidad."
+    },
+    'Manganeso (Mn) disponible Olsen mg/kg': {
+        'bajo': "Aplicar sulfato de manganeso o quelatos de Mn.",
+        'alto': "Evitar aportes; puede volverse tóxico en suelos ácidos."
+    },
+    'Zinc (Zn) disponible Olsen mg/kg': {
+        'bajo': "Aplicar sulfato de zinc o quelatos de Zn (EDTA-Zn).",
+        'alto': "Evitar aplicaciones; niveles altos afectan el fósforo y el hierro."
+    }
+}
+rangos_optimos = {
+        'pH agua:suelo 2,5:1,0': (6.0, 7.5),
+        'Materia orgánica (MO) %': (2.0, 5.0),
+        'Fósforo (P) Bray II mg/kg': (15, 40),
+        'Azufre (S) Fosfato monocalcico mg/kg': (10, 30),
+        'Calcio (Ca) intercambiable cmol(+)/kg': (5, 10),
+        'Magnesio (Mg) intercambiable cmol(+)/kg': (1, 4),
+        'Potasio (K) intercambiable cmol(+)/kg': (0.3, 0.7),
+        'Sodio (Na) intercambiable cmol(+)/kg': (0.1, 0.4),
+        'Hierro (Fe) disponible olsen mg/kg': (5, 10),
+        'Cobre (Cu) disponible mg/kg': (0.2, 2.0),
+        'Manganeso (Mn) disponible Olsen mg/kg': (10, 50),
+        'Zinc (Zn) disponible Olsen mg/kg': (1, 5)
+    }
+
+def evaluar_suelo(fila):
+    estado = []
+    recomendaciones = []
+
+    for var, (min_val, max_val) in rangos_optimos.items():
+        valor = fila[var]
+        if valor < min_val:
+            estado.append(f"{var} : BAJO")
+            recomendaciones.append(recomendaciones_tecnicas[var]['bajo'])
+        elif valor > max_val:
+            estado.append(f"{var} : ALTO")
+            recomendaciones.append(recomendaciones_tecnicas[var]['alto'])
+        else:
+            estado.append(f"{var} : ÓPTIMO")
+            recomendaciones.append(recomendaciones_tecnicas[var].get('óptimo', 'Valor en rango adecuado, no se requiere atención o correción.'))
+
+    valores_ordenados = [fila[f] for f in features]
+    cultivo_predicho = model.predict(pd.DataFrame([valores_ordenados], columns=features))[0]
+
+    return {
+    "cultivo": cultivo_predicho,
+    "estado": estado,
+    "recomendaciones": recomendaciones
+    }
+
+features = [
+    'pH agua:suelo 2,5:1,0', 'Materia orgánica (MO) %',
+    'Fósforo (P) Bray II mg/kg', 'Azufre (S) Fosfato monocalcico mg/kg',
+    'Calcio (Ca) intercambiable cmol(+)/kg', 'Magnesio (Mg) intercambiable cmol(+)/kg',
+    'Potasio (K) intercambiable cmol(+)/kg', 'Sodio (Na) intercambiable cmol(+)/kg',
+    'Hierro (Fe) disponible olsen mg/kg', 'Cobre (Cu) disponible mg/kg',
+    'Manganeso (Mn) disponible Olsen mg/kg', 'Zinc (Zn) disponible Olsen mg/kg'
+]
+
+def recomendaciones(request):
+    mediciones = Medicion.objects.all().order_by('-fecha')[:10]
+
+    resultados = []
+
+    for m in mediciones:
+        fila = {
+            'pH agua:suelo 2,5:1,0': m.PH,
+            'Materia orgánica (MO) %': m.MateriaOrganica,
+            'Fósforo (P) Bray II mg/kg': m.Fosforo,
+            'Azufre (S) Fosfato monocalcico mg/kg': m.Azufre,
+            'Calcio (Ca) intercambiable cmol(+)/kg': m.Calcio,
+            'Magnesio (Mg) intercambiable cmol(+)/kg': m.Magnesio,
+            'Potasio (K) intercambiable cmol(+)/kg': m.Potasio,
+            'Sodio (Na) intercambiable cmol(+)/kg': m.Sodio,
+            'Hierro (Fe) disponible olsen mg/kg': m.Hierro,
+            'Cobre (Cu) disponible mg/kg': m.Cobre,
+            'Manganeso (Mn) disponible Olsen mg/kg': m.Manganeso,
+            'Zinc (Zn) disponible Olsen mg/kg': m.Zinc
+        }
+
+        resultado = evaluar_suelo(fila)
+        resultados.append({
+            'medicion': m,
+            'cultivo': resultado['cultivo'],
+            'estado': resultado['estado'],
+            'recomendaciones': resultado['recomendaciones']
+        })
+
+    return render(request, 'recomendaciones.html', {'resultados': resultados})
