@@ -240,7 +240,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-model = joblib.load('modelo\my_random_forest.joblib')
+model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
