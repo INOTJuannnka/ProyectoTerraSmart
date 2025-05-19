@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load custom_filters %}
+
 {% block title %}Historial{% endblock %}
 
 {% block content %}
@@ -28,8 +30,7 @@
     <tbody>
       {% for registro in registros %}
       <tr>
-        <td>{{ registro.fecha }}</td>
-        <td>{{ registro.PH}}</td>
+        <td>{{ registro.fecha|iso_to_local_datetime:"America/Mexico_City" }}</td>        <td>{{ registro.PH}}</td>
         <td>{{ registro.MateriaOrganica}}</td>
         <td>{{ registro.Fosforo}}</td>
         <td>{{ registro.Azufre}}</td>
