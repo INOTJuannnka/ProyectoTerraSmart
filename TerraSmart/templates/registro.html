@@ -71,6 +71,8 @@
 
 <div class="container mt-5">
   <div class="register-container">
+
+
     <form method="POST" class="register-form">
       {% csrf_token %}
       <h4>Crea una cuenta</h4>
@@ -82,11 +84,8 @@
     </form>
 
     <div class="social-register">
-      <p class="text-center mt-4">O registrate con:</p>
+      <pj class="text-center mt-4">O registrate con:</pj>
       <a href="#" class="fblogin"><i class="fab fa-facebook"></i> Registrate con Facebook</a>
       <a href="#" class="twlogin"><i class="fab fa-twitter"></i> Registrate conTwitter</a>
-      <a href="#" class="gplogin"><i class="fab fa-google-plus"></i> Registrate con Google</a>
-    </div>
-  </div>
-</div>
+      <a href="/accounts/google/login/" class="gplogin"><i class="fab fa-google-plus"></i> Registrarse con Google</a></div>
 {% endblock %}
