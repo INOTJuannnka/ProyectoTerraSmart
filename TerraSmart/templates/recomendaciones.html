@@ -6,9 +6,26 @@
 <h2 class="fw-bold">RECOMENDACIONES</h2>
 
 <div class="record-box">
-  <p>Suelo con bajo potasio<br>• Aplicar fertilizante con <b>K</b> al 5%</p>
-  <p>PH ligeramente ácido<br>• Considere agregar cal agrícola</p>
-  <p>Humedad baja<br>• Riegue el cultivo dentro de 24 horas</p>
+  {% for r in resultados %}
+    <div style="margin-bottom: 30px; border: 1px solid #ccc; padding: 15px;">
+        <h3>📅 Medición del {{ r.medicion.fecha }}</h3>
+        <p>🌱 <strong>Cultivo sugerido:</strong> {{ r.cultivo }}</p>
+
+        <h4>📊 Estado del suelo:</h4>
+        <ul>
+            {% for estado in r.estado %}
+                <li>{{ estado }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>🧪 Recomendaciones técnicas:</h4>
+        <ol>
+            {% for recomendacion in r.recomendaciones %}
+                <li>{{ recomendacion }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+  {% endfor %}
 </div>
 
 <div class="mt-4">
