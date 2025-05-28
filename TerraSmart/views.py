@@ -8,7 +8,8 @@ from django.contrib.auth import login, logout
 import pandas as pd
 import numpy as np
 import joblib
-
+import requests
+import time
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -24,16 +25,20 @@ def vista_inicio(request):
     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
 
 def vista_historial(request):
-    registros = obtener_mediciones_firestore()
+    user = request.session.get('usuario')
+    print(f"Obteniendo historial para el usuario: {user}")
+    registros = obtener_mediciones_firestore(user)
     return render(request, 'historial.html', {'registros': registros})
 
 def vista_mediciones(request):
+    user = request.session.get('usuario')
     if request.method == 'POST':
             accion = request.POST.get('accion', 'subir_manual')
             
             # Si es subida manual de datos
             if accion == 'subir_manual':
                 # Obtener datos del formulario
+                user = user
                 ph = request.POST.get('ph')
                 materiaOrganica = request.POST.get('materiaOrganica')
                 fosforo = request.POST.get('fosforo')
@@ -50,25 +55,9 @@ def vista_mediciones(request):
                 
                 
                 try:
-                    nuevo_registro = postMediciones(
-                        PH=ph,
-                        MateriaOrganica=materiaOrganica,
-                        Fosforo=fosforo,
-                        Azufre=azufre,
-                        Calcio=calcio,
-                        Magnesio=magnesio,
-                        Potasio=potasio,
-                        Sodio=sodio,
-                        Hierro=hierro,
-                        Cobre=cobre,
-                        Manganeso=manganeso,
-                        Zinc=zinc,
-                        fecha=fecha
-                    )
-                    nuevo_registro.save()
-
-                     # Guardar en Firestore
+                    # Guardar en Firestore
                     db.collection("medicion").add({
+                        "user": user,
                         "PH": ph,
                         "MateriaOrganica": materiaOrganica,
                         "Fosforo": fosforo,
@@ -85,20 +74,19 @@ def vista_mediciones(request):
                     })
 
                     messages.success(request, 'Registro guardado exitosamente.')
-                    return render(request, 'recomendaciones.html')
+                    return render(request, 'mediciones.html')
+
+                    #return render(request, 'recomendaciones.html')
                 except Exception as e:
                     messages.error(request, f'Error al guardar el registro: {e}')
             
             # Si es subida de archivo
             elif accion == 'subir_archivo':
-                print("Entra en subir archivo")
                 archivo = request.FILES.get('archivo_mediciones')
 
                 # Verificar si se ha subido un archivo
                 if 'archivo_mediciones' in request.FILES:
                     archivo = request.FILES['archivo_mediciones']
-                    #Imprimir el archivo subido
-                    print("Hola")
                     print(f"Archivo subido: {archivo.name}")
                     try:
                         # Determinar el tipo de archivo y procesarlo
@@ -115,7 +103,7 @@ def vista_mediciones(request):
                         df.columns = [col.lower().strip() for col in df.columns]
                         
                         # Verificar columnas necesarias
-                        columnas_requeridas = ['ph', 'materiaorganica', 'fosforo', 'azufre', 'calcio', 'magnesio', 'potasio', 'sodio', 'hierro', 'cobre', 'manganeso', 'zinc']
+                        columnas_requeridas = ['ph', 'materiaorganica', 'fosforo', 'azufre', 'calcio', 'magnesio', 'potasio', 'sodio', 'hierro', 'cobre', 'manganeso', 'zinc','fecha']
                         
                         # Verificar si todas las columnas requeridas están presentes
                         columnas_faltantes = [col for col in columnas_requeridas if col not in df.columns]
@@ -140,24 +128,25 @@ def vista_mediciones(request):
                                 cobre_val = float(fila['cobre']) if pd.notna(fila['cobre']) else None
                                 manganeso_val = float(fila['manganeso']) if pd.notna(fila['manganeso']) else None
                                 zinc_val = float(fila['zinc']) if pd.notna(fila['zinc']) else None
+                                fecha_str = fila['fecha'] if pd.notna(fila['fecha']) else None
                                                
                                 # Crear y guardar nuevo registro
-                                nuevo_registro = postMediciones(
-                                    PH=ph_val,
-                                    MateriaOrganica=materiaOrganica_val,
-                                    Fosforo=fosforo_val,
-                                    Azufre=azufre_val,
-                                    Calcio=calcio_val,
-                                    Magnesio=magnesio_val,
-                                    Potasio=potasio_val,
-                                    Sodio=sodio_val,
-                                    Hierro=hierro_val,
-                                    Cobre=cobre_val,
-                                    Manganeso=manganeso_val,
-                                    Zinc=zinc_val,
-                                    fecha=timezone.now()
-                                )
-                                nuevo_registro.save()
+                                db.collection("medicion").add({
+                                    "user": user,
+                                    "PH": ph_val,
+                                    "MateriaOrganica": materiaOrganica_val,
+                                    "Fosforo": fosforo_val,
+                                    "Azufre": azufre_val,
+                                    "Calcio": calcio_val,
+                                    "Magnesio": magnesio_val,
+                                    "Potasio": potasio_val,
+                                    "Sodio": sodio_val,
+                                    "Hierro": hierro_val,
+                                    "Cobre": cobre_val,
+                                    "Manganeso": manganeso_val,
+                                    "Zinc": zinc_val,
+                                    "fecha": fecha_str
+                                })
                                 registros_guardados += 1
                                 
                             except Exception as e:
@@ -181,9 +170,11 @@ def vista_mediciones(request):
         # Si la solicitud no es POST
     return render(request, 'mediciones.html')
 #Función para obtener mediciones desde Firestore
-def obtener_mediciones_firestore():
+def obtener_mediciones_firestore(user):
     mediciones = []
-    docs = db.collection("medicion").order_by("fecha", direction="DESCENDING").stream()
+    print(f"Obteniendo mediciones para el usuario: {user}")
+#docs = db.collection("medicion").order_by("fecha", direction="DESCENDING").stream()
+    docs = db.collection("medicion").order_by("fecha", direction="DESCENDING").where("user", "==", user).stream()
     for doc in docs:
         data = doc.to_dict()
         mediciones.append(data)
@@ -240,7 +231,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-model = joblib.load('..\modelo\my_random_forest.joblib')
+#model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
@@ -372,3 +363,8 @@ def recomendaciones(request):
         })
 
     return render(request, 'recomendaciones.html', {'resultados': resultados})
+
+# Ejemplo de uso en bucle (cada 15 segundos)
+# while True:
+    revisar_nuevo_dato()
+    time.sleep(15)
