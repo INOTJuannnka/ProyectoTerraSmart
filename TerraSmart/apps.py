@@ -10,7 +10,7 @@ class TerrasmartConfig(AppConfig):
 
     def ready(self):
         from . import thingspeak_monitor
-        thread = threading.Thread(target=thingspeak_monitor.run_monitor, daemon=True)
-        thread.start()
+        #thread = threading.Thread(target=thingspeak_monitor.run_monitor, daemon=True)
+        #thread.start()
         import TerraSmart.signals
 
