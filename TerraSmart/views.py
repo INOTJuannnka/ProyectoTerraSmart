@@ -13,6 +13,9 @@ import time
 from threading import Thread
 from django.contrib.auth.decorators import login_required
 from .thingspeak_monitor import run_monitor
+from types import SimpleNamespace
+
+
 
 @login_required
 def iniciar_monitor(request):
@@ -29,8 +32,8 @@ def historial(request):
     return render(request, 'historial.html')
 
 def vista_inicio(request):
-    ultimo_registro = Medicion.objects.last()
     user_id = request.session.get('usuario')
+    ultimo_registro = obtener_n_registros_firestore(user_id, 1)
     Thread(target=run_monitor, args=(user_id,), daemon=True).start()
     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
 
@@ -190,6 +193,15 @@ def obtener_mediciones_firestore(user):
         mediciones.append(data)
     return mediciones
 
+def obtener_n_registros_firestore(user, n):
+    print(f"Obteniendo los últimos {n} registros para el usuario: {user}")
+    docs = db.collection("medicion").order_by("fecha", direction="DESCENDING").where("user", "==", user).limit(n).stream()
+    registros = []
+    for doc in docs:
+        data = doc.to_dict()
+        registros.append(data)
+    return registros
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -241,7 +253,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-#model = joblib.load('..\modelo\my_random_forest.joblib')
+model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
@@ -343,39 +355,58 @@ features = [
     'Manganeso (Mn) disponible Olsen mg/kg', 'Zinc (Zn) disponible Olsen mg/kg'
 ]
 
+def promediar_variables_medicion(lista_de_dicts):
+    campos = [
+        'PH', 'MateriaOrganica', 'Fosforo', 'Azufre',
+        'Calcio', 'Magnesio', 'Potasio', 'Sodio',
+        'Hierro', 'Cobre', 'Manganeso', 'Zinc'
+    ]
+
+    acumulados = {campo: 0.0 for campo in campos}
+    contador = 0
+
+    for data in lista_de_dicts:
+        for campo in campos:
+            acumulados[campo] += data.get(campo, 0.0)
+        contador += 1
+
+    if contador == 0:
+        return None  
+
+    promedios = {campo: acumulados[campo] / contador for campo in campos}
+    return SimpleNamespace(**promedios)
+
 def recomendaciones(request):
+    n = 10
     user = request.session.get('usuario')
-    mediciones = obtener_mediciones_firestore(user)
+    mediciones = obtener_n_registros_firestore(user, n)
+    m = promediar_variables_medicion(mediciones)
     print(mediciones)
     resultados = []
 
-    for m in mediciones:
-        fila = {
-            'pH agua:suelo 2,5:1,0': m.PH,
-            'Materia orgánica (MO) %': m.MateriaOrganica,
-            'Fósforo (P) Bray II mg/kg': m.Fosforo,
-            'Azufre (S) Fosfato monocalcico mg/kg': m.Azufre,
-            'Calcio (Ca) intercambiable cmol(+)/kg': m.Calcio,
-            'Magnesio (Mg) intercambiable cmol(+)/kg': m.Magnesio,
-            'Potasio (K) intercambiable cmol(+)/kg': m.Potasio,
-            'Sodio (Na) intercambiable cmol(+)/kg': m.Sodio,
-            'Hierro (Fe) disponible olsen mg/kg': m.Hierro,
-            'Cobre (Cu) disponible mg/kg': m.Cobre,
-            'Manganeso (Mn) disponible Olsen mg/kg': m.Manganeso,
-            'Zinc (Zn) disponible Olsen mg/kg': m.Zinc
-        }
+    print(f"Promedio de mediciones: {m}")
+    fila = {
+        'pH agua:suelo 2,5:1,0': m.PH,
+        'Materia orgánica (MO) %': m.MateriaOrganica,
+        'Fósforo (P) Bray II mg/kg': m.Fosforo,
+        'Azufre (S) Fosfato monocalcico mg/kg': m.Azufre,
+        'Calcio (Ca) intercambiable cmol(+)/kg': m.Calcio,
+        'Magnesio (Mg) intercambiable cmol(+)/kg': m.Magnesio,
+        'Potasio (K) intercambiable cmol(+)/kg': m.Potasio,
+        'Sodio (Na) intercambiable cmol(+)/kg': m.Sodio,
+        'Hierro (Fe) disponible olsen mg/kg': m.Hierro,
+        'Cobre (Cu) disponible mg/kg': m.Cobre,
+        'Manganeso (Mn) disponible Olsen mg/kg': m.Manganeso,
+        'Zinc (Zn) disponible Olsen mg/kg': m.Zinc
+    }
 
-        resultado = evaluar_suelo(fila)
-        resultados.append({
-            'medicion': m,
-            'cultivo': resultado['cultivo'],
-            'estado': resultado['estado'],
-            'recomendaciones': resultado['recomendaciones']
-        })
+    resultado = evaluar_suelo(fila)
+    resultados.append({
+        'medicion': m,
+        'cultivo': resultado['cultivo'],
+        'estado': resultado['estado'],
+        'recomendaciones': resultado['recomendaciones']
+    })
 
     return render(request, 'recomendaciones.html', {'resultados': resultados})
 
-# Ejemplo de uso en bucle (cada 15 segundos)
-# while True:
-    revisar_nuevo_dato()
-    time.sleep(15)
