@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from TerraSmart.models import Medicion, postMediciones
 from django.utils import timezone
 from django.contrib import messages
@@ -10,6 +10,14 @@ import numpy as np
 import joblib
 import requests
 import time
+from threading import Thread
+from django.contrib.auth.decorators import login_required
+from .thingspeak_monitor import run_monitor
+
+@login_required
+def iniciar_monitor(request):
+    
+    return JsonResponse({'mensaje': 'Monitor iniciado para el usuario actual'})
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -22,6 +30,8 @@ def historial(request):
 
 def vista_inicio(request):
     ultimo_registro = Medicion.objects.last()
+    user_id = request.session.get('usuario')
+    Thread(target=run_monitor, args=(user_id,), daemon=True).start()
     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
 
 def vista_historial(request):
@@ -334,8 +344,9 @@ features = [
 ]
 
 def recomendaciones(request):
-    mediciones = Medicion.objects.all().order_by('-fecha')[:10]
-
+    user = request.session.get('usuario')
+    mediciones = obtener_mediciones_firestore(user)
+    print(mediciones)
     resultados = []
 
     for m in mediciones:
