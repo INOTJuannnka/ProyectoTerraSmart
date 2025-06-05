@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear cuenta{% endblock %}
+
+{% block content %}
+<style>
+  .register-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .register-form {
+    flex: 1 1 500px;
+    margin: 15px;
+  }
+
+  .register-form h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .register-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #7ED957;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .social-register a {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .fblogin { background-color: #3b5998; }
+  .twlogin { background-color: #1da1f2; }
+  .gplogin { background-color: #db4437; }
+
+  @media (max-width: 768px) {
+    .register-container {
+      flex-direction: column;
+      padding: 20px;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="register-container">
+
+
+    <form method="POST" class="register-form">
+      {% csrf_token %}
+      <h4>Crea una cuenta</h4>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password1" placeholder="Password" required>
+      <input type="password" name="password2" placeholder="Confirm Password" required>
+      <input type="submit" value="Registrarse">
+    </form>
+
+    <div class="social-register">
+      <pj class="text-center mt-4">O registrate con:</pj>
+      <a href="#" class="fblogin"><i class="fab fa-facebook"></i> Registrate con Facebook</a>
+      <a href="#" class="twlogin"><i class="fab fa-twitter"></i> Registrate conTwitter</a>
+      <a href="/accounts/google/login/" class="gplogin"><i class="fab fa-google-plus"></i> Registrarse con Google</a></div>
+{% endblock %}
