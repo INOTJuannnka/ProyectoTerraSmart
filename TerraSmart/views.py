@@ -252,7 +252,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-#model = joblib.load('..\modelo\my_random_forest.joblib')
+model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
@@ -401,6 +401,7 @@ def recomendaciones(request):
 
     resultado = evaluar_suelo(fila)
     resultados.append({
+        'fecha': mediciones[0]['fecha'] if mediciones else timezone.now(),
         'medicion': m,
         'cultivo': resultado['cultivo'],
         'estado': resultado['estado'],
