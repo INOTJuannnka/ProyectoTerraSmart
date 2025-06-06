@@ -17,10 +17,6 @@ from types import SimpleNamespace
 
 
 
-@login_required
-def iniciar_monitor(request):
-    
-    return JsonResponse({'mensaje': 'Monitor iniciado para el usuario actual'})
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -405,6 +401,7 @@ def recomendaciones(request):
 
     resultado = evaluar_suelo(fila)
     resultados.append({
+        'fecha': mediciones[0]['fecha'] if mediciones else timezone.now(),
         'medicion': m,
         'cultivo': resultado['cultivo'],
         'estado': resultado['estado'],
