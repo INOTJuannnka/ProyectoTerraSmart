@@ -17,10 +17,6 @@ from types import SimpleNamespace
 
 
 
-@login_required
-def iniciar_monitor(request):
-    
-    return JsonResponse({'mensaje': 'Monitor iniciado para el usuario actual'})
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -35,6 +31,10 @@ def vista_inicio(request):
     user_id = request.session.get('usuario')
     ultimo_registro = obtener_n_registros_firestore(user_id, 1)
     ultimo_registro = ultimo_registro[0] if ultimo_registro else None
+
+    print(f"Último registro obtenido: {ultimo_registro}")
+    Thread(target=run_monitor, args=(user_id,), daemon=True).start()
+    return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
 
 def vista_historial(request):
     user = request.session.get('usuario')

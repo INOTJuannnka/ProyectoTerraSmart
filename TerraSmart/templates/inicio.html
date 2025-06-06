@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block title %}Inicio{% endblock %}
 
@@ -36,7 +37,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ ultimo_registro.fecha }}</td>
+              <td>{{ ultimo_registro.fecha|iso_to_local_datetime:"America/Mexico_City"}}</td>
               <td>{{ ultimo_registro.PH }}</td>
               <td>{{ ultimo_registro.MateriaOrganica }}</td>
               <td>{{ ultimo_registro.Fosforo }}</td>
