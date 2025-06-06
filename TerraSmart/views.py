@@ -14,6 +14,20 @@ from threading import Thread
 from django.contrib.auth.decorators import login_required
 from .thingspeak_monitor import run_monitor
 from types import SimpleNamespace
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+import time
+import matplotlib
+matplotlib.use('Agg') 
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+from django.shortcuts import render
+from .models import Medicion
+from .firebase_config import db
+from django.contrib.auth.decorators import login_required
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 
@@ -31,11 +45,79 @@ def configuracion(request):
 def historial(request):
     return render(request, 'historial.html')
 
+# def vista_inicio(request):
+#     user_id = request.session.get('usuario')
+#     ultimo_registro = obtener_n_registros_firestore(user_id, 1)
+#     Thread(target=run_monitor, args=(user_id,), daemon=True).start()
+#     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
+
 def vista_inicio(request):
     user_id = request.session.get('usuario')
-    ultimo_registro = obtener_n_registros_firestore(user_id, 1)
-    Thread(target=run_monitor, args=(user_id,), daemon=True).start()
-    return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
+    mediciones = obtener_mediciones_firestore(user_id)
+
+    if not mediciones:
+        return render(request, 'inicio.html', {'img_data_dict': {}, 'mediciones': []})
+
+    # Convertir a DataFrame para agrupar por semana
+    df = pd.DataFrame(mediciones)
+    df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce', infer_datetime_format=True)
+    df = df.dropna(subset=['fecha'])
+
+    # Lista de campos numéricos
+    campos = [
+        'PH', 'MateriaOrganica', 'Fosforo', 'Azufre', 'Calcio', 'Magnesio', 
+        'Potasio', 'Sodio', 'Hierro', 'Cobre', 'Manganeso', 'Zinc'
+    ]
+
+    # Convertir columnas numéricas a float (ignorar errores)
+    for campo in campos:
+        if campo in df.columns:
+            df[campo] = pd.to_numeric(df[campo], errors='coerce')
+
+    # Agrupar por semana y calcular el promedio solo de los campos numéricos
+    df.set_index('fecha', inplace=True)
+    df_semanal = df[campos].resample('W').mean().reset_index()
+
+    img_data_dict = {}
+
+    for campo in campos:
+        if campo not in df_semanal.columns:
+            continue
+        valores = df_semanal[campo].dropna().tolist()
+        fechas = df_semanal['fecha'].dt.strftime('%Y-%m-%d').tolist()
+
+        if not valores:
+            continue
+
+        fig, ax = plt.subplots(figsize=(8, 4))
+        ax.plot(fechas, valores, marker='o', linestyle='-', color='g', label=campo)
+        ax.set_ylim(min(valores) - 1, max(valores) + 1)
+        plt.xticks(rotation=45, ha="right")
+        ax.set(xlabel='Semana', ylabel=campo, title=f'Evolución semanal de {campo}')
+        ax.grid(True)
+
+        buf = BytesIO()
+        plt.tight_layout()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        img_data_dict[campo] = base64.b64encode(buf.getvalue()).decode('utf-8')
+        buf.close()
+        plt.close(fig)
+
+        # Obtener el último registro (más reciente)
+    ultimo_registro = None
+    if not df.empty:
+        ultimo_registro = df.sort_index(ascending=False).iloc[0].to_dict()
+        if 'fecha' in ultimo_registro and pd.notnull(ultimo_registro['fecha']):
+           ultimo_registro['fecha'] = ultimo_registro['fecha'].strftime('%Y-%m-%d %H:%M:%S')
+
+    return render(request,'inicio.html',{
+            'img_data_dict': img_data_dict,
+            'mediciones': mediciones,
+            'ultimo_registro': ultimo_registro
+        }
+    )
+
 
 def vista_historial(request):
     user = request.session.get('usuario')
@@ -410,3 +492,8 @@ def recomendaciones(request):
 
     return render(request, 'recomendaciones.html', {'resultados': resultados})
 
+def vista_bienvenida(request):
+    return render(request, 'bienvenida.html')
+
+def vista_instrucciones(request):
+    return render(request, 'instrucciones.html')
