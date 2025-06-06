@@ -502,6 +502,7 @@ def promediar_variables_medicion(lista_de_dicts):
     promedios = {campo: acumulados[campo] / contador for campo in campos}
     return SimpleNamespace(**promedios)
 
+
 def recomendaciones(request):
     if "usuario" not in request.session:
         return redirect("login")

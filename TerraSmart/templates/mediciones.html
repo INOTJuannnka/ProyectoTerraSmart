@@ -13,6 +13,13 @@
 </div>
 
 
+<div class="intro-description" style="text-align: justify;">
+  <p>
+    En la vista de Mediciones, puedes ingresar nuevos datos sobre las condiciones del suelo para recibir recomendaciones personalizadas. Aquí puedes introducir mediciones como el pH, el nivel de materia orgánica, los nutrientes presentes (fósforo, potasio, magnesio, etc.), entre otros. Además, es posible subir archivos en formato CSV o Excel para procesar múltiples mediciones a la vez. Esta vista permite alimentar la plataforma con datos esenciales para la generación de recomendaciones específicas y mejorar la gestión del suelo.
+  </p>
+</div>
+
+
 <form class="record-box w-100" method="post" action="{% url 'mediciones' %}" enctype="multipart/form-data">
   {% csrf_token %}
 
