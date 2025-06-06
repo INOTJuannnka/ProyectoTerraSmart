@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -89,14 +90,14 @@ WSGI_APPLICATION = 'project_core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'terrasmart',
-       'USER': 'root',
-       'PASSWORD': 'mysql',
-       'HOST': '127.0.0.1',
-       'PORT': '3306', 
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'terrasmart',
+        'USER': 'root',
+        'PASSWORD': 'admin',
+        'HOST': '127.0.0.1',
+        'PORT': '3306', 
+    }
 }
 
 
