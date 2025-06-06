@@ -17,9 +17,18 @@ Including another URLconf
 # mi_proyecto/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns  # Importar i18n_patterns
 
 urlpatterns = [
-    path('', include('TerraSmart.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')), 
+]
+
+# Usar i18n_patterns para las rutas que se desean manejar con internacionalización
+urlpatterns += i18n_patterns(
+    path('', include('TerraSmart.urls')),  # Incluye las rutas de TerraSmart dentro de i18n_patterns
+)
+
+urlpatterns += [
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
