@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
+
+
 {% block title %}Recomendaciones{% endblock %}
+{% load custom_filters %}
+
+
 
 {% block content %}
 <h2 class="fw-bold">RECOMENDACIONES</h2>
@@ -8,7 +13,7 @@
 <div class="record-box">
   {% for r in resultados %}
     <div style="margin-bottom: 30px; border: 1px solid #ccc; padding: 15px;">
-        <h3>📅 Medición del {{ r.medicion.fecha }}</h3>
+        <h3>📅 Medición del {{ r.fecha|iso_to_local_datetime:"America/Mexico_City"}}</h3>
         <p>🌱 <strong>Cultivo sugerido:</strong> {{ r.cultivo }}</p>
 
         <h4>📊 Estado del suelo:</h4>
