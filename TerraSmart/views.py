@@ -17,10 +17,6 @@ from types import SimpleNamespace
 
 
 
-@login_required
-def iniciar_monitor(request):
-    
-    return JsonResponse({'mensaje': 'Monitor iniciado para el usuario actual'})
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -256,7 +252,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-model = joblib.load('..\modelo\my_random_forest.joblib')
+#model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
