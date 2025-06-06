@@ -65,6 +65,25 @@
     }
 
   </style>
+  {% block extra_styles %}
+  <style>
+    .btn-success {
+      background-color: #7ED957;
+      color: white;
+      font-weight: bold;
+    }
+    .btn-success:hover {
+      background-color: #009F53;
+    }
+    h1, h2, h3 {
+      color: #009F53;
+    }
+    p {
+      color: #555;
+    }
+  </style>
+  {% endblock %}
+
 </head>
 <body>
 <div class="container-fluid">
@@ -86,7 +105,7 @@
       <div class="user-dropdown text-center mt-auto">
         
         <button id="userMenuBtn" class="btn p-0 bg-transparent border-0">
-          <img src="https://cdn-icons-png.flaticon.com/512/2250/2250207.png" alt="User Icon" style="width: 60px; height: 60px; object-fit: contain;">
+          <img src="https://cdn-icons-png.flaticon.com/512/2250/2250207.png" alt="User Icon" style="width: 100px; height: 100px; object-fit: contain;">
         </button>
         
 

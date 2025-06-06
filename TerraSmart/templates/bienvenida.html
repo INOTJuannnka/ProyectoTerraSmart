@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}TeRraSmart - Bienvenida{% endblock %}
+
+{% block content %}
+  <div class="text-center" style="margin-top: 20%;">
+    <h1 class="fw-bold">Bienvenido a <span class="green">TeRra-</span><span class="black">Smart</span></h1>
+    <p><img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 80px;"></p>
+    <p class="fs-3">Esperamos que disfrutes tu experiencia</p>
+    <p id="countdown">Redirigiendo en 3 segundos...</p> <!-- Aquí se mostrará el contador -->
+  </div>
+
+  <script>
+    var countdown = 3;  // Tiempo inicial
+    var countdownElement = document.getElementById('countdown'); // Elemento que mostrará el contador
+
+    // Actualiza el contador cada segundo
+    var interval = setInterval(function() {
+      countdownElement.textContent = 'Redirigiendo en ' + countdown + ' segundos...';
+      countdown--;
+      
+      if (countdown < 0) {
+        clearInterval(interval);  // Detiene el contador
+        window.location.href = "{% url 'instrucciones' %}";  // Redirige al siguiente página
+      }
+    }, 1000); // 1000ms = 1 segundo
+  </script>
+{% endblock %}
