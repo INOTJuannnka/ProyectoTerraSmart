@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 {% load socialaccount %}
 
-{% block title %}Conectar con Google{% endblock %}
+{% block title %}{% trans "Conectar con Google" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-5 text-center">
-  <h2>Iniciar sesión con Google</h2>
-  <p>Estás a punto de iniciar sesión usando tu cuenta de Google.</p>
+  <h2>{% trans "Iniciar sesión con Google" %}</h2>
+  <p>{% trans "Estás a punto de iniciar sesión usando tu cuenta de Google." %}</p>
   <form method="post" action="">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">
-      <i class="fab fa-google"></i> Continuar con Google
-    </button>
+    <button type="submit" class="btn btn-danger"><i class="fab fa-google"></i>{% trans "Continuar con Google" %}</button>
   </form>
 </div>
 {% endblock %}

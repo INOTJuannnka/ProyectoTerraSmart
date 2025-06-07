@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Crear cuenta{% endblock %}
+{% block title %}{% trans "Crear cuenta" %}{% endblock %}
 
 {% block content %}
 <style>
@@ -75,7 +76,7 @@
 
     <form method="POST" class="register-form">
       {% csrf_token %}
-      <h4>Crea una cuenta</h4>
+      <h4>{% trans "Crea una cuenta" %}</h4>
       <input type="text" name="username" placeholder="Username" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password1" placeholder="Password" required>
@@ -84,8 +85,8 @@
     </form>
 
     <div class="social-register">
-      <pj class="text-center mt-4">O registrate con:</pj>
-      <a href="#" class="fblogin"><i class="fab fa-facebook"></i> Registrate con Facebook</a>
-      <a href="#" class="twlogin"><i class="fab fa-twitter"></i> Registrate conTwitter</a>
-      <a href="/accounts/google/login/" class="gplogin"><i class="fab fa-google-plus"></i> Registrarse con Google</a></div>
+      <pj class="text-center mt-4">{% trans "O registrate con: " %}</pj>
+      <a href="#" class="fblogin"><i class="fab fa-facebook"></i>{% trans "Registrate con Facebook" %}</a>
+      <a href="#" class="twlogin"><i class="fab fa-twitter"></i>{% trans "Registrate conTwitter" %}</a>
+      <a href="/accounts/google/login/" class="gplogin"><i class="fab fa-google-plus"></i>{% trans "Registrarse con Google" %}</a></div>
 {% endblock %}

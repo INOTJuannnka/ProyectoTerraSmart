@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}TeRra-Smart - Mediciones{% endblock %}
+{% block title %}{% trans "TeRra-Smart - Mediciones" %}{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold">MEDICIONES</h2>
+<h2 class="fw-bold">{% trans "MEDICIONES" %}</h2>
 
 <div class="intro-description" style="text-align: justify;">
   <p>
-    En la vista de Mediciones, puedes ingresar nuevos datos sobre las condiciones del suelo para recibir recomendaciones personalizadas. Aquí puedes introducir mediciones como el pH, el nivel de materia orgánica, los nutrientes presentes (fósforo, potasio, magnesio, etc.), entre otros. Además, es posible subir archivos en formato CSV o Excel para procesar múltiples mediciones a la vez. Esta vista permite alimentar la plataforma con datos esenciales para la generación de recomendaciones específicas y mejorar la gestión del suelo.
+    {% trans "En Mediciones, puedes ingresar nuevos datos sobre las condiciones del suelo para recibir recomendaciones personalizadas. Aquí puedes introducir mediciones como el pH, el nivel de materia orgánica, los nutrientes presentes (fósforo, potasio, magnesio, etc.), entre otros. Además, es posible subir archivos en formato CSV o Excel para procesar múltiples mediciones a la vez. Esta vista permite alimentar la plataforma con datos esenciales para la generación de recomendaciones específicas y mejorar la gestión del suelo." %}
   </p>
 </div>
 
@@ -17,66 +18,66 @@
 
   <div class="row g-3">
     <div class="col-md-4">
-      <label class="form-label">pH agua:suelo 2,5:1,0</label>
+      <label class="form-label">{% trans "pH agua:suelo 2,5:1,0" %}</label>
       <input type="text" name="ph" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Materia orgánica (MO) %</label>
+      <label class="form-label">{% trans "Materia orgánica (MO) %" %}</label>
       <input type="text" name="materiaOrganica" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Fósforo (P) Bray II mg/kg</label>
+      <label class="form-label">{% trans "Fósforo (P) Bray II mg/kg" %}</label>
       <input type="text" name="fosforo" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Azufre (S) Fosfato monocalcico mg/kg</label>
+      <label class="form-label">{% trans "Azufre (S) Fosfato monocalcico mg/kg" %}</label>
       <input type="text" name="azufre" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Calcio (Ca) intercambiable cmol(+)/kg</label>
+      <label class="form-label">{%trans "Calcio (Ca) intercambiable cmol(+)/kg" %}</label>
       <input type="text" name="calcio" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Magnesio (Mg) intercambiable cmol(+)/kg</label>
+      <label class="form-label">{% trans "Magnesio (Mg) intercambiable cmol(+)/kg" %}</label>
       <input type="text" name="magnesio" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Potasio (K) intercambiable cmol(+)/kg</label>
+      <label class="form-label">{% trans "Potasio (K) intercambiable cmol(+)/kg" %}</label>
       <input type="text" name="potasio" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Sodio (Na) intercambiable cmol(+)/kg</label>
+      <label class="form-label">{% trans "Sodio (Na) intercambiable cmol(+)/kg" %}</label>
       <input type="text" name="sodio" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Hierro (Fe) disponible Olsen mg/kg</label>
+      <label class="form-label">{% trans "Hierro (Fe) disponible Olsen mg/kg" %}</label>
       <input type="text" name="hierro" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Cobre (Cu) disponible mg/kg</label>
+      <label class="form-label">{% trans "Cobre (Cu) disponible mg/kg" %}</label>
       <input type="text" name="cobre" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Manganeso (Mn) disponible Olsen mg/kg</label>
+      <label class="form-label">{% trans "Manganeso (Mn) disponible Olsen mg/kg" %}</label>
       <input type="text" name="manganeso" class="form-control">
     </div>
     <div class="col-md-4">
-      <label class="form-label">Zinc (Zn) disponible Olsen mg/kg</label>
+      <label class="form-label">{% trans "Zinc (Zn) disponible Olsen mg/kg" %}</label>
       <input type="text" name="zinc" class="form-control">
     </div>
   </div>
 
   <div class="mt-4">
-    <button type="submit" name="accion" value="subir_manual" class="btn footer-btn mb-3">SUBIR DATOS</button>
+    <button type="submit" name="accion" value="subir_manual" class="btn footer-btn mb-3">{% trans "SUBIR DATOS" %}</button>
   </div>
 
   <div class="mb-3">
-    <label for="archivo_mediciones" class="form-label">Subir archivo de mediciones</label>
+    <label for="archivo_mediciones" class="form-label">{% trans "Subir archivo de mediciones" %}</label>
     <input type="file" class="form-control" id="archivo_mediciones" name="archivo_mediciones" accept=".csv,.xlsx,.xls">
-    <small class="form-text text-muted">Formatos aceptados: CSV, Excel</small>
+    <small class="form-text text-muted">{% trans "Formatos aceptados: CSV, Excel" %}</small>
   </div>
 
-  <button type="submit" name="accion" value="subir_archivo" class="btn footer-btn mb-2">PROCESAR ARCHIVO</button>
+  <button type="submit" name="accion" value="subir_archivo" class="btn footer-btn mb-2">{% trans "PROCESAR ARCHIVO" %}</button>
 </form>
 
 {% if messages %}
