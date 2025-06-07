@@ -59,8 +59,17 @@
     {% endif %}
   </div>
 
-  <!-- Botón para acceder al historial -->
-  <div class="mt-4">
-    <a href="{% url 'historial' %}" class="btn btn-success footer-btn">HISTORIAL</a>
-  </div>
+<div class="text-center mt-4">
+  <h3>Gráficos de Mediciones</h3>
+  {% for campo, img_data in img_data_dict.items %}
+    <h4>{{ campo }}</h4>
+    <img src="data:image/png;base64,{{ img_data }}" alt="Gráfico de {{ campo }}">
+  {% endfor %}
+</div>
+
+
+<div class="mt-4">
+  <a href="{% url 'historial' %}" class="btn btn-success footer-btn">HISTORIAL</a>
+  
+</div>
 {% endblock %}
