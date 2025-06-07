@@ -42,74 +42,77 @@ def historial(request):
     return render(request, 'historial.html')
 
 def vista_inicio(request):
-    user_id = request.session.get('usuario')
-    mediciones = obtener_mediciones_firestore(user_id)
-    Thread(target=run_monitor, args=(user_id,), daemon=True).start()
-    if not mediciones:
-        return render(request, 'inicio.html', {'img_data_dict': {}, 'mediciones': []})
+    if "usuario" not in request.session:
+        return redirect("login")
+    else:
+        user_id = request.session.get('usuario')
+        mediciones = obtener_mediciones_firestore(user_id)
+        Thread(target=run_monitor, args=(user_id,), daemon=True).start()
+        if not mediciones:
+            return render(request, 'inicio.html', {'img_data_dict': {}, 'mediciones': []})
 
-    # Convertir a DataFrame para agrupar por semana
-    df = pd.DataFrame(mediciones)
-    df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce', infer_datetime_format=True)
-    df = df.dropna(subset=['fecha'])
+        # Convertir a DataFrame para agrupar por semana
+        df = pd.DataFrame(mediciones)
+        df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce', infer_datetime_format=True)
+        df = df.dropna(subset=['fecha'])
 
-    # Lista de campos numéricos
-    campos = [
-        'PH', 'MateriaOrganica', 'Fosforo', 'Azufre', 'Calcio', 'Magnesio', 
-        'Potasio', 'Sodio', 'Hierro', 'Cobre', 'Manganeso', 'Zinc'
-    ]
+        # Lista de campos numéricos
+        campos = [
+            'PH', 'MateriaOrganica', 'Fosforo', 'Azufre', 'Calcio', 'Magnesio', 
+            'Potasio', 'Sodio', 'Hierro', 'Cobre', 'Manganeso', 'Zinc'
+        ]
 
-    # Convertir columnas numéricas a float (ignorar errores)
-    for campo in campos:
-        if campo in df.columns:
-            df[campo] = pd.to_numeric(df[campo], errors='coerce')
+        # Convertir columnas numéricas a float (ignorar errores)
+        for campo in campos:
+            if campo in df.columns:
+                df[campo] = pd.to_numeric(df[campo], errors='coerce')
 
-    # Agrupar por semana y calcular el promedio solo de los campos numéricos
-    df.set_index('fecha', inplace=True)
-    df_semanal = df[campos].resample('W').mean().reset_index()
+        # Agrupar por semana y calcular el promedio solo de los campos numéricos
+        df.set_index('fecha', inplace=True)
+        df_semanal = df[campos].resample('W').mean().reset_index()
 
-    img_data_dict = {}
+        img_data_dict = {}
 
-    for campo in campos:
-        if campo not in df_semanal.columns:
-            continue
-        valores = df_semanal[campo].dropna().tolist()
-        fechas = df_semanal['fecha'].dt.strftime('%Y-%m-%d').tolist()
+        for campo in campos:
+            if campo not in df_semanal.columns:
+                continue
+            valores = df_semanal[campo].dropna().tolist()
+            fechas = df_semanal['fecha'].dt.strftime('%Y-%m-%d').tolist()
 
-        if not valores:
-            continue
+            if not valores:
+                continue
 
-        fig, ax = plt.subplots(figsize=(8, 4))
-        ax.plot(fechas, valores, marker='o', linestyle='-', color='g', label=campo)
-        ax.set_ylim(min(valores) - 1, max(valores) + 1)
-        plt.xticks(rotation=45, ha="right")
-        ax.set(xlabel='Semana', ylabel=campo, title=f'Evolución semanal de {campo}')
-        ax.grid(True)
+            fig, ax = plt.subplots(figsize=(8, 4))
+            ax.plot(fechas, valores, marker='o', linestyle='-', color='g', label=campo)
+            ax.set_ylim(min(valores) - 1, max(valores) + 1)
+            plt.xticks(rotation=45, ha="right")
+            ax.set(xlabel='Semana', ylabel=campo, title=f'Evolución semanal de {campo}')
+            ax.grid(True)
 
-        buf = BytesIO()
-        plt.tight_layout()
-        plt.savefig(buf, format='png')
-        buf.seek(0)
-        img_data_dict[campo] = base64.b64encode(buf.getvalue()).decode('utf-8')
-        buf.close()
-        plt.close(fig)
+            buf = BytesIO()
+            plt.tight_layout()
+            plt.savefig(buf, format='png')
+            buf.seek(0)
+            img_data_dict[campo] = base64.b64encode(buf.getvalue()).decode('utf-8')
+            buf.close()
+            plt.close(fig)
 
-        # Obtener el último registro (más reciente)
-    ultimo_registro =  obtener_n_registros_firestore(user_id, 1)
-    ultimo_registro = ultimo_registro[0] if ultimo_registro else None
-    if not ultimo_registro:
-        ultimo_registro = {
-            'PH': None, 'MateriaOrganica': None, 'Fosforo': None, 'Azufre': None,
-            'Calcio': None, 'Magnesio': None, 'Potasio': None, 'Sodio': None,
-            'Hierro': None, 'Cobre': None, 'Manganeso': None, 'Zinc': None,
-            'fecha': timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-        }
-    return render(request,'inicio.html',{
-            'img_data_dict': img_data_dict,
-            'mediciones': mediciones,
-            'ultimo_registro': ultimo_registro
-        }
-    )
+            # Obtener el último registro (más reciente)
+        ultimo_registro =  obtener_n_registros_firestore(user_id, 1)
+        ultimo_registro = ultimo_registro[0] if ultimo_registro else None
+        if not ultimo_registro:
+            ultimo_registro = {
+                'PH': None, 'MateriaOrganica': None, 'Fosforo': None, 'Azufre': None,
+                'Calcio': None, 'Magnesio': None, 'Potasio': None, 'Sodio': None,
+                'Hierro': None, 'Cobre': None, 'Manganeso': None, 'Zinc': None,
+                'fecha': timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+        return render(request,'inicio.html',{
+                'img_data_dict': img_data_dict,
+                'mediciones': mediciones,
+                'ultimo_registro': ultimo_registro
+            }
+        )
 
 def vista_historial(request):
     user = request.session.get('usuario')
@@ -118,6 +121,8 @@ def vista_historial(request):
     return render(request, 'historial.html', {'registros': registros})
 
 def vista_mediciones(request):
+    if "usuario" not in request.session:
+        return redirect("login")
     user = request.session.get('usuario')
     if request.method == 'POST':
             accion = request.POST.get('accion', 'subir_manual')
@@ -284,10 +289,9 @@ def login_view(request):
         users_ref = db.collection("user")
         query = users_ref.where("username", "==", username).where("password", "==", password).get()
         if query:
-            # Aquí podrías crear una sesión personalizada si no usas el sistema de auth de Django
             request.session["usuario"] = username
-            messages.success(request, "Inicio de sesión exitoso.")
-            return redirect("inicio")
+            messages.success(request, "Inicio de sesión exitoso.", extra_tags="login_exitoso")
+            return redirect("login")
         else:
             messages.error(request, "Usuario o contraseña incorrectos.")
             return render(request, "login.html")
@@ -319,6 +323,7 @@ def registro_view(request):
             "password": password1  # En producción, nunca guardes contraseñas en texto plano
         })
         messages.success(request, "Usuario registrado con éxito.")
+        time.sleep(2)
         return redirect("login")
 
     return render(request, "registro.html")
@@ -327,7 +332,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-model = joblib.load('..\modelo\my_random_forest.joblib')
+#model = joblib.load('..\modelo\my_random_forest.joblib')
 
 
 recomendaciones_tecnicas = {
@@ -456,8 +461,9 @@ def promediar_variables_medicion(lista_de_dicts):
     promedios = {campo: acumulados[campo] / contador for campo in campos}
     return SimpleNamespace(**promedios)
 
-
 def recomendaciones(request):
+    if "usuario" not in request.session:
+        return redirect("login")
     if request.method == "POST":
         # Obtener la cantidad de registros seleccionados por el usuario
         cantidad_registros = int(request.POST.get('cantidad_registros', 10))  # Valor predeterminado de 10 si no se ingresa nada
