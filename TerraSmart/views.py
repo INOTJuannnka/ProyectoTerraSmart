@@ -414,6 +414,7 @@ def recomendaciones(request):
         # Evaluar el estado del suelo y obtener las recomendaciones
         resultado = evaluar_suelo(fila)
         resultados.append({
+            'fecha': mediciones[0]['fecha'] if mediciones else timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
             'medicion': m,
             'cultivo': resultado['cultivo'],
             'estado': resultado['estado'],
