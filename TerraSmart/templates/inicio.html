@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load custom_filters %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}{% trans "Inicio" %}{% endblock %}
 
 {% block content %}
 
-  <h2 class="fw-bold">INICIO</h2>
+  <h2 class="fw-bold">{% trans "INICIO" %}</h2>
+
 
   <div class="intro-description" style="text-align: justify;">
     <p>
-      Esta es la página principal de la aplicación TeRra-Smart. Aquí podrás ver el último registro de medición del estado del suelo en tiempo real. La plataforma proporciona información crucial como el pH, la materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, etc.) y otros parámetros que te ayudarán a optimizar tus cultivos. Si deseas revisar más registros, puedes acceder al historial completo de mediciones.
+      {% trans "En Inicio, podrás ver el último registro de medición del estado del suelo en tiempo real. La plataforma proporciona información crucial como el pH, la materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, etc.) y otros parámetros que te ayudarán a optimizar tus cultivos. Además, puedes ver gráficas de evolución con respecto a cada parámetro. Si deseas revisar más registros, puedes acceder al historial completo de mediciones." %}
     </p>
   </div>
 
-  <p class="fw-medium">Último registro</p>
+  <p class="fw-medium">{% trans "Último registro" %}</p>
   <!-- Mostrar el último registro -->
   <div class="mb-4">
     {% if ultimo_registro %}
@@ -21,19 +23,19 @@
         <table class="table text-center table-bordered w-100 historial-table">
           <thead>
             <tr>
-              <th>Fecha</th>
-              <th>PH</th>
-              <th>Materia Orgánica</th>
-              <th>Fósforo</th>
-              <th>Azufre</th>
-              <th>Calcio</th>
-              <th>Magnesio</th>
-              <th>Potasio</th>
-              <th>Sodio</th>
-              <th>Hierro</th>
-              <th>Cobre</th>
-              <th>Manganeso</th>
-              <th>Zinc</th>
+              <th>{% trans "fecha" %}</th>
+              <th>{% trans "PH" %}</th>
+              <th>{% trans "Materia Organica" %}</th>
+              <th>{% trans "Fósforo" %}</th>
+              <th>{% trans "Azufre" %}</th>
+              <th>{% trans "Calcio" %}</th>
+              <th>{% trans "Magnesio" %}</th>
+              <th>{% trans "Potasio" %}</th>
+              <th>{% trans "Sodio" %}</th>
+              <th>{% trans "Hierro" %}</th>
+              <th>{% trans "Cobre" %}</th>
+              <th>{% trans "Manganeso" %}</th>
+              <th>{% trans "Zinc" %}</th>
             </tr>
           </thead>
           <tbody>
@@ -56,12 +58,12 @@
         </table>
       </div>
     {% else %}
-      <p>No hay registros aún.</p>
+      <p>{% trans "No hay registros aún." %}</p>
     {% endif %}
   </div>
 
 <div class="text-center mt-4">
-  <h3>Gráficos de Mediciones</h3>
+  <h3>{% trans "Gráficos de Mediciones" %}</h3>
   {% for campo, img_data in img_data_dict.items %}
     <h4>{{ campo }}</h4>
     <img src="data:image/png;base64,{{ img_data }}" alt="Gráfico de {{ campo }}">
@@ -70,7 +72,7 @@
 
 
 <div class="mt-4">
-  <a href="{% url 'historial' %}" class="btn btn-success footer-btn">HISTORIAL</a>
+  <a href="{% url 'historial' %}" class="btn btn-success footer-btn">{% trans "HISTORIAL" %}</a>
   
 </div>
 {% endblock %}

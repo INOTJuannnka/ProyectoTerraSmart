@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Iniciar Sesión{% endblock %}
+{% block title %}{% trans "Iniciar Sesión" %}{% endblock %}
 
 {% block content %}
 <style>
@@ -103,23 +104,23 @@
     <div class="login-left">
       <form method="POST" class="login-form">
         {% csrf_token %}
-        <h4>Acceda a su cuenta</h4>
+        <h4>{% trans "Acceda a su cuenta" %}</h4>
         <input type="text" name="username" placeholder="User Name" required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="submit" value="iniciar sesión">
         <div class="extras">
-          <label><input type="checkbox" name="remember"> Recuerda me</label>
-          <a href="#">Olvido su constraseña ?</a>
+          <label><input type="checkbox" name="remember">{% trans "Recuerda me" %}</label>
+          <a href="#">{%trans "Olvido su constraseña?" %}</a>
         </div>
       </form>
       
     </div>
     <!-- Social login -->
     <div class="login-right">
-      <small>No tienes cuenta ? <a href="{% url 'registro' %}">Registrate!</a></small>
-      <a href="#" class="social fblogin"><i class="fab fa-facebook"></i> Registrarse con Facebook</a>
-      <a href="#" class="social twlogin"><i class="fab fa-twitter"></i>  Registrarse con Twitter</a>
-<a href="/accounts/google/login/" class="social gplogin"><i class="fab fa-google"></i> Registrarse con Google</a>
+      <small>{% trans "No tienes cuenta?" %} <a href="{% url 'registro' %}">{% trans "Registrate!" %}</a></small>
+      <a href="#" class="social fblogin"><i class="fab fa-facebook"></i>{% trans "Registrarse con Facebook" %}</a>
+      <a href="#" class="social twlogin"><i class="fab fa-twitter"></i>{%trans "Registrarse con Twitter" %}</a>
+      <a href="/accounts/google/login/" class="social gplogin"><i class="fab fa-google"></i>{% trans "Registrarse con Google" %}</a>
     </div>
   </div>
 </div>

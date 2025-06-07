@@ -116,7 +116,7 @@
           {% if request.session.usuario %}
             <p class="dropdown-header fw-bold text-center">{{ request.session.usuario }}</p>
             <a href="#" class="dropdown-item">{% trans "✉️ Contactanos" %}</a>
-            <a href="{% url 'logout' %}" class="dropdown-item text-danger">↩️ Cerrar sesión</a>
+            <a href="{% url 'logout' %}" class="dropdown-item text-danger">{% trans "↩️ Cerrar sesión" %}</a>
           {% else %}
             <a href="{% url 'login' %}" class="dropdown-item">{% trans "🔐 Iniciar Sesión" %}</a>
             <a href="{% url 'registro' %}" class="dropdown-item">{% trans "📝 Registrate" %}</a>

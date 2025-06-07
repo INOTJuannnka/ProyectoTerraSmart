@@ -1,14 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 20:25-0500\n"
+"POT-Creation-Date: 2025-06-07 01:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,79 +10,514 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\TerraSmart\templates\base.html:80
+#: .\TerraSmart\templates\base.html:100 .\TerraSmart\templates\inicio.html:7
 msgid "INICIO"
 msgstr "START"
 
-#: .\TerraSmart\templates\base.html:81
+#: .\TerraSmart\templates\base.html:101
+#: .\TerraSmart\templates\mediciones.html:6
 msgid "MEDICIONES"
 msgstr "MESSUNGEN"
 
-#: .\TerraSmart\templates\base.html:82
+#: .\TerraSmart\templates\base.html:102
+#: .\TerraSmart\templates\recomendaciones.html:7
 msgid "RECOMENDACIONES"
 msgstr "EMPFEHLUNGEN"
 
-#: .\TerraSmart\templates\base.html:83
+#: .\TerraSmart\templates\base.html:103
 #: .\TerraSmart\templates\configuracion.html:7
 msgid "CONFIGURACIÓN"
 msgstr "EINSTELLUNGEN"
 
-#: .\TerraSmart\templates\base.html:98
+#: .\TerraSmart\templates\base.html:118
 msgid "✉️ Contactanos"
 msgstr "✉️ Kontaktieren Sie uns"
 
-#: .\TerraSmart\templates\base.html:101
+#: .\TerraSmart\templates\base.html:119
+msgid "↩️ Cerrar sesión"
+msgstr "↩️ Abmelden"
+
+#: .\TerraSmart\templates\base.html:121
 msgid "🔐 Iniciar Sesión"
 msgstr "🔐 Anmelden"
 
-#: .\TerraSmart\templates\base.html:102
+#: .\TerraSmart\templates\base.html:122
 msgid "📝 Registrate"
 msgstr "📝 Registrieren"
+
+#: .\TerraSmart\templates\bienvenida.html:3
+#, fuzzy
+#| msgid "Bienvenida"
+msgid "TeRraSmart - Bienvenida"
+msgstr "TeRraSmart - Willkommen"
+
+#: .\TerraSmart\templates\bienvenida.html:7
+msgid "Bienvenido a"
+msgstr "Willkommen bei"
+
+#: .\TerraSmart\templates\bienvenida.html:9
+msgid "Esperamos que disfrutes tu experiencia"
+msgstr "Wir hoffen, dass Sie Ihre Erfahrung genießen"
+
+#: .\TerraSmart\templates\bienvenida.html:10
+msgid "Redirigiendo en 3 segundos..."
+msgstr "Weiterleitung in 3 Sekunden..."
 
 #: .\TerraSmart\templates\configuracion.html:4
 msgid "Configuración"
 msgstr "Einstellungen"
 
 #: .\TerraSmart\templates\configuracion.html:10
-msgid "Ajustes generales del sistema:"
-msgstr "Allgemeine Systemeinstellungen:"
+msgid ""
+"En Configuración, puedes modificar el idioma de la plataforma según tus "
+"preferencias. Actualmente, puedes seleccionar entre los idiomas disponibles, "
+"como el español, inglés, francés, japonés, italiano y alemán, para mejorar "
+"la experiencia de usuario. Esta sección te permite ajustar el idioma de la "
+"interfaz, facilitando el uso de la plataforma de acuerdo con tus necesidades "
+"lingüísticas."
+msgstr ""
+"In den Einstellungen können Sie die Sprache der Plattform nach Ihren "
+"Vorlieben ändern. Derzeit können Sie aus verfügbaren Sprachen wie Spanisch, "
+"Englisch, Französisch, Japanisch, Italienisch und Deutsch wählen, um die "
+"Benutzererfahrung zu verbessern. Dieser Abschnitt ermöglicht es Ihnen, die "
+"Sprache der Benutzeroberfläche anzupassen und die Plattform entsprechend "
+"Ihren sprachlichen Bedürfnissen zu verwenden."
 
-#: .\TerraSmart\templates\configuracion.html:12
-msgid "TIEMPO DE LECTURA"
-msgstr "Lesezeit"
-
-#: .\TerraSmart\templates\configuracion.html:20
+#: .\TerraSmart\templates\configuracion.html:18
 msgid "Seleccionar idioma"
 msgstr "Sprache auswählen"
 
-#: .\TerraSmart\templates\configuracion.html:22 .\project_core\settings.py:128
+#: .\TerraSmart\templates\configuracion.html:20 .\project_core\settings.py:129
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: .\TerraSmart\templates\configuracion.html:23 .\project_core\settings.py:129
+#: .\TerraSmart\templates\configuracion.html:21 .\project_core\settings.py:130
 msgid "English"
 msgstr "Englisch"
 
-#: .\TerraSmart\templates\configuracion.html:24 .\project_core\settings.py:130
+#: .\TerraSmart\templates\configuracion.html:22 .\project_core\settings.py:131
 msgid "Japanese"
 msgstr "Japanisch"
 
-#: .\TerraSmart\templates\configuracion.html:25 .\project_core\settings.py:131
+#: .\TerraSmart\templates\configuracion.html:23 .\project_core\settings.py:132
 msgid "French"
 msgstr "Französisch"
 
-#: .\TerraSmart\templates\configuracion.html:26 .\project_core\settings.py:132
+#: .\TerraSmart\templates\configuracion.html:24 .\project_core\settings.py:133
 msgid "Italian"
 msgstr "Italienisch"
 
-#: .\TerraSmart\templates\configuracion.html:27 .\project_core\settings.py:133
+#: .\TerraSmart\templates\configuracion.html:25 .\project_core\settings.py:134
 msgid "German"
 msgstr "Deutsch"
 
-#: .\TerraSmart\templates\configuracion.html:29
+#: .\TerraSmart\templates\configuracion.html:27
 msgid "GUARDAR CAMBIOS"
 msgstr "Änderungen speichern"
+
+#: .\TerraSmart\templates\historial.html:5
+#: .\TerraSmart\templates\instrucciones.html:85
+msgid "Historial"
+msgstr "Verlauf"
+
+#: .\TerraSmart\templates\historial.html:8
+#: .\TerraSmart\templates\inicio.html:72
+msgid "HISTORIAL"
+msgstr "VERLAUF"
+
+#: .\TerraSmart\templates\historial.html:11
+msgid ""
+"En Historial, podrás ver los últimos registro de medición del estado del "
+"suelo para un usuario. La plataforma proporciona el historial de todos los "
+"registros almacenados para cada usuario, mostrando datos como el pH, la "
+"materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, "
+"etc.). Si deseas continuar viendo las gráficas, puedes volver a inicio."
+msgstr ""
+"Im Verlauf können Sie die letzten Bodenmessungen für einen Benutzer sehen. "
+"Die Plattform bietet den Verlauf aller gespeicherten Messungen für jeden "
+"Benutzer, zeigt Daten wie pH, organische Substanz und Nährstoffwerte "
+"(Phosphor, Kalzium, Magnesium usw.). Wenn Sie die Diagramme weiter ansehen "
+"möchten, können Sie zur Startseite zurückkehren."
+
+#: .\TerraSmart\templates\historial.html:14
+msgid "Últimos registros"
+msgstr "Letzte Einträge"
+
+#: .\TerraSmart\templates\historial.html:20
+#: .\TerraSmart\templates\inicio.html:23
+msgid "fecha"
+msgstr "Datum"
+
+#: .\TerraSmart\templates\historial.html:21
+#: .\TerraSmart\templates\inicio.html:24
+msgid "PH"
+msgstr "pH"
+
+#: .\TerraSmart\templates\historial.html:22
+#: .\TerraSmart\templates\inicio.html:25
+msgid "Materia Organica"
+msgstr "Organische Substanz"
+
+#: .\TerraSmart\templates\historial.html:23
+#: .\TerraSmart\templates\inicio.html:26
+msgid "Fósforo"
+msgstr "Phosphor"
+
+#: .\TerraSmart\templates\historial.html:24
+#: .\TerraSmart\templates\inicio.html:27
+msgid "Azufre"
+msgstr "Schwefel"
+
+#: .\TerraSmart\templates\historial.html:25
+#: .\TerraSmart\templates\inicio.html:28
+msgid "Calcio"
+msgstr "Kalzium"
+
+#: .\TerraSmart\templates\historial.html:26
+#: .\TerraSmart\templates\inicio.html:29
+msgid "Magnesio"
+msgstr "Magnesium"
+
+#: .\TerraSmart\templates\historial.html:27
+#: .\TerraSmart\templates\inicio.html:30
+msgid "Potasio"
+msgstr "Kalium"
+
+#: .\TerraSmart\templates\historial.html:28
+#: .\TerraSmart\templates\inicio.html:31
+msgid "Sodio"
+msgstr "Natrium"
+
+#: .\TerraSmart\templates\historial.html:29
+#: .\TerraSmart\templates\inicio.html:32
+msgid "Hierro"
+msgstr "Eisen"
+
+#: .\TerraSmart\templates\historial.html:30
+#: .\TerraSmart\templates\inicio.html:33
+msgid "Cobre"
+msgstr "Kupfer"
+
+#: .\TerraSmart\templates\historial.html:31
+#: .\TerraSmart\templates\inicio.html:34
+msgid "Manganeso"
+msgstr "Mangan"
+
+#: .\TerraSmart\templates\historial.html:32
+#: .\TerraSmart\templates\inicio.html:35
+msgid "Zinc"
+msgstr "Zink"
+
+#: .\TerraSmart\templates\historial.html:58
+msgid "VOLVER A INICIO"
+msgstr "ZURÜCK ZUR STARTSEITE"
+
+#: .\TerraSmart\templates\inicio.html:4
+msgid "Inicio"
+msgstr "Start"
+
+#: .\TerraSmart\templates\inicio.html:11
+msgid ""
+"En Inicio, podrás ver el último registro de medición del estado del suelo en "
+"tiempo real. La plataforma proporciona información crucial como el pH, la "
+"materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, "
+"etc.) y otros parámetros que te ayudarán a optimizar tus cultivos. Además, "
+"puedes ver gráficas de evolución con respecto a cada parámetro. Si deseas "
+"revisar más registros, puedes acceder al historial completo de mediciones."
+msgstr ""
+"Auf der Startseite können Sie das letzte Messprotokoll des Bodenstatus in "
+"Echtzeit einsehen. Die Plattform liefert wichtige Informationen wie pH, "
+"organische Substanz, Nährstoffwerte (Phosphor, Kalzium, Magnesium usw.) und "
+"andere Parameter, die Ihnen helfen, Ihre Ernte zu optimieren. Außerdem "
+"können Sie Entwicklungsgrafiken für jeden Parameter sehen. Wenn Sie weitere "
+"Messungen überprüfen möchten, können Sie auf die vollständige Historie der "
+"Messungen zugreifen."
+
+#: .\TerraSmart\templates\inicio.html:15
+msgid "Último registro"
+msgstr "Letzter Eintrag"
+
+#: .\TerraSmart\templates\inicio.html:58
+msgid "No hay registros aún."
+msgstr "Noch keine Einträge"
+
+#: .\TerraSmart\templates\inicio.html:63
+msgid "Gráficos de Mediciones"
+msgstr "Messgrafiken"
+
+#: .\TerraSmart\templates\instrucciones.html:3
+#, fuzzy
+#| msgid "Instrucciones"
+msgid "TeRraSmart - Instrucciones"
+msgstr "Anleitungen"
+
+#: .\TerraSmart\templates\instrucciones.html:61
+msgid "¿Cómo usar TeRra-Smart?"
+msgstr "Wie man TeRra-Smart benutzt?"
+
+#: .\TerraSmart\templates\instrucciones.html:63
+msgid ""
+"TeRra-Smart es una plataforma diseñada para ayudar a los agricultores a "
+"monitorear y optimizar las condiciones del suelo en tiempo real. Con "
+"nuestras mediciones, podrás obtener recomendaciones personalizadas para "
+"mejorar tus cultivos, basadas en la calidad del suelo."
+msgstr ""
+"TeRra-Smart ist eine Plattform, die den Landwirten hilft, die "
+"Bodenbedingungen in Echtzeit zu überwachen und zu optimieren. Mit unseren "
+"Messungen können Sie personalisierte Empfehlungen erhalten, um Ihre Ernte "
+"basierend auf der Bodenqualität zu verbessern."
+
+#: .\TerraSmart\templates\instrucciones.html:71
+msgid "Mediciones"
+msgstr "Messungen"
+
+#: .\TerraSmart\templates\instrucciones.html:72
+msgid "Haz clic en Mediciones para ingresar los valores del suelo."
+msgstr "Klicken Sie auf Messungen, um die Bodenwerte einzugeben."
+
+#: .\TerraSmart\templates\instrucciones.html:78
+#: .\TerraSmart\templates\recomendaciones.html:3
+msgid "Recomendaciones"
+msgstr "Empfehlungen"
+
+#: .\TerraSmart\templates\instrucciones.html:79
+msgid "Consulta las Recomendaciones para obtener sugerencias sobre tu cultivo."
+msgstr ""
+"Konsultieren Sie die Empfehlungen, um Vorschläge für Ihre Ernte zu erhalten."
+
+#: .\TerraSmart\templates\instrucciones.html:86
+msgid "Ve el Historial para revisar tus registros anteriores."
+msgstr "Siehe Verlauf, um Ihre vorherigen Einträge zu überprüfen."
+
+#: .\TerraSmart\templates\instrucciones.html:93
+msgid "¡Intentar ahora!"
+msgstr "Jetzt ausprobieren!"
+
+#: .\TerraSmart\templates\login.html:3
+#, fuzzy
+#| msgid "🔐 Iniciar Sesión"
+msgid "Iniciar Sesión"
+msgstr "🔐 Anmelden"
+
+#: .\TerraSmart\templates\login.html:106
+msgid "Acceda a su cuenta"
+msgstr "Greifen Sie auf Ihr Konto zu"
+
+#: .\TerraSmart\templates\login.html:111
+msgid "Recuerda me"
+msgstr "Erinnere dich an mich"
+
+#: .\TerraSmart\templates\login.html:112
+msgid "Olvido su constraseña?"
+msgstr "Haben Sie Ihr Passwort vergessen?"
+
+#: .\TerraSmart\templates\login.html:119
+msgid "No tienes cuenta?"
+msgstr "Haben Sie kein Konto?"
+
+#: .\TerraSmart\templates\login.html:119
+#, fuzzy
+#| msgid "📝 Registrate"
+msgid "Registrate!"
+msgstr "📝 Registrieren"
+
+#: .\TerraSmart\templates\login.html:120
+msgid "Registrarse con Facebook"
+msgstr "Mit Facebook registrieren"
+
+#: .\TerraSmart\templates\login.html:121
+msgid "Registrarse con Twitter"
+msgstr "Mit Twitter registrieren"
+
+#: .\TerraSmart\templates\login.html:122
+#: .\TerraSmart\templates\registro.html:90
+msgid "Registrarse con Google"
+msgstr "Mit Google registrieren"
+
+#: .\TerraSmart\templates\mediciones.html:3
+msgid "TeRra-Smart - Mediciones"
+msgstr ""
+
+#: .\TerraSmart\templates\mediciones.html:10
+msgid ""
+"En Mediciones, puedes ingresar nuevos datos sobre las condiciones del suelo "
+"para recibir recomendaciones personalizadas. Aquí puedes introducir "
+"mediciones como el pH, el nivel de materia orgánica, los nutrientes "
+"presentes (fósforo, potasio, magnesio, etc.), entre otros. Además, es "
+"posible subir archivos en formato CSV o Excel para procesar múltiples "
+"mediciones a la vez. Esta vista permite alimentar la plataforma con datos "
+"esenciales para la generación de recomendaciones específicas y mejorar la "
+"gestión del suelo."
+msgstr ""
+"In Messungen können Sie neue Daten zu den Bodenbedingungen eingeben, um "
+"personalisierte Empfehlungen zu erhalten. Hier können Sie Messungen wie pH, "
+"organische Substanz, Nährstoffe (Phosphor, Kalium, Magnesium usw.) und "
+"andere eingeben. Außerdem können Sie CSV- oder Excel-Dateien hochladen, um "
+"mehrere Messungen gleichzeitig zu verarbeiten. Diese Ansicht ermöglicht es "
+"der Plattform, mit wichtigen Daten zu versorgen, die zur Generierung "
+"spezifischer Empfehlungen und zur Verbesserung der Bodenbewirtschaftung "
+"erforderlich sind."
+
+#: .\TerraSmart\templates\mediciones.html:20
+msgid "pH agua:suelo 2,5:1,0"
+msgstr "pH Wasser:Boden 2,5:1,0"
+
+#: .\TerraSmart\templates\mediciones.html:24
+#, python-format
+msgid "Materia orgánica (MO) %%"
+msgstr "Organische Substanz (MO) %%"
+
+#: .\TerraSmart\templates\mediciones.html:28
+msgid "Fósforo (P) Bray II mg/kg"
+msgstr "Phosphor (P) Bray II mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:32
+msgid "Azufre (S) Fosfato monocalcico mg/kg"
+msgstr "Schwefel (S) Monokalziumphosphat mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:36
+msgid "Calcio (Ca) intercambiable cmol(+)/kg"
+msgstr "Kalzium (Ca) austauschbar cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:40
+msgid "Magnesio (Mg) intercambiable cmol(+)/kg"
+msgstr "Magnesium (Mg) austauschbar cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:44
+msgid "Potasio (K) intercambiable cmol(+)/kg"
+msgstr "Kalium (K) austauschbar cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:48
+msgid "Sodio (Na) intercambiable cmol(+)/kg"
+msgstr "Natrium (Na) austauschbar cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:52
+msgid "Hierro (Fe) disponible Olsen mg/kg"
+msgstr "Eisen (Fe) verfügbar Olsen mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:56
+msgid "Cobre (Cu) disponible mg/kg"
+msgstr "Kupfer (Cu) verfügbar mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:60
+msgid "Manganeso (Mn) disponible Olsen mg/kg"
+msgstr "Mangan (Mn) verfügbar Olsen mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:64
+msgid "Zinc (Zn) disponible Olsen mg/kg"
+msgstr "Zink (Zn) verfügbar Olsen mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:70
+msgid "SUBIR DATOS"
+msgstr "DATEN HOCHLADEN"
+
+#: .\TerraSmart\templates\mediciones.html:74
+msgid "Subir archivo de mediciones"
+msgstr "Messdatei hochladen"
+
+#: .\TerraSmart\templates\mediciones.html:76
+msgid "Formatos aceptados: CSV, Excel"
+msgstr "Akzeptierte Formate: CSV, Excel"
+
+#: .\TerraSmart\templates\mediciones.html:79
+msgid "PROCESAR ARCHIVO"
+msgstr "DATEI VERARBEITEN"
+
+#: .\TerraSmart\templates\recomendaciones.html:11
+msgid ""
+"Recomendaciones te permite obtener sugerencias personalizadas sobre cómo "
+"mejorar las condiciones del suelo para un cultivo específico. Tras ingresar "
+"el número de registros que deseas consultar, la plataforma analizará los "
+"datos y generará recomendaciones técnicas basadas en el estado actual del "
+"suelo. Esta vista proporciona detalles sobre el cultivo sugerido, el estado "
+"del suelo y recomendaciones prácticas para mejorar los nutrientes y "
+"características del terreno."
+msgstr ""
+"Empfehlungen ermöglicht es Ihnen, personalisierte Vorschläge zur "
+"Verbesserung der Bodenbedingungen für eine bestimmte Kultur zu erhalten. "
+"Nachdem Sie die Anzahl der zu konsultierenden Einträge eingegeben haben, "
+"wird die Plattform die Daten analysieren und technische Empfehlungen "
+"basierend auf dem aktuellen Bodenstatus generieren. Diese Ansicht bietet "
+"Details zum vorgeschlagenen Anbau, dem Bodenstatus und praktische "
+"Empfehlungen zur Verbesserung der Nährstoffe und Eigenschaften des Bodens."
+
+#: .\TerraSmart\templates\recomendaciones.html:20
+msgid ""
+"¿Con cuántos de los últimos registros quieres hacer la consulta? "
+"(Preferiblemente entre 1 y 20 registros)"
+msgstr ""
+"Mit wie vielen der letzten Einträge möchten Sie die Anfrage durchführen? "
+"(Bevorzugt zwischen 1 und 20 Einträgen)"
+
+#: .\TerraSmart\templates\recomendaciones.html:22
+#, fuzzy
+#| msgid "Seleccionar idioma"
+msgid "Seleccionar"
+msgstr "Sprache"
+
+#: .\TerraSmart\templates\recomendaciones.html:29
+msgid "📅 Medición del "
+msgstr "📅 Messung vom "
+
+#: .\TerraSmart\templates\recomendaciones.html:30
+msgid "Cultivo sugerido: "
+msgstr "Vorgeschlagene Kultur: "
+
+#: .\TerraSmart\templates\recomendaciones.html:32
+msgid "📊 Estado del suelo: "
+msgstr "📊 Bodenstatus: "
+
+#: .\TerraSmart\templates\recomendaciones.html:39
+msgid "🧪 Recomendaciones técnicas: "
+msgstr "🧪 Technische Empfehlungen: "
+
+#: .\TerraSmart\templates\registro.html:3
+msgid "Crear cuenta"
+msgstr "Konto erstellen"
+
+#: .\TerraSmart\templates\registro.html:78
+msgid "Crea una cuenta"
+msgstr "Erstellen Sie ein Konto"
+
+#: .\TerraSmart\templates\registro.html:87
+#, fuzzy
+#| msgid "📝 Registrate"
+msgid "O registrate con: "
+msgstr "📝 Registrieren"
+
+#: .\TerraSmart\templates\registro.html:88
+msgid "Registrate con Facebook"
+msgstr "Mit Facebook registrieren"
+
+#: .\TerraSmart\templates\registro.html:89
+msgid "Registrate conTwitter"
+msgstr "Mit Twitter registrieren"
+
+#: .\TerraSmart\templates\socialaccount\login.html:4
+msgid "Conectar con Google"
+msgstr "Mit Google verbinden"
+
+#: .\TerraSmart\templates\socialaccount\login.html:8
+#, fuzzy
+#| msgid "🔐 Iniciar Sesión"
+msgid "Iniciar sesión con Google"
+msgstr "🔐 Mit Google anmelden"
+
+#: .\TerraSmart\templates\socialaccount\login.html:9
+msgid "Estás a punto de iniciar sesión usando tu cuenta de Google."
+msgstr "Sie sind dabei, sich mit Ihrem Google-Konto anzumelden."
+
+#: .\TerraSmart\templates\socialaccount\login.html:12
+msgid "Continuar con Google"
+msgstr "Mit Google fortfahren"
+
+#~ msgid "Ajustes generales del sistema:"
+#~ msgstr "Allgemeine Systemeinstellungen:"
+
+#~ msgid "TIEMPO DE LECTURA"
+#~ msgstr "Lesezeit"
 
 #, fuzzy
 #~| msgid "CONFIGURACIÓN"
