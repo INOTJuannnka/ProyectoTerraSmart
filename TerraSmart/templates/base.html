@@ -95,10 +95,10 @@
           <img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 30px; height: 30px; vertical-align: middle;">
         </h2>
       </div>
-      <a href="{% url 'inicio' %}" class="btn">INICIO</a>
-      <a href="{% url 'mediciones' %}" class="btn">MEDICIONES</a>
-      <a href="{% url 'recomendaciones' %}" class="btn">RECOMENDACIONES</a>
-      <a href="{% url 'configuracion' %}" class="btn">CONFIGURACION</a>
+      <a href="{% url 'inicio' %}" class="btn">{% trans "INICIO" %}</a>
+      <a href="{% url 'mediciones' %}" class="btn">{% trans "MEDICIONES" %}</a>
+      <a href="{% url 'recomendaciones' %}" class="btn">{% trans "RECOMENDACIONES" %}</a>
+      <a href="{% url 'configuracion' %}" class="btn">{% trans "CONFIGURACIÓN" %}</a>
 
       <!-- abre el popup  -->
        <!--prueba-->
@@ -113,11 +113,11 @@
         <div id="userPopup" class="dropdown-menu-custom">
           {% if request.session.usuario %}
             <p class="dropdown-header fw-bold text-center">{{ request.session.usuario }}</p>
-            <a href="#" class="dropdown-item">✉️ Contactanos</a>
+            <a href="#" class="dropdown-item">{% trans "✉️ Contactanos" %}</a>
             <a href="{% url 'logout' %}" class="dropdown-item text-danger">↩️ Cerrar sesión</a>
           {% else %}
-            <a href="{% url 'login' %}" class="dropdown-item">🔐 Iniciar Sesión</a>
-            <a href="{% url 'registro' %}" class="dropdown-item">📝 Registrate</a>
+            <a href="{% url 'login' %}" class="dropdown-item">{% trans "🔐 Iniciar Sesión" %}</a>
+            <a href="{% url 'registro' %}" class="dropdown-item">{% trans "📝 Registrate" %}</a>
           {% endif %}
         </div>
       </div>

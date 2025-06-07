@@ -1,56 +1,63 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold">INICIO</h2>
-<p class="fw-medium">Último registro</p>
+  <h2 class="fw-bold">INICIO</h2>
 
-<div class="record-box">
-  {% if ultimo_registro %}
-  <div class="table-responsive">
-  <table class="table text-center table-bordered w-100 historial-table">
-    <thead>
-      <tr>
-        <th>fecha</th>
-        <th>PH</th>
-        <th>Materia Organica</th>
-        <th>Fósforo</th>
-        <th>Azufre</th>
-        <th>Calcio</th>
-        <th>Magnesio</th>
-        <th>Potasio</th>
-        <th>Sodio</th>
-        <th>Hierro</th>
-        <th>Cobre</th>
-        <th>Manganeso</th>
-        <th>Zinc</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ ultimo_registro.fecha }}</td>
-        <td>{{ ultimo_registro.PH}}</td>
-        <td>{{ ultimo_registro.MateriaOrganica}}</td>
-        <td>{{ ultimo_registro.Fosforo}}</td>
-        <td>{{ ultimo_registro.Azufre}}</td>
-        <td>{{ ultimo_registro.Calcio }}</td>
-        <td>{{ ultimo_registro.Magnesio }}</td>
-        <td>{{ ultimo_registro.Potasio }}</td>
-        <td>{{ ultimo_registro.Sodio }}</td>
-        <td>{{ ultimo_registro.Hierro }}</td>
-        <td>{{ ultimo_registro.Cobre }}</td>
-        <td>{{ ultimo_registro.Manganeso }}</td>
-        <td>{{ ultimo_registro.Zinc }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="intro-description" style="text-align: justify;">
+    <p>
+      Esta es la página principal de la aplicación TeRra-Smart. Aquí podrás ver el último registro de medición del estado del suelo en tiempo real. La plataforma proporciona información crucial como el pH, la materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, etc.) y otros parámetros que te ayudarán a optimizar tus cultivos. Si deseas revisar más registros, puedes acceder al historial completo de mediciones.
+    </p>
+  </div>
 
-  {% else %}
-  <p>No hay registros aún.</p>
-  {% endif %}
-</div>
+  <p class="fw-medium">Último registro</p>
+  <!-- Mostrar el último registro -->
+  <div class="mb-4">
+    {% if ultimo_registro %}
+      <div class="table-responsive">
+        <table class="table text-center table-bordered w-100 historial-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>PH</th>
+              <th>Materia Orgánica</th>
+              <th>Fósforo</th>
+              <th>Azufre</th>
+              <th>Calcio</th>
+              <th>Magnesio</th>
+              <th>Potasio</th>
+              <th>Sodio</th>
+              <th>Hierro</th>
+              <th>Cobre</th>
+              <th>Manganeso</th>
+              <th>Zinc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ ultimo_registro.fecha|iso_to_local_datetime:"America/Mexico_City"}}</td>
+              <td>{{ ultimo_registro.PH }}</td>
+              <td>{{ ultimo_registro.MateriaOrganica }}</td>
+              <td>{{ ultimo_registro.Fosforo }}</td>
+              <td>{{ ultimo_registro.Azufre }}</td>
+              <td>{{ ultimo_registro.Calcio }}</td>
+              <td>{{ ultimo_registro.Magnesio }}</td>
+              <td>{{ ultimo_registro.Potasio }}</td>
+              <td>{{ ultimo_registro.Sodio }}</td>
+              <td>{{ ultimo_registro.Hierro }}</td>
+              <td>{{ ultimo_registro.Cobre }}</td>
+              <td>{{ ultimo_registro.Manganeso }}</td>
+              <td>{{ ultimo_registro.Zinc }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No hay registros aún.</p>
+    {% endif %}
+  </div>
 
 <div class="text-center mt-4">
   <h3>Gráficos de Mediciones</h3>

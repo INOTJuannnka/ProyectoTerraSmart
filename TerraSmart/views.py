@@ -31,10 +31,6 @@ import numpy as np
 
 
 
-@login_required
-def iniciar_monitor(request):
-    
-    return JsonResponse({'mensaje': 'Monitor iniciado para el usuario actual'})
 
 def recomendaciones(request):
     return render(request, 'recomendaciones.html')
@@ -117,7 +113,6 @@ def vista_inicio(request):
             'ultimo_registro': ultimo_registro
         }
     )
-
 
 def vista_historial(request):
     user = request.session.get('usuario')
@@ -449,7 +444,13 @@ def promediar_variables_medicion(lista_de_dicts):
 
     for data in lista_de_dicts:
         for campo in campos:
-            acumulados[campo] += data.get(campo, 0.0)
+            valor = data.get(campo, 0.0)
+            # Aseguramos que el valor sea un número (float)
+            try:
+                valor = float(valor)
+            except ValueError:
+                valor = 0.0  # Si no es convertible a float, usamos 0.0
+            acumulados[campo] += valor
         contador += 1
 
     if contador == 0:
@@ -458,39 +459,48 @@ def promediar_variables_medicion(lista_de_dicts):
     promedios = {campo: acumulados[campo] / contador for campo in campos}
     return SimpleNamespace(**promedios)
 
+
 def recomendaciones(request):
-    n = 10
-    user = request.session.get('usuario')
-    mediciones = obtener_n_registros_firestore(user, n)
-    m = promediar_variables_medicion(mediciones)
-    print(mediciones)
-    resultados = []
+    if request.method == "POST":
+        # Obtener la cantidad de registros seleccionados por el usuario
+        cantidad_registros = int(request.POST.get('cantidad_registros', 10))  # Valor predeterminado de 10 si no se ingresa nada
+        
+        # Obtener los registros desde Firestore
+        user = request.session.get('usuario')  # Suponiendo que el nombre de usuario está en la sesión
+        mediciones = obtener_n_registros_firestore(user, cantidad_registros)
+        
+        # Promediar las variables de medición
+        m = promediar_variables_medicion(mediciones)
+        resultados = []
 
-    print(f"Promedio de mediciones: {m}")
-    fila = {
-        'pH agua:suelo 2,5:1,0': m.PH,
-        'Materia orgánica (MO) %': m.MateriaOrganica,
-        'Fósforo (P) Bray II mg/kg': m.Fosforo,
-        'Azufre (S) Fosfato monocalcico mg/kg': m.Azufre,
-        'Calcio (Ca) intercambiable cmol(+)/kg': m.Calcio,
-        'Magnesio (Mg) intercambiable cmol(+)/kg': m.Magnesio,
-        'Potasio (K) intercambiable cmol(+)/kg': m.Potasio,
-        'Sodio (Na) intercambiable cmol(+)/kg': m.Sodio,
-        'Hierro (Fe) disponible olsen mg/kg': m.Hierro,
-        'Cobre (Cu) disponible mg/kg': m.Cobre,
-        'Manganeso (Mn) disponible Olsen mg/kg': m.Manganeso,
-        'Zinc (Zn) disponible Olsen mg/kg': m.Zinc
-    }
+        print(f"Promedio de mediciones: {m}")
+        fila = {
+            'pH agua:suelo 2,5:1,0': m.PH,
+            'Materia orgánica (MO) %': m.MateriaOrganica,
+            'Fósforo (P) Bray II mg/kg': m.Fosforo,
+            'Azufre (S) Fosfato monocalcico mg/kg': m.Azufre,
+            'Calcio (Ca) intercambiable cmol(+)/kg': m.Calcio,
+            'Magnesio (Mg) intercambiable cmol(+)/kg': m.Magnesio,
+            'Potasio (K) intercambiable cmol(+)/kg': m.Potasio,
+            'Sodio (Na) intercambiable cmol(+)/kg': m.Sodio,
+            'Hierro (Fe) disponible olsen mg/kg': m.Hierro,
+            'Cobre (Cu) disponible mg/kg': m.Cobre,
+            'Manganeso (Mn) disponible Olsen mg/kg': m.Manganeso,
+            'Zinc (Zn) disponible Olsen mg/kg': m.Zinc
+        }
 
-    resultado = evaluar_suelo(fila)
-    resultados.append({
-        'medicion': m,
-        'cultivo': resultado['cultivo'],
-        'estado': resultado['estado'],
-        'recomendaciones': resultado['recomendaciones']
-    })
+        # Evaluar el estado del suelo y obtener las recomendaciones
+        resultado = evaluar_suelo(fila)
+        resultados.append({
+            'medicion': m,
+            'cultivo': resultado['cultivo'],
+            'estado': resultado['estado'],
+            'recomendaciones': resultado['recomendaciones']
+        })
 
-    return render(request, 'recomendaciones.html', {'resultados': resultados})
+        # Pasar los resultados a la plantilla
+        return render(request, 'recomendaciones.html', {'resultados': resultados})
+
 
 def vista_bienvenida(request):
     return render(request, 'bienvenida.html')
