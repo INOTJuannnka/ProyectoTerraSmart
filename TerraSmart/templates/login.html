@@ -123,4 +123,23 @@
     </div>
   </div>
 </div>
+{% if messages %}
+  {% for message in messages %}
+    {% if 'login_exitoso' in message.tags %}  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: '{{ message|escapejs }}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      setTimeout(function() {
+        window.location.href = "{% url 'inicio' %}";
+      }, 1500);
+    </script>
+    {% endif %}
+  {% endfor %}
+{% endif %}
 {% endblock %}
