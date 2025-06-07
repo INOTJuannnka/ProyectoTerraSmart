@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}TeRraSmart - Instrucciones{% endblock %}
+
+{% block extra_styles %}
+  <style>
+    .instruction-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 350px;  /* Altura fija para todas las tarjetas */
+      max-width: 300px; /* Tamaño máximo para las tarjetas */
+      margin: 0 auto; /* Centrado */
+    }
+
+    .instruction-card h4 {
+      color: #009F53;
+      font-weight: bold;
+    }
+
+    /* Ajustamos las imágenes */
+    .instruction-card img {
+      width: 100%; /* Ocupa el 100% del ancho de la tarjeta */
+      height: 150px; /* Fija una altura para las imágenes */
+      object-fit: contain; /* Ajusta la imagen sin recortarla */
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .instruction-btn {
+      background-color: #7ED957;
+      color: white;
+      font-weight: bold;
+      border-radius: 25px;
+      padding: 12px 30px;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .instruction-btn:hover {
+      background-color: #009F53;
+    }
+
+    /* Ajustes de estilo para el carrusel de imágenes */
+    .carousel-item img {
+      max-height: 300px;
+      object-fit: cover;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-1">
+    <h2 class="fw-bold text-center mb-5" style="color: #009F53;">¿Cómo usar TeRra-Smart?</h2>
+    <p class="text-center mb-5"> 
+      TeRra-Smart es una plataforma diseñada para ayudar a los agricultores a monitorear y optimizar las condiciones del suelo en tiempo real. Con nuestras mediciones, podrás obtener recomendaciones personalizadas para mejorar tus cultivos, basadas en la calidad del suelo.
+    </p>
+
+    <!-- Tarjetas de instrucciones -->
+    <div class="row justify-content-center">  <!-- Usamos justify-content-center para centrar las tarjetas -->
+      <div class="col-md-4">
+        <div class="instruction-card">
+          <img src="https://linguistica.gea.lat/wp-content/uploads/descubre-la-importancia-de-la-cuantificacion-en-la-medicion-de-datos.png" alt="Mediciones">
+          <h4>Mediciones</h4>
+          <p>Haz clic en "Mediciones" para ingresar los valores del suelo.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="instruction-card">
+          <img src="https://economipedia.com/wp-content/uploads/Redactar-una-carta-de-recomendacion.png" alt="Recomendaciones">
+          <h4>Recomendaciones</h4>
+          <p>Consulta las "Recomendaciones" para obtener sugerencias sobre tu cultivo.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="instruction-card">
+          <img src="https://tse3.mm.bing.net/th/id/OIP.zgM0NGkGCF1VQNMSDwwQnwHaHG?rs=1&pid=ImgDetMain" alt="Historial">
+          <h4>Historial</h4>
+          <p>Ve el "Historial" para revisar tus registros anteriores.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de llamada a la acción -->
+    <div class="text-center mt-4">
+      <a href="{% url 'inicio' %}" class="instruction-btn">¡Intentar ahora!</a>
+    </div>
+  </div>
+{% endblock %}
