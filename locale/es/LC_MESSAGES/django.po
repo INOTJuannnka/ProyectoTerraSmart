@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-05 20:24-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\TerraSmart\templates\base.html:80
+msgid "INICIO"
+msgstr "INICIO"
+
+#: .\TerraSmart\templates\base.html:81
+msgid "MEDICIONES"
+msgstr "MEDICIONES"
+
+#: .\TerraSmart\templates\base.html:82
+msgid "RECOMENDACIONES"
+msgstr "RECOMENDACIONES"
+
+#: .\TerraSmart\templates\base.html:83
+#: .\TerraSmart\templates\configuracion.html:7
+msgid "CONFIGURACIÓN"
+msgstr "CONFIGURACIÓN"
+
+#: .\TerraSmart\templates\base.html:98
+msgid "✉️ Contactanos"
+msgstr "✉️ Contactanos"
+
+#: .\TerraSmart\templates\base.html:101
+msgid "🔐 Iniciar Sesión"
+msgstr "🔐 Iniciar Sesión"
+
+#: .\TerraSmart\templates\base.html:102
+msgid "📝 Registrate"
+msgstr "📝 Registrate"
+
+#: .\TerraSmart\templates\configuracion.html:4
+msgid "Configuración"
+msgstr "Configuración"
+
+#: .\TerraSmart\templates\configuracion.html:10
+msgid "Ajustes generales del sistema:"
+msgstr "Ajustes generales del sistema:"
+
+#: .\TerraSmart\templates\configuracion.html:12
+msgid "TIEMPO DE LECTURA"
+msgstr "Tiempo de lectura"
+
+#: .\TerraSmart\templates\configuracion.html:20
+msgid "Seleccionar idioma"
+msgstr "Seleccionar idioma"
+
+#: .\TerraSmart\templates\configuracion.html:22 .\project_core\settings.py:128
+msgid "Spanish"
+msgstr "Español"
+
+#: .\TerraSmart\templates\configuracion.html:23 .\project_core\settings.py:129
+msgid "English"
+msgstr "Inglés"
+
+#: .\TerraSmart\templates\configuracion.html:24 .\project_core\settings.py:130
+msgid "Japanese"
+msgstr "Japonés"
+
+#: .\TerraSmart\templates\configuracion.html:25 .\project_core\settings.py:131
+msgid "French"
+msgstr "Francés"
+
+#: .\TerraSmart\templates\configuracion.html:26 .\project_core\settings.py:132
+msgid "Italian"
+msgstr "Italiano"
+
+#: .\TerraSmart\templates\configuracion.html:27 .\project_core\settings.py:133
+msgid "German"
+msgstr "Alemán"
+
+#: .\TerraSmart\templates\configuracion.html:29
+msgid "GUARDAR CAMBIOS"
+msgstr "Guardar cambios"

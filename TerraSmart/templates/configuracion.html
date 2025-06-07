@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Configuración{% endblock %}
+{% block title %}{% trans "Configuración" %}{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold">CONFIGURACIÓN</h2>
+<h2 class="fw-bold">{% trans "CONFIGURACIÓN" %}</h2>
 
-<div class="record-box">
-  <p>Ajustes generales del sistema:</p>
-  
-  <button class="btn btn-outline-dark w-100">TIEMPO DE LECTURA</button>
+<div class="intro-description" style="text-align: justify;">
+  <p>
+    En la vista de Configuración, puedes modificar el idioma de la plataforma según tus preferencias. Actualmente, puedes seleccionar entre los idiomas disponibles, como el español, inglés, francés, japonés, italiano, alemán, chino y portugués, para mejorar la experiencia de usuario. Esta sección te permite ajustar el idioma de la interfaz, facilitando el uso de la plataforma de acuerdo con tus necesidades lingüísticas.
+  </p>
 </div>
 
-<div class="mt-4">
-  <button class="btn footer-btn">GUARDAR CAMBIOS</button>
+<!-- Formulario para cambiar el idioma -->
+<div class="mb-4">
+    <form method="post" action="{% url 'set_language' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path_info }}">
+      <label for="language" class="form-label">{% trans "Seleccionar idioma" %}</label>
+      <select name="language" id="language" class="form-control">
+          <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>{% trans "Spanish" %}</option>
+          <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>{% trans "English" %}</option>
+          <option value="jp" {% if LANGUAGE_CODE == 'jp' %}selected{% endif %}>{% trans "Japanese" %}</option>
+          <option value="fr" {% if LANGUAGE_CODE == 'fr' %}selected{% endif %}>{% trans "French" %}</option>
+          <option value="it" {% if LANGUAGE_CODE == 'it' %}selected{% endif %}>{% trans "Italian" %}</option>
+          <option value="gr" {% if LANGUAGE_CODE == 'gr' %}selected{% endif %}>{% trans "German" %}</option>
+      </select>
+      <button class="btn footer-btn" type="submit">{% trans "GUARDAR CAMBIOS" %}</button>
+    </form>
 </div>
+
 {% endblock %}
