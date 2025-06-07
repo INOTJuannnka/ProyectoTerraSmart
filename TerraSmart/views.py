@@ -41,16 +41,10 @@ def configuracion(request):
 def historial(request):
     return render(request, 'historial.html')
 
-# def vista_inicio(request):
-#     user_id = request.session.get('usuario')
-#     ultimo_registro = obtener_n_registros_firestore(user_id, 1)
-#     Thread(target=run_monitor, args=(user_id,), daemon=True).start()
-#     return render(request, 'inicio.html', {'ultimo_registro': ultimo_registro})
-
 def vista_inicio(request):
     user_id = request.session.get('usuario')
     mediciones = obtener_mediciones_firestore(user_id)
-
+    Thread(target=run_monitor, args=(user_id,), daemon=True).start()
     if not mediciones:
         return render(request, 'inicio.html', {'img_data_dict': {}, 'mediciones': []})
 
@@ -101,12 +95,15 @@ def vista_inicio(request):
         plt.close(fig)
 
         # Obtener el último registro (más reciente)
-    ultimo_registro = None
-    if not df.empty:
-        ultimo_registro = df.sort_index(ascending=False).iloc[0].to_dict()
-        if 'fecha' in ultimo_registro and pd.notnull(ultimo_registro['fecha']):
-           ultimo_registro['fecha'] = ultimo_registro['fecha'].strftime('%Y-%m-%d %H:%M:%S')
-
+    ultimo_registro =  obtener_n_registros_firestore(user_id, 1)
+    ultimo_registro = ultimo_registro[0] if ultimo_registro else None
+    if not ultimo_registro:
+        ultimo_registro = {
+            'PH': None, 'MateriaOrganica': None, 'Fosforo': None, 'Azufre': None,
+            'Calcio': None, 'Magnesio': None, 'Potasio': None, 'Sodio': None,
+            'Hierro': None, 'Cobre': None, 'Manganeso': None, 'Zinc': None,
+            'fecha': timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
     return render(request,'inicio.html',{
             'img_data_dict': img_data_dict,
             'mediciones': mediciones,
