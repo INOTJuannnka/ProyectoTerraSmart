@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'terrasmart',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'mysql',
         'HOST': '127.0.0.1',
         'PORT': '3306', 
     }

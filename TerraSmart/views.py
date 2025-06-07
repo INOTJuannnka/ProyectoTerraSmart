@@ -499,6 +499,8 @@ def recomendaciones(request):
         # Pasar los resultados a la plantilla
         return render(request, 'recomendaciones.html', {'resultados': resultados})
 
+    # Si el método no es POST, redirigir a la misma página o mostrar un mensaje de error
+    return render(request, 'recomendaciones.html', {'resultados': []})
 
 def vista_bienvenida(request):
     return render(request, 'bienvenida.html')

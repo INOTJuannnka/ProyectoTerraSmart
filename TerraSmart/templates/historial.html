@@ -1,36 +1,43 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% load custom_filters %}
 
-{% block title %}Historial{% endblock %}
+{% block title %}{% trans "Historial" %}{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold">HISTORIAL</h2>
-<p class="fw-medium">Últimos registros</p>
+<h2 class="fw-bold">{% trans "HISTORIAL" %}</h2>
+
+<div class="intro-description" style="text-align: justify;">
+    <p>{%trans "En Historial, podrás ver los últimos registro de medición del estado del suelo para un usuario. La plataforma proporciona el historial de todos los registros almacenados para cada usuario, mostrando datos como el pH, la materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, etc.). Si deseas continuar viendo las gráficas, puedes volver a inicio." %}</p>
+  </div>
+
+<p class="fw-medium">{% trans "Últimos registros" %}</p>
 
 <div class="table-responsive">
   <table class="table text-center table-bordered w-100 historial-table">
     <thead>
       <tr>
-        <th>fecha</th>
-        <th>PH</th>
-        <th>Materia Organica</th>
-        <th>Fósforo</th>
-        <th>Azufre</th>
-        <th>Calcio</th>
-        <th>Magnesio</th>
-        <th>Potasio</th>
-        <th>Sodio</th>
-        <th>Hierro</th>
-        <th>Cobre</th>
-        <th>Manganeso</th>
-        <th>Zinc</th>
+        <th>{% trans "fecha" %}</th>
+        <th>{% trans "PH" %}</th>
+        <th>{% trans "Materia Organica" %}</th>
+        <th>{% trans "Fósforo" %}</th>
+        <th>{% trans "Azufre" %}</th>
+        <th>{% trans "Calcio" %}</th>
+        <th>{% trans "Magnesio" %}</th>
+        <th>{% trans "Potasio" %}</th>
+        <th>{% trans "Sodio" %}</th>
+        <th>{% trans "Hierro" %}</th>
+        <th>{% trans "Cobre" %}</th>
+        <th>{% trans "Manganeso" %}</th>
+        <th>{% trans "Zinc" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for registro in registros %}
       <tr>
-        <td>{{ registro.fecha|iso_to_local_datetime:"America/Mexico_City" }}</td>        <td>{{ registro.PH}}</td>
+        <td>{{ registro.fecha|iso_to_local_datetime:"America/Mexico_City" }}</td>
+        <td>{{ registro.PH}}</td>
         <td>{{ registro.MateriaOrganica}}</td>
         <td>{{ registro.Fosforo}}</td>
         <td>{{ registro.Azufre}}</td>
@@ -49,6 +56,6 @@
 </div>
 
 <div class="mt-4">
-  <a href="{% url 'inicio' %}" class="btn btn-success footer-btn">VOLVER A INICIO</a>
+  <a href="{% url 'inicio' %}" class="btn btn-success footer-btn">{% trans "VOLVER A INICIO" %}</a>
 </div>
 {% endblock %}
