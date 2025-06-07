@@ -39,11 +39,13 @@
     .logo .blue { color: blue; }
     .logo h2 { font-size: 40px; font-weight: bold; }
     .record-box { border: 2px solid black; padding: 20px; }
+
+    /* Estilos del dropdown */
     .dropdown-menu-custom {
       display: none;
       position: absolute;
-      bottom: 70px;
-      left: 10px;
+      top: -150px;  /* El popup ahora aparece encima del botón */
+      left: -50px;  /* Ajustamos el popup para que quede más a la izquierda */
       background-color: #2c2c2c;
       color: white;
       border-radius: 10px;
@@ -64,6 +66,11 @@
 
     .dropdown-menu-custom .dropdown-item:hover {
       background-color: #444;
+    }
+
+    /* Añadimos position relative para que el popup se posicione correctamente */
+    .user-dropdown {
+      position: relative;
     }
 
   </style>
@@ -103,13 +110,10 @@
       <a href="{% url 'configuracion' %}" class="btn">{% trans "CONFIGURACIÓN" %}</a>
 
       <!-- abre el popup  -->
-       <!--prueba-->
       <div class="user-dropdown text-center mt-auto">
-        
         <button id="userMenuBtn" class="btn p-0 bg-transparent border-0">
           <img src="https://cdn-icons-png.flaticon.com/512/2250/2250207.png" alt="User Icon" style="width: 100px; height: 100px; object-fit: contain;">
         </button>
-        
 
         <!-- Popup emergente -->
         <div id="userPopup" class="dropdown-menu-custom">
@@ -123,8 +127,6 @@
           {% endif %}
         </div>
       </div>
-
-
     </div>
     <div class="col-md-8 col-lg-9 main-content bg-white">
       {% block content %}{% endblock %}
@@ -145,7 +147,6 @@
       popup.style.display = 'none';
     }
   });
-
 </script>
 
 </body>
