@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}TeRraSmart - Bienvenida{% endblock %}
+{% block title %}{% trans "TeRraSmart - Bienvenida" %}{% endblock %}
 
 {% block content %}
   <div class="text-center" style="margin-top: 20%;">
-    <h1 class="fw-bold">Bienvenido a <span class="green">TeRra-</span><span class="black">Smart</span></h1>
+    <h1 class="fw-bold">{% trans "Bienvenido a" %} <span class="green"> TeRra-</span><span class="black">Smart</span></h1>
     <p><img src="https://emojinarium.com/img/microsoft/seedling_1f331.png" alt="Planta" style="width: 80px;"></p>
-    <p class="fs-3">Esperamos que disfrutes tu experiencia</p>
-    <p id="countdown">Redirigiendo en 3 segundos...</p> <!-- Aquí se mostrará el contador -->
+    <p class="fs-3">{% trans "Esperamos que disfrutes tu experiencia" %}</p>
+    <p id="countdown">{% trans "Redirigiendo en 3 segundos..." %}</p> <!-- Aquí se mostrará el contador -->
   </div>
 
   <script>

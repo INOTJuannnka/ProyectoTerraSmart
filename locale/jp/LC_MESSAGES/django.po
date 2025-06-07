@@ -1,14 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 20:25-0500\n"
+"POT-Creation-Date: 2025-06-07 01:50-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,78 +11,500 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\TerraSmart\templates\base.html:80
+#: .\TerraSmart\templates\base.html:100 .\TerraSmart\templates\inicio.html:7
 msgid "INICIO"
 msgstr "開始"
 
-#: .\TerraSmart\templates\base.html:81
+#: .\TerraSmart\templates\base.html:101
+#: .\TerraSmart\templates\mediciones.html:6
 msgid "MEDICIONES"
 msgstr "測定"
 
-#: .\TerraSmart\templates\base.html:82
+#: .\TerraSmart\templates\base.html:102
+#: .\TerraSmart\templates\recomendaciones.html:7
 msgid "RECOMENDACIONES"
 msgstr "推奨"
 
-#: .\TerraSmart\templates\base.html:83
+#: .\TerraSmart\templates\base.html:103
 #: .\TerraSmart\templates\configuracion.html:7
 msgid "CONFIGURACIÓN"
 msgstr "設定"
 
-#: .\TerraSmart\templates\base.html:98
+#: .\TerraSmart\templates\base.html:118
 msgid "✉️ Contactanos"
 msgstr "✉️ お問い合わせ"
 
-#: .\TerraSmart\templates\base.html:101
+#: .\TerraSmart\templates\base.html:119
+msgid "↩️ Cerrar sesión"
+msgstr "↩️ ログアウト"
+
+#: .\TerraSmart\templates\base.html:121
 msgid "🔐 Iniciar Sesión"
 msgstr "🔐 ログイン"
 
-#: .\TerraSmart\templates\base.html:102
+#: .\TerraSmart\templates\base.html:122
 msgid "📝 Registrate"
 msgstr "📝 登録"
+
+#: .\TerraSmart\templates\bienvenida.html:3
+#, fuzzy
+#| msgid "Bienvenida"
+msgid "TeRraSmart - Bienvenida"
+msgstr "TeRraSmart - ようこそ"
+
+#: .\TerraSmart\templates\bienvenida.html:7
+msgid "Bienvenido a"
+msgstr "ようこそ"
+
+#: .\TerraSmart\templates\bienvenida.html:9
+msgid "Esperamos que disfrutes tu experiencia"
+msgstr "素晴らしい体験をお楽しみください"
+
+#: .\TerraSmart\templates\bienvenida.html:10
+msgid "Redirigiendo en 3 segundos..."
+msgstr "3秒後にリダイレクトします..."
 
 #: .\TerraSmart\templates\configuracion.html:4
 msgid "Configuración"
 msgstr "設定"
 
 #: .\TerraSmart\templates\configuracion.html:10
-msgid "Ajustes generales del sistema:"
-msgstr "システムの一般設定:"
+msgid ""
+"En Configuración, puedes modificar el idioma de la plataforma según tus "
+"preferencias. Actualmente, puedes seleccionar entre los idiomas disponibles, "
+"como el español, inglés, francés, japonés, italiano y alemán, para mejorar "
+"la experiencia de usuario. Esta sección te permite ajustar el idioma de la "
+"interfaz, facilitando el uso de la plataforma de acuerdo con tus necesidades "
+"lingüísticas."
+msgstr ""
+"設定では、プラットフォームの言語を好みに応じて変更できます。現在、スペイン"
+"語、英語、フランス語、日本語、イタリア語、ドイツ語など、利用可能な言語を選択"
+"できます。このセクションでは、インターフェースの言語を調整して、ユーザーの言"
+"語ニーズに合わせてプラットフォームを使いやすくします。"
 
-#: .\TerraSmart\templates\configuracion.html:12
-msgid "TIEMPO DE LECTURA"
-msgstr "読書時間"
-
-#: .\TerraSmart\templates\configuracion.html:20
+#: .\TerraSmart\templates\configuracion.html:18
 msgid "Seleccionar idioma"
 msgstr "言語を選択"
 
-#: .\TerraSmart\templates\configuracion.html:22 .\project_core\settings.py:128
+#: .\TerraSmart\templates\configuracion.html:20 .\project_core\settings.py:129
 msgid "Spanish"
 msgstr "スペイン語"
 
-#: .\TerraSmart\templates\configuracion.html:23 .\project_core\settings.py:129
+#: .\TerraSmart\templates\configuracion.html:21 .\project_core\settings.py:130
 msgid "English"
 msgstr "英語"
 
-#: .\TerraSmart\templates\configuracion.html:24 .\project_core\settings.py:130
+#: .\TerraSmart\templates\configuracion.html:22 .\project_core\settings.py:131
 msgid "Japanese"
 msgstr "日本語"
 
-#: .\TerraSmart\templates\configuracion.html:25 .\project_core\settings.py:131
+#: .\TerraSmart\templates\configuracion.html:23 .\project_core\settings.py:132
 msgid "French"
 msgstr "フランス語"
 
-#: .\TerraSmart\templates\configuracion.html:26 .\project_core\settings.py:132
+#: .\TerraSmart\templates\configuracion.html:24 .\project_core\settings.py:133
 msgid "Italian"
 msgstr "イタリア語"
 
-#: .\TerraSmart\templates\configuracion.html:27 .\project_core\settings.py:133
+#: .\TerraSmart\templates\configuracion.html:25 .\project_core\settings.py:134
 msgid "German"
 msgstr "ドイツ語"
 
-#: .\TerraSmart\templates\configuracion.html:29
+#: .\TerraSmart\templates\configuracion.html:27
 msgid "GUARDAR CAMBIOS"
 msgstr "変更を保存"
+
+#: .\TerraSmart\templates\historial.html:5
+#: .\TerraSmart\templates\instrucciones.html:85
+msgid "Historial"
+msgstr "履歴"
+
+#: .\TerraSmart\templates\historial.html:8
+#: .\TerraSmart\templates\inicio.html:72
+msgid "HISTORIAL"
+msgstr "履歴"
+
+#: .\TerraSmart\templates\historial.html:11
+msgid ""
+"En Historial, podrás ver los últimos registro de medición del estado del "
+"suelo para un usuario. La plataforma proporciona el historial de todos los "
+"registros almacenados para cada usuario, mostrando datos como el pH, la "
+"materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, "
+"etc.). Si deseas continuar viendo las gráficas, puedes volver a inicio."
+msgstr ""
+"履歴では、ユーザーの土壌状態測定の最新の記録を見ることができます。プラット"
+"フォームは、各ユーザーのすべての記録の履歴を提供し、pH、土壌有機物、栄養素の"
+"レベル（リン、カルシウム、マグネシウムなど）を表示します。グラフを続けて表示"
+"するには、ホームに戻ることができます。"
+
+#: .\TerraSmart\templates\historial.html:14
+msgid "Últimos registros"
+msgstr "最新の記録"
+
+#: .\TerraSmart\templates\historial.html:20
+#: .\TerraSmart\templates\inicio.html:23
+msgid "fecha"
+msgstr "日付"
+
+#: .\TerraSmart\templates\historial.html:21
+#: .\TerraSmart\templates\inicio.html:24
+msgid "PH"
+msgstr "pH"
+
+#: .\TerraSmart\templates\historial.html:22
+#: .\TerraSmart\templates\inicio.html:25
+msgid "Materia Organica"
+msgstr "有機物"
+
+#: .\TerraSmart\templates\historial.html:23
+#: .\TerraSmart\templates\inicio.html:26
+msgid "Fósforo"
+msgstr "リン"
+
+#: .\TerraSmart\templates\historial.html:24
+#: .\TerraSmart\templates\inicio.html:27
+msgid "Azufre"
+msgstr "硫黄"
+
+#: .\TerraSmart\templates\historial.html:25
+#: .\TerraSmart\templates\inicio.html:28
+msgid "Calcio"
+msgstr "カルシウム"
+
+#: .\TerraSmart\templates\historial.html:26
+#: .\TerraSmart\templates\inicio.html:29
+msgid "Magnesio"
+msgstr "マグネシウム"
+
+#: .\TerraSmart\templates\historial.html:27
+#: .\TerraSmart\templates\inicio.html:30
+msgid "Potasio"
+msgstr "カリウム"
+
+#: .\TerraSmart\templates\historial.html:28
+#: .\TerraSmart\templates\inicio.html:31
+msgid "Sodio"
+msgstr "ナトリウム"
+
+#: .\TerraSmart\templates\historial.html:29
+#: .\TerraSmart\templates\inicio.html:32
+msgid "Hierro"
+msgstr "鉄"
+
+#: .\TerraSmart\templates\historial.html:30
+#: .\TerraSmart\templates\inicio.html:33
+msgid "Cobre"
+msgstr "銅"
+
+#: .\TerraSmart\templates\historial.html:31
+#: .\TerraSmart\templates\inicio.html:34
+msgid "Manganeso"
+msgstr "マンガン"
+
+#: .\TerraSmart\templates\historial.html:32
+#: .\TerraSmart\templates\inicio.html:35
+msgid "Zinc"
+msgstr "亜鉛"
+
+#: .\TerraSmart\templates\historial.html:58
+msgid "VOLVER A INICIO"
+msgstr "ホームに戻る"
+
+#: .\TerraSmart\templates\inicio.html:4
+msgid "Inicio"
+msgstr "開始"
+
+#: .\TerraSmart\templates\inicio.html:11
+msgid ""
+"En Inicio, podrás ver el último registro de medición del estado del suelo en "
+"tiempo real. La plataforma proporciona información crucial como el pH, la "
+"materia orgánica, los niveles de nutrientes (fósforo, calcio, magnesio, "
+"etc.) y otros parámetros que te ayudarán a optimizar tus cultivos. Además, "
+"puedes ver gráficas de evolución con respecto a cada parámetro. Si deseas "
+"revisar más registros, puedes acceder al historial completo de mediciones."
+msgstr ""
+"ホームでは、土壌の状態測定の最新記録をリアルタイムで確認できます。プラット"
+"フォームは、pH、土壌有機物、栄養素（リン、カルシウム、マグネシウムなど）や、"
+"作物の最適化に役立つその他のパラメータに関する重要な情報を提供します。さら"
+"に、各パラメータに関する進化グラフを表示できます。他の記録を確認したい場合"
+"は、完全な測定履歴にアクセスできます。"
+
+#: .\TerraSmart\templates\inicio.html:15
+msgid "Último registro"
+msgstr "最後の記録"
+
+#: .\TerraSmart\templates\inicio.html:58
+msgid "No hay registros aún."
+msgstr "まだ記録はありません"
+
+#: .\TerraSmart\templates\inicio.html:63
+msgid "Gráficos de Mediciones"
+msgstr "測定グラフ"
+
+#: .\TerraSmart\templates\instrucciones.html:3
+#, fuzzy
+#| msgid "Instrucciones"
+msgid "TeRraSmart - Instrucciones"
+msgstr "使い方"
+
+#: .\TerraSmart\templates\instrucciones.html:61
+msgid "¿Cómo usar TeRra-Smart?"
+msgstr "TeRra-Smartの使い方"
+
+#: .\TerraSmart\templates\instrucciones.html:63
+msgid ""
+"TeRra-Smart es una plataforma diseñada para ayudar a los agricultores a "
+"monitorear y optimizar las condiciones del suelo en tiempo real. Con "
+"nuestras mediciones, podrás obtener recomendaciones personalizadas para "
+"mejorar tus cultivos, basadas en la calidad del suelo."
+msgstr ""
+"TeRra-Smartは、農家が土壌の状態をリアルタイムで監視・最適化するために設計され"
+"たプラットフォームです。私たちの測定により、土壌の質に基づいたカスタマイズさ"
+"れたアドバイスを受け、作物を改善できます。"
+
+#: .\TerraSmart\templates\instrucciones.html:71
+msgid "Mediciones"
+msgstr "測定"
+
+#: .\TerraSmart\templates\instrucciones.html:72
+msgid "Haz clic en Mediciones para ingresar los valores del suelo."
+msgstr "土壌の値を入力するには、「測定」をクリックしてください。"
+
+#: .\TerraSmart\templates\instrucciones.html:78
+#: .\TerraSmart\templates\recomendaciones.html:3
+msgid "Recomendaciones"
+msgstr "推奨"
+
+#: .\TerraSmart\templates\instrucciones.html:79
+msgid "Consulta las Recomendaciones para obtener sugerencias sobre tu cultivo."
+msgstr "作物に関する提案を得るために、推奨を確認してください。"
+
+#: .\TerraSmart\templates\instrucciones.html:86
+msgid "Ve el Historial para revisar tus registros anteriores."
+msgstr "過去の記録を確認するには、履歴を参照してください。"
+
+#: .\TerraSmart\templates\instrucciones.html:93
+msgid "¡Intentar ahora!"
+msgstr "今すぐ試す！"
+
+#: .\TerraSmart\templates\login.html:3
+#, fuzzy
+#| msgid "🔐 Iniciar Sesión"
+msgid "Iniciar Sesión"
+msgstr "ログイン"
+
+#: .\TerraSmart\templates\login.html:106
+msgid "Acceda a su cuenta"
+msgstr "アカウントにログイン"
+
+#: .\TerraSmart\templates\login.html:111
+msgid "Recuerda me"
+msgstr "私を覚えている"
+
+#: .\TerraSmart\templates\login.html:112
+msgid "Olvido su constraseña?"
+msgstr "パスワードを忘れましたか？"
+
+#: .\TerraSmart\templates\login.html:119
+msgid "No tienes cuenta?"
+msgstr "アカウントがありませんか？"
+
+#: .\TerraSmart\templates\login.html:119
+#, fuzzy
+#| msgid "📝 Registrate"
+msgid "Registrate!"
+msgstr "登録"
+
+#: .\TerraSmart\templates\login.html:120
+msgid "Registrarse con Facebook"
+msgstr "Facebookで登録"
+
+#: .\TerraSmart\templates\login.html:121
+msgid "Registrarse con Twitter"
+msgstr "Twitterで登録"
+
+#: .\TerraSmart\templates\login.html:122
+#: .\TerraSmart\templates\registro.html:90
+msgid "Registrarse con Google"
+msgstr "Googleで登録"
+
+#: .\TerraSmart\templates\mediciones.html:3
+msgid "TeRra-Smart - Mediciones"
+msgstr ""
+
+#: .\TerraSmart\templates\mediciones.html:10
+msgid ""
+"En Mediciones, puedes ingresar nuevos datos sobre las condiciones del suelo "
+"para recibir recomendaciones personalizadas. Aquí puedes introducir "
+"mediciones como el pH, el nivel de materia orgánica, los nutrientes "
+"presentes (fósforo, potasio, magnesio, etc.), entre otros. Además, es "
+"posible subir archivos en formato CSV o Excel para procesar múltiples "
+"mediciones a la vez. Esta vista permite alimentar la plataforma con datos "
+"esenciales para la generación de recomendaciones específicas y mejorar la "
+"gestión del suelo."
+msgstr ""
+"測定では、土壌の状態に関する新しいデータを入力して、カスタマイズされた推奨を"
+"受けることができます。ここでは、pH、有機物レベル、栄養素（リン、カリウム、マ"
+"グネシウムなど）などを入力できます。さらに、CSVまたはExcel形式で複数の測定を"
+"一度に処理するためにファイルをアップロードできます。このビューでは、プラット"
+"フォームにデータを提供し、特定の推奨を生成して土壌管理を改善することができま"
+"す。"
+
+#: .\TerraSmart\templates\mediciones.html:20
+msgid "pH agua:suelo 2,5:1,0"
+msgstr "水：土壌のpH 2.5：1.0"
+
+#: .\TerraSmart\templates\mediciones.html:24
+#, python-format
+msgid "Materia orgánica (MO) %%"
+msgstr "有機物（MO）％％"
+
+#: .\TerraSmart\templates\mediciones.html:28
+msgid "Fósforo (P) Bray II mg/kg"
+msgstr "リン（P）Bray II mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:32
+msgid "Azufre (S) Fosfato monocalcico mg/kg"
+msgstr "硫黄（S）モノカルシウムリン酸塩 mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:36
+msgid "Calcio (Ca) intercambiable cmol(+)/kg"
+msgstr "カルシウム（Ca）交換可能 cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:40
+msgid "Magnesio (Mg) intercambiable cmol(+)/kg"
+msgstr "マグネシウム（Mg）交換可能 cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:44
+msgid "Potasio (K) intercambiable cmol(+)/kg"
+msgstr "カリウム（K）交換可能 cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:48
+msgid "Sodio (Na) intercambiable cmol(+)/kg"
+msgstr "ナトリウム（Na）交換可能 cmol(+)/kg"
+
+#: .\TerraSmart\templates\mediciones.html:52
+msgid "Hierro (Fe) disponible Olsen mg/kg"
+msgstr "鉄（Fe）利用可能オルセン mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:56
+msgid "Cobre (Cu) disponible mg/kg"
+msgstr "銅（Cu）利用可能 mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:60
+msgid "Manganeso (Mn) disponible Olsen mg/kg"
+msgstr "マンガン（Mn）利用可能オルセン mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:64
+msgid "Zinc (Zn) disponible Olsen mg/kg"
+msgstr "亜鉛（Zn）利用可能オルセン mg/kg"
+
+#: .\TerraSmart\templates\mediciones.html:70
+msgid "SUBIR DATOS"
+msgstr "データをアップロード"
+
+#: .\TerraSmart\templates\mediciones.html:74
+msgid "Subir archivo de mediciones"
+msgstr "測定ファイルをアップロード"
+
+#: .\TerraSmart\templates\mediciones.html:76
+msgid "Formatos aceptados: CSV, Excel"
+msgstr "対応フォーマット：CSV、Excel"
+
+#: .\TerraSmart\templates\mediciones.html:79
+msgid "PROCESAR ARCHIVO"
+msgstr "ファイルを処理"
+
+#: .\TerraSmart\templates\recomendaciones.html:11
+msgid ""
+"Recomendaciones te permite obtener sugerencias personalizadas sobre cómo "
+"mejorar las condiciones del suelo para un cultivo específico. Tras ingresar "
+"el número de registros que deseas consultar, la plataforma analizará los "
+"datos y generará recomendaciones técnicas basadas en el estado actual del "
+"suelo. Esta vista proporciona detalles sobre el cultivo sugerido, el estado "
+"del suelo y recomendaciones prácticas para mejorar los nutrientes y "
+"características del terreno."
+msgstr ""
+"推奨は、特定の作物のために土壌の状態を改善する方法について、カスタマイズされ"
+"た提案を提供します。相談したい記録数を入力した後、プラットフォームはデータを"
+"分析し、現在の土壌状態に基づいた技術的な提案を生成します。このビューでは、提"
+"案された作物、土壌の状態、栄養素や土壌の特徴を改善するための実用的な提案を提"
+"供します。"
+
+#: .\TerraSmart\templates\recomendaciones.html:20
+msgid ""
+"¿Con cuántos de los últimos registros quieres hacer la consulta? "
+"(Preferiblemente entre 1 y 20 registros)"
+msgstr ""
+"最後の記録のうち、いくつでクエリを実行したいですか？(できれば1〜20の記録で)"
+
+#: .\TerraSmart\templates\recomendaciones.html:22
+#, fuzzy
+#| msgid "Seleccionar idioma"
+msgid "Seleccionar"
+msgstr "言語を選択"
+
+#: .\TerraSmart\templates\recomendaciones.html:29
+msgid "📅 Medición del "
+msgstr "📅 測定 "
+
+#: .\TerraSmart\templates\recomendaciones.html:30
+msgid "Cultivo sugerido: "
+msgstr "提案された作物: "
+
+#: .\TerraSmart\templates\recomendaciones.html:32
+msgid "📊 Estado del suelo: "
+msgstr "📊 土壌の状態: "
+
+#: .\TerraSmart\templates\recomendaciones.html:39
+msgid "🧪 Recomendaciones técnicas: "
+msgstr "🧪 技術的推奨: "
+
+#: .\TerraSmart\templates\registro.html:3
+msgid "Crear cuenta"
+msgstr "アカウント作成"
+
+#: .\TerraSmart\templates\registro.html:78
+msgid "Crea una cuenta"
+msgstr "アカウントを作成"
+
+#: .\TerraSmart\templates\registro.html:87
+#, fuzzy
+#| msgid "📝 Registrate"
+msgid "O registrate con: "
+msgstr "登録"
+
+#: .\TerraSmart\templates\registro.html:88
+msgid "Registrate con Facebook"
+msgstr "Facebookで登録"
+
+#: .\TerraSmart\templates\registro.html:89
+msgid "Registrate conTwitter"
+msgstr "Twitterで登録"
+
+#: .\TerraSmart\templates\socialaccount\login.html:4
+msgid "Conectar con Google"
+msgstr "Googleで接続"
+
+#: .\TerraSmart\templates\socialaccount\login.html:8
+#, fuzzy
+#| msgid "🔐 Iniciar Sesión"
+msgid "Iniciar sesión con Google"
+msgstr "Googleでログイン"
+
+#: .\TerraSmart\templates\socialaccount\login.html:9
+msgid "Estás a punto de iniciar sesión usando tu cuenta de Google."
+msgstr "Googleアカウントでログインしようとしています。"
+
+#: .\TerraSmart\templates\socialaccount\login.html:12
+msgid "Continuar con Google"
+msgstr "Googleで続行"
+
+#~ msgid "Ajustes generales del sistema:"
+#~ msgstr "システムの一般設定:"
+
+#~ msgid "TIEMPO DE LECTURA"
+#~ msgstr "読書時間"
 
 #, fuzzy
 #~| msgid "CONFIGURACIÓN"
