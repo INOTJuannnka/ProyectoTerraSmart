@@ -6,10 +6,6 @@ from django.utils import timezone
 
 
 
-
-    # Ejemplo de guardar datos asociados al usuario
-    # DatosSensor.objects.create(usuario=user, PH=..., etc.)
-
 API_KEY = "BX8EEVZ092MP4LXX"
 CHANNEL_ID = "2967381"
 URL = f"https://api.thingspeak.com/channels/{CHANNEL_ID}/feeds.json?api_key={API_KEY}&results=1"
