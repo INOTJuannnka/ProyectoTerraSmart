@@ -28,6 +28,8 @@ from .firebase_config import db
 from django.contrib.auth.decorators import login_required
 import matplotlib.pyplot as plt
 import numpy as np
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 
 
 
@@ -287,13 +289,22 @@ def login_view(request):
         password = request.POST.get("password")
 
         users_ref = db.collection("user")
-        query = users_ref.where("username", "==", username).where("password", "==", password).get()
-        if query:
+        query = users_ref.where("username", "==", username).get()
+        if not query:
+            messages.error(request, "Usuario no encontrado.")
+            return render(request, "login.html")
+
+        user_data = query[0].to_dict()
+        hashed_password = user_data.get("password")
+
+        if check_password(password, hashed_password):
+            # Login exitoso
             request.session["usuario"] = username
             messages.success(request, "Inicio de sesión exitoso.", extra_tags="login_exitoso")
-            return redirect("login")
+            # Redirige a la página principal o dashboard
+            return redirect("inicio")
         else:
-            messages.error(request, "Usuario o contraseña incorrectos.")
+            messages.error(request, "Contraseña incorrecta.")
             return render(request, "login.html")
 
     return render(request, "login.html")
@@ -320,10 +331,10 @@ def registro_view(request):
         users_ref.add({
             "username": username,
             "email": email,
-            "password": password1  # En producción, nunca guardes contraseñas en texto plano
+            "password": make_password(password1)  # constrasñea encriptada (Hasheada)
         })
-        messages.success(request, "Usuario registrado con éxito.")
-        time.sleep(2)
+        messages.success(request, "Usuario registrado con éxito.",extra_tags="registro_exitoso")
+        #time.sleep(2)
         return redirect("login")
 
     return render(request, "registro.html")
