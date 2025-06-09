@@ -14,6 +14,7 @@ from TerraSmart import views
 # ]
 urlpatterns = [
     path('', views.vista_bienvenida, name='bienvenida'),
+    path("verificar-email/", views.verificar_email, name="verificar_email"),
     path('instrucciones/', views.vista_instrucciones, name='instrucciones'),
     path('inicio/', views.vista_inicio, name='inicio'),
     path('mediciones/', views.vista_mediciones, name='mediciones'),

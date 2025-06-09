@@ -30,6 +30,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.conf import settings
+from .utils import generate_token
+from django.shortcuts import redirect
+from .utils import verify_token
 
 
 
@@ -319,25 +325,50 @@ def registro_view(request):
         if password1 != password2:
             messages.error(request, "Las contraseñas no coinciden.")
             return render(request, "registro.html")
-
-        # Verifica si el usuario ya existe en Firestore
         users_ref = db.collection("user")
         existing = users_ref.where("email", "==", email).get()
         if existing:
             messages.error(request, "El correo ya está registrado.")
             return render(request, "registro.html")
 
-        # Agrega el usuario a Firestore
+        # Crear usuario sin verificar
         users_ref.add({
             "username": username,
             "email": email,
-            "password": make_password(password1)  # constrasñea encriptada (Hasheada)
+            "password": make_password(password1),
+            "email_verified": False
         })
-        messages.success(request, "Usuario registrado con éxito.",extra_tags="registro_exitoso")
-        #time.sleep(2)
+
+        token = generate_token(email)
+        verify_url = request.build_absolute_uri(reverse("verificar_email") + f"?token={token}")
+
+        send_mail(
+            "Confirma tu correo electrónico",
+            f"Hola {username}, haz clic en este enlace para confirmar tu correo:\n\n{verify_url}",
+            settings.DEFAULT_FROM_EMAIL,
+            [email]
+        )
+
+        messages.success(request, "Registro exitoso. Verifica tu correo para activar tu cuenta.")
         return redirect("login")
 
     return render(request, "registro.html")
+
+def verificar_email(request):
+    token = request.GET.get("token")
+    email = verify_token(token)
+
+    if email:
+        # Buscar y actualizar el campo email_verified en Firestore
+        users_ref = db.collection("user")
+        user_docs = users_ref.where("email", "==", email).get()
+        for doc in user_docs:
+            users_ref.document(doc.id).update({"email_verified": True})
+        messages.success(request, "Correo verificado correctamente. Ya puedes iniciar sesión.")
+        return redirect("login")
+    else:
+        messages.error(request, "El enlace de verificación es inválido o ha expirado.")
+        return redirect("registro")
 
 def logout_view(request):
     request.session.flush()
