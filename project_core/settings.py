@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'terrasmart',
         'USER': 'root',
-        'PASSWORD': 'mysql',
+        'PASSWORD': 'admin',
         'HOST': '127.0.0.1',
         'PORT': '3306', 
     }
@@ -172,6 +172,11 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
+        },
+        'APP': {
+            'client_id': 'TU_CLIENT_ID_DE_GOOGLE',
+            'secret': 'TU_CLIENT_SECRET_DE_GOOGLE',
+            'key': ''
         }
-    }
+    },
 }
