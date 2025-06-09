@@ -15,7 +15,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,6 +51,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
 ]
 SITE_ID = 1
+
+AUTENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Backend por defecto de Django
+    'allauth.account.auth_backends.AuthenticationBackend',  # Backend de allauth
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -90,14 +94,14 @@ WSGI_APPLICATION = 'project_core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'terrasmart',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3306', 
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': 'terrasmart',
+       'USER': 'root',
+       'PASSWORD': 'admin',
+       'HOST': '127.0.0.1',
+       'PORT': '3306', 
+   }
 }
 
 
@@ -159,8 +163,20 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jucarvajal@unicauca.edu.co'
+EMAIL_HOST_PASSWORD = 'aluf hgmn ottw fqfy'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_CONFIM_EMAIL_ON_GET = True
+LOGGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
