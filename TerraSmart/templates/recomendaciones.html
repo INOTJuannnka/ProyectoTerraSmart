@@ -24,22 +24,6 @@
     </div>
 </form>
 
-<div class="intro-description" style="text-align: justify;">
-  <p>
-    La vista de Recomendaciones te permite obtener sugerencias personalizadas sobre cómo mejorar las condiciones del suelo para un cultivo específico. Tras ingresar el número de registros que deseas consultar, la plataforma analizará los datos y generará recomendaciones técnicas basadas en el estado actual del suelo. Esta vista proporciona detalles sobre el cultivo sugerido, el estado del suelo y recomendaciones prácticas para mejorar los nutrientes y características del terreno.
-  </p>
-</div>
-
-
-<!-- Sección para seleccionar la cantidad de registros -->
-<form method="post" action="{% url 'recomendaciones' %}">
-    {% csrf_token %}
-    <div class="mb-4">
-        <label for="cantidad_registros" class="form-label">¿Con cuántos de los últimos registros quieres hacer la consulta?</label>
-        <input type="number" id="cantidad_registros" name="cantidad_registros" class="form-control" min="1" max="30" placeholder="Ingresa el número de registros, preferiblemente entre 1 y 20 registros" required>
-        <button type="submit" class="btn btn-primary mt-2">Seleccionar</button>
-    </div>
-</form>
 
 <div class="record-box">
   {% for r in resultados %}

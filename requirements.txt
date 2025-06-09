@@ -1,0 +1,10 @@
+Django==4.2.4
+pandas
+numpy
+matplotlib
+firebase-admin
+joblib
+requests
+django-allauth
+mysqlclient
+itsdangerous
