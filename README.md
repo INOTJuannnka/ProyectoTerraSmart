@@ -36,7 +36,7 @@
 3. **Instala las dependencias**  
    Asegúrate de tener un archivo `requirements.txt` con todas las librerías necesarias. Si no existe, crea uno con las siguientes dependencias mínimas:
    ```
-    Django==4.2.4
+   Django==4.2.4
     pandas
     numpy
     matplotlib
@@ -45,6 +45,7 @@
     requests
     django-allauth
     mysqlclient
+    itsdangerous
    
    ```
    Instala con:
@@ -109,6 +110,7 @@
 - El soporte multilenguaje está habilitado mediante Django i18n y archivos `.po` en la carpeta `locale/`.
 - Para agregar nuevos idiomas, crea un subdirectorio en `locale/` y ejecuta `makemessages` y `compilemessages`.
 - El monitoreo de datos externos (ThingSpeak) se realiza en segundo plano mediante hilos (`threading.Thread`).
+- Desde la siguiente carpeta de Drive ´https://drive.google.com/drive/folders/1MMF_Opjt4aUI8ypP6iHadDgtpKR-Ci9B?usp=sharing´ se puede descargar la carpeta "modelo" donde se encuentra el modelo de IA.
 
 ## Comandos Útiles
 
