@@ -37,7 +37,9 @@ from .utils import generate_token
 from django.shortcuts import redirect
 from .utils import verify_token
 
-
+from django.contrib.auth.hashers import make_password
+from django.views.decorators.csrf import csrf_exempt
+from allauth.account.forms import ResetPasswordKeyForm
 
 
 def recomendaciones(request):
@@ -328,7 +330,7 @@ def registro_view(request):
         users_ref = db.collection("user")
         existing = users_ref.where("email", "==", email).get()
         if existing:
-            messages.error(request, "El correo ya está registrado.")
+            messages.error(request, "El correo ya está registrado.",extra_tags="registro_exitoso")
             return render(request, "registro.html")
 
         # Crear usuario sin verificar
@@ -555,3 +557,4 @@ def vista_bienvenida(request):
 
 def vista_instrucciones(request):
     return render(request, 'instrucciones.html')
+

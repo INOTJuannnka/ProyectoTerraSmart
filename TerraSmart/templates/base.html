@@ -119,7 +119,7 @@
         <div id="userPopup" class="dropdown-menu-custom">
           {% if request.session.usuario %}
             <p class="dropdown-header fw-bold text-center">{{ request.session.usuario }}</p>
-            <a href="#" class="dropdown-item">{% trans "✉ Contactanos" %}</a>
+            <a href="https://jucmanquillo.wixsite.com/phantom-secure" class="dropdown-item">{% trans "✉ Contactanos" %}</a>
             <a href="{% url 'logout' %}" class="dropdown-item text-danger">{% trans "↩ Cerrar sesión" %}</a>
           {% else %}
             <a href="{% url 'login' %}" class="dropdown-item">{% trans "🔐 Iniciar Sesión" %}</a>

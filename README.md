@@ -36,7 +36,7 @@
 3. **Instala las dependencias**  
    Asegúrate de tener un archivo `requirements.txt` con todas las librerías necesarias. Si no existe, crea uno con las siguientes dependencias mínimas:
    ```
-   Django==4.2.4
+    Django==4.2.4
     pandas
     numpy
     matplotlib
@@ -81,6 +81,13 @@
 2. **Carga del modelo de Machine Learning**
    - El modelo se carga automáticamente desde `modelo/my_random_forest.joblib` al iniciar el servidor.
    - Si necesitas regenerar el modelo, reemplaza el archivo `.joblib` en la ruta indicada.
+
+3. **Pruebas Unitarias
+   - Para validar el correcto funcionamiento del sistema,  TerraSmart incluye pruebas unitarias en el archivo "tests.py".
+   - Puedes ejecutarlas con el siguiente comando desde la raíz del proyecto:
+   ```sh
+   python manage.py compilemessages
+   ```
 
 ## Estructura de Carpetas
 
