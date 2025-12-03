@@ -36,6 +36,8 @@ from django.conf import settings
 from .utils import generate_token
 from django.shortcuts import redirect
 from .utils import verify_token
+import os
+import logging
 
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
@@ -376,7 +378,31 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-model = joblib.load('..\modelo\my_random_forest.joblib')
+_model = None
+
+def get_model():
+    """Lazily load the ML model. Returns None if the model or sklearn aren't available.
+
+    This avoids importing sklearn at module import time (which breaks management commands
+    and tests when scikit-learn isn't installed).
+    """
+    global _model
+    if _model is not None:
+        return _model
+
+    try:
+        # Build a path relative to this file: ../modelo/my_random_forest.joblib
+        base_dir = os.path.dirname(__file__)
+        model_path = os.path.normpath(os.path.join(base_dir, '..', 'modelo', 'my_random_forest.joblib'))
+        if os.path.exists(model_path):
+            _model = joblib.load(model_path)
+            return _model
+        else:
+            logging.getLogger(__name__).warning("ML model not found at %s", model_path)
+            return None
+    except Exception:
+        logging.getLogger(__name__).exception("Failed to load ML model")
+        return None
 
 recomendaciones_tecnicas = {
     'pH agua:suelo 2,5:1,0': {
@@ -460,7 +486,16 @@ def evaluar_suelo(fila):
             recomendaciones.append(recomendaciones_tecnicas[var].get('óptimo', 'Valor en rango adecuado, no se requiere atención o correción.'))
 
     valores_ordenados = [fila[f] for f in features]
-    cultivo_predicho = model.predict(pd.DataFrame([valores_ordenados], columns=features))[0]
+    model_inst = get_model()
+    if model_inst is None:
+        logging.getLogger(__name__).warning("Model not available, returning None for predicted crop")
+        cultivo_predicho = None
+    else:
+        try:
+            cultivo_predicho = model_inst.predict(pd.DataFrame([valores_ordenados], columns=features))[0]
+        except Exception:
+            logging.getLogger(__name__).exception("Error while predicting with the ML model")
+            cultivo_predicho = None
 
     return {
     "cultivo": cultivo_predicho,
