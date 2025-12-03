@@ -1,170 +1,32 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
-
-{% block title %}{% trans "Iniciar Sesión" %}{% endblock %}
-
 {% block content %}
-<style>
-  .login-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
+<div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 fw-normal text-success"><i class="bi bi-flower1"></i> Bienvenido</h1>
+                    <p class="text-muted">Ingresa a tu cuenta TerraSmart</p>
+                </div>
 
-  .login-left, .login-right {
-    flex: 1 1 300px;
-    margin: 15px;
-  }
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
 
-  .login-form h4 {
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-
-  .login-form input[type="text"],
-  .login-form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  .login-form input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #7ED957;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-
-  .login-form .extras {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 10px;
-  }
-
-  .login-right a.social {
-    display: block;
-    text-align: center;
-    padding: 10px;
-    margin: 10px 0;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .fblogin { background-color: #3b5998; }
-  .twlogin { background-color: #1da1f2; }
-  .gplogin { background-color: #db4437; }
-
-  .gplogin {
-    background-color: #db4437; /* Color oficial de Google */
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    display: block;
-    text-decoration: none;
-}
-.gplogin:hover {
-    background-color: #c1351d;
-}
-
-  .login-right small {
-    display: block;
-    text-align: right;
-    font-size: 0.9em;
-    margin-top: 5px;
-  }
-
-  @media (max-width: 768px) {
-    .login-container {
-      flex-direction: column;
-      padding: 20px;
-    }
-  }
-</style>
-
-<div class="container mt-5">
-  <div class="login-container">
-
-    <!-- Login form -->
-    <div class="login-left">
-      <form method="POST" class="login-form">
-        {% csrf_token %}
-        <h4>{% trans "Acceda a su cuenta" %}</h4>
-        <input type="text" name="username" placeholder="User Name" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="iniciar sesión">
-        <div class="extras">
-          <label><input type="checkbox" name="remember">{% trans "Recuerda me" %}</label>
-          <a href="{% url 'account_reset_password' %}">{%trans "Olvido su constraseña?" %}</a>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg" type="submit">Ingresar</button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <a href="{% url 'account_reset_password' %}" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
+                </div>
+            </div>
         </div>
-      </form>
-      
     </div>
-    <!-- Social login -->
-    <div class="login-right">
-      <small>{% trans "No tienes cuenta?" %} <a href="{% url 'registro' %}">{% trans "Registrate!" %}</a></small>
-      <a href="#" class="social fblogin"><i class="fab fa-facebook"></i>{% trans "Registrarse con Facebook" %}</a>
-      <a href="#" class="social twlogin"><i class="fab fa-twitter"></i>{%trans "Registrarse con Twitter" %}</a>
-      <a href="/accounts/google/login/" class="social gplogin"><i class="fab fa-google"></i>{% trans "Registrarse con Google" %}</a>
-    </div>
-  </div>
 </div>
-
-{% if messages %}
-  {% for message in messages %}
-    {% if 'registro_exitoso' in message.tags %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      Swal.fire({
-        icon: 'success',
-        title: '{{ message|escapejs }}',
-        showConfirmButton: false,
-        timer: 1800
-      });
-    </script>
-    {% endif %}
-    {% if 'login_exitoso' in message.tags %}  
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      Swal.fire({
-        icon: 'success',
-        title: '{{ message|escapejs }}',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      setTimeout(function() {
-        window.location.href = "{% url 'inicio' %}";
-      }, 1500);
-    </script>
-    {% endif %}
-    {% if 'error' in message.tags %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      Swal.fire({
-        icon: 'error',
-        title: '{{ message|escapejs }}',
-        showConfirmButton: false,
-        timer: 1800
-      });
-    </script>
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
 {% endblock %}
