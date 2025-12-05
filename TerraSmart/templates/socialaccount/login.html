@@ -1,17 +1,139 @@
-{% extends "base.html" %}
-{% load socialaccount %}
-
-{% load i18n %}
-
-{% block title %}{% trans "Conectar con Google" %}{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5 text-center">
-  <h2>{% trans "Iniciar sesión con Google" %}</h2>
-  <p>{% trans "Estás a punto de iniciar sesión usando tu cuenta de Google." %}</p>
-  <form method="post" action="">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger"><i class="fab fa-google"></i>{% trans "Continuar con Google" %}</button>
-  </form>
+<style>
+
+    .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        overflow: hidden;
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.3s ease;
+    }
+
+    .login-header {
+        background-color: #2c5e2e; 
+        padding: 30px 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .login-body {
+        padding: 40px 30px;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"],
+    .login-form input[type="email"] {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        box-sizing: border-box; 
+    }
+
+    .login-form input:focus {
+        border-color: #2c5e2e;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(44, 94, 46, 0.1);
+    }
+
+    .login-form label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 14px;
+    }
+
+    .btn-login {
+        background-color: #2c5e2e;
+        color: white;
+        padding: 12px;
+        border-radius: 8px;
+        width: 100%;
+        font-weight: bold;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-login:hover {
+        background-color: #1e4220;
+    }
+    
+    .help-text {
+        font-size: 12px;
+        color: #888;
+        margin-top: -15px;
+        margin-bottom: 15px;
+        display: block;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2 class="mb-0"><i class="bi bi-flower1"></i> TerraSmart</h2>
+            <small class="opacity-75">Acceso Seguro</small>
+        </div>
+
+        <div class="login-body">
+            <form method="post" action="{% url 'account_login' %}" class="login-form">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                    <div class="alert alert-danger py-2 text-center small mb-3">
+                        Usuario o contraseña incorrectos.
+                    </div>
+                {% endif %}
+
+                {{ form.as_p }}
+
+                <button class="btn-login mt-2" type="submit">
+                    INGRESAR <i class="bi bi-arrow-right-short"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <a href="{% url 'account_reset_password' %}" class="text-decoration-none text-muted small">
+                    ¿Olvidaste tu contraseña?
+                </a>
+                <br>
+                <a href="{% url 'account_signup' %}" class="text-decoration-none fw-bold text-success small">
+                    Crear cuenta nueva
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var helpTexts = document.querySelectorAll('.helptext');
+        helpTexts.forEach(function(el) {
+            el.classList.add('help-text'); 
+        });
+        
+       
+        var inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+        if(inputs.length > 0) {
+            if(!inputs[0].getAttribute('placeholder')) inputs[0].setAttribute('placeholder', 'Ej: usuario123');
+            if(inputs[1] && !inputs[1].getAttribute('placeholder')) inputs[1].setAttribute('placeholder', '••••••••');
+        }
+    });
+</script>
+
 {% endblock %}
