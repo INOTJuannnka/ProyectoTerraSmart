@@ -6,8 +6,8 @@ from django.utils import timezone
 
 
 
-API_KEY = "M9CXAXFEOSJ1S6CF"
-CHANNEL_ID = "3196741"
+API_KEY = "APIKEY"
+CHANNEL_ID = "CHANELID"
 URL = f"https://api.thingspeak.com/channels/{CHANNEL_ID}/feeds.json?api_key={API_KEY}&results=1"
 
 ultimo_entry_id = None
