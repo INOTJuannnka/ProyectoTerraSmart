@@ -11,7 +11,7 @@ from firebase_admin import credentials, firestore
 # If the file isn't present or initialization fails, we set `db = None`.
 
 DEFAULT_CRED_FILENAME = "serviceAccountKey.json"
-env_path = os.environ.get("FIREBASE_CREDENTIALS")
+env_path = os.environ.get("ProyectoTerraSmart\\TerraSmart\\firebase")
 
 # Candidate locations to check (in order)
 base_dir = os.path.dirname(__file__)  # TerraSmart/

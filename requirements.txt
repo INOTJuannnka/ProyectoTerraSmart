@@ -8,3 +8,5 @@
  django-allauth
  mysqlclient
  itsdangerous
+ requests-oauthlib
+ firebase

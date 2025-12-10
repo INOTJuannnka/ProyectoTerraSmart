@@ -70,8 +70,7 @@ def vista_inicio(request):
 
         # Lista de campos numéricos
         campos = [
-            'PH', 'MateriaOrganica', 'Fosforo', 'Azufre', 'Calcio', 'Magnesio', 
-            'Potasio', 'Sodio', 'Hierro', 'Cobre', 'Manganeso', 'Zinc'
+            'HumedadSuelo', 'Luz', 'Temperatura', 'HumedadAire','Nitrogeno', 'Fosforo', 'Potasio', 'PH'
         ]
 
         # Convertir columnas numéricas a float (ignorar errores)
@@ -79,27 +78,50 @@ def vista_inicio(request):
             if campo in df.columns:
                 df[campo] = pd.to_numeric(df[campo], errors='coerce')
 
-        # Agrupar por semana y calcular el promedio solo de los campos numéricos
+        # Usaremos la serie completa (no solo resample semanal) para mostrar todos los puntos
         df.set_index('fecha', inplace=True)
-        df_semanal = df[campos].resample('W').mean().reset_index()
+        # Asegurarse de que el índice esté ordenado de manera ascendente
+        df.sort_index(inplace=True)
+
+        # Loguear información útil para depuración
+        try:
+            logging.getLogger(__name__).info(f"Mediciones totales: {len(df)}; rango: {df.index.min()} - {df.index.max()}")
+        except Exception:
+            logging.getLogger(__name__).exception("Error logging df range")
 
         img_data_dict = {}
 
         for campo in campos:
-            if campo not in df_semanal.columns:
+            # Verificar que el campo exista en el DataFrame
+            if campo not in df.columns:
                 continue
-            valores = df_semanal[campo].dropna().tolist()
-            fechas = df_semanal['fecha'].dt.strftime('%Y-%m-%d').tolist()
-
-            if not valores:
+            # Tomar la serie completa del campo y eliminar NaN
+            serie = df[campo].dropna()
+            if serie.empty:
                 continue
+            valores = serie.tolist()
+            fechas = serie.index.strftime('%Y-%m-%d %H:%M:%S').tolist()
 
             fig, ax = plt.subplots(figsize=(8, 4))
-            ax.plot(fechas, valores, marker='o', linestyle='-', color='g', label=campo)
-            ax.set_ylim(min(valores) - 1, max(valores) + 1)
-            plt.xticks(rotation=45, ha="right")
-            ax.set(xlabel='Semana', ylabel=campo, title=f'Evolución semanal de {campo}')
-            ax.grid(True)
+            # Usar objetos datetime como eje x para que matplotlib maneje fechas
+            x = serie.index
+            y = valores
+            ax.plot(x, y, marker='o', linestyle='-', color='g', label=campo, markersize=4, linewidth=1)
+            try:
+                ax.set_ylim(min(y) - 1, max(y) + 1)
+            except Exception:
+                pass
+            ax.set(xlabel='Fecha', ylabel=campo, title=f'Evolución de {campo}')
+            ax.grid(True, axis='y')
+
+            # Mostrar etiquetas de fecha muestreadas para evitar sobreposición
+            num_points = len(x)
+            max_labels = 6
+            step = max(1, num_points // max_labels)
+            ticks = x[::step]
+            ticklabels = [d.strftime('%Y-%m-%d') for d in ticks]
+            ax.set_xticks(ticks)
+            ax.set_xticklabels(ticklabels, rotation=45, ha='right')
 
             buf = BytesIO()
             plt.tight_layout()
@@ -114,9 +136,8 @@ def vista_inicio(request):
         ultimo_registro = ultimo_registro[0] if ultimo_registro else None
         if not ultimo_registro:
             ultimo_registro = {
-                'PH': None, 'MateriaOrganica': None, 'Fosforo': None, 'Azufre': None,
-                'Calcio': None, 'Magnesio': None, 'Potasio': None, 'Sodio': None,
-                'Hierro': None, 'Cobre': None, 'Manganeso': None, 'Zinc': None,
+                'HumedadSuelo': None, 'Luz': None, 'Temperatura': None, 'HumedadAire': None,
+                'Nitrogeno': None, 'Fosforo': None, 'Potasio': None, 'PH': None,
                 'fecha': timezone.now().strftime('%Y-%m-%d %H:%M:%S')
             }
         return render(request,'inicio.html',{
@@ -135,144 +156,257 @@ def vista_historial(request):
 def vista_mediciones(request):
     if "usuario" not in request.session:
         return redirect("login")
+
     user = request.session.get('usuario')
+
     if request.method == 'POST':
-            accion = request.POST.get('accion', 'subir_manual')
-            
-            # Si es subida manual de datos
-            if accion == 'subir_manual':
-                # Obtener datos del formulario
-                user = user
-                ph = request.POST.get('ph')
-                materiaOrganica = request.POST.get('materiaOrganica')
-                fosforo = request.POST.get('fosforo')
-                azufre = request.POST.get('azufre')
-                calcio = request.POST.get('calcio')
-                magnesio = request.POST.get('magnesio')
-                potasio = request.POST.get('potasio')
-                sodio = request.POST.get('sodio')
-                hierro = request.POST.get('hierro')
-                cobre = request.POST.get('cobre')
-                manganeso = request.POST.get('manganeso')
-                zinc = request.POST.get('zinc')
-                fecha = timezone.now()
-                
-                
+        accion = request.POST.get('accion', 'subir_manual')
+
+        # Si es subida manual de datos
+        if accion == 'subir_manual':
+            # Obtener datos del formulario
+            HumedadSuelo = float(request.POST.get('HumedadSuelo', 0))
+            Luz = float(request.POST.get('Luz', 0))
+            Temperatura = float(request.POST.get('Temperatura', 0))
+            HumedadAire = float(request.POST.get('HumedadAire', 0))
+            Nitrogeno = float(request.POST.get('Nitrogeno', 0))
+            Fosforo = float(request.POST.get('Fosforo', 0))
+            Potasio = float(request.POST.get('Potasio', 0))
+            ph = float(request.POST.get('ph', 0))
+            fecha = timezone.now()
+
+            try:
+                # Guardar en Firestore
+                db.collection("medicion").add({
+                    "user": user,
+                    "HumedadSuelo": HumedadSuelo,
+                    "Luz": Luz,
+                    "Temperatura": Temperatura,
+                    "HumedadAire": HumedadAire,
+                    "Nitrogeno": Nitrogeno,
+                    "Fosforo": Fosforo,
+                    "Potasio": Potasio,
+                    "PH": ph,
+                    "fecha": fecha.isoformat()
+                })
+
+                messages.success(request, 'Registro guardado exitosamente.')
+                return render(request, 'mediciones.html')
+
+            except Exception as e:
+                messages.error(request, f'Error al guardar el registro: {e}')
+
+        # Si es subida de archivo
+        elif accion == 'subir_archivo':
+            archivo = request.FILES.get('archivo_mediciones')
+
+            # Verificar si se ha subido un archivo
+            if 'archivo_mediciones' in request.FILES:
+                archivo = request.FILES['archivo_mediciones']
+                print(f"Archivo subido: {archivo.name}")
                 try:
-                    # Guardar en Firestore
-                    db.collection("medicion").add({
-                        "user": user,
-                        "PH": ph,
-                        "MateriaOrganica": materiaOrganica,
-                        "Fosforo": fosforo,
-                        "Azufre": azufre,
-                        "Calcio": calcio,
-                        "Magnesio": magnesio,
-                        "Potasio": potasio,
-                        "Sodio": sodio,
-                        "Hierro": hierro,
-                        "Cobre": cobre,
-                        "Manganeso": manganeso,
-                        "Zinc": zinc,
-                        "fecha": fecha.isoformat()
-                    })
+                    # Determinar el tipo de archivo y procesarlo
+                    if archivo.name.endswith('.csv'):
+                        # Procesar CSV
+                        df = pd.read_csv(archivo)
+                    elif archivo.name.endswith(('.xlsx', '.xls')):
+                        # Procesar Excel
+                        df = pd.read_excel(archivo)
+                    else:
+                        messages.error(request, "Formato de archivo no soportado. Use CSV o Excel.")
 
-                    messages.success(request, 'Registro guardado exitosamente.')
-                    return render(request, 'mediciones.html')
+                    # Normalizar nombres de columnas (convertir a minúsculas para comparación)
+                    df.columns = [col.lower().strip() for col in df.columns]
 
-                    #return render(request, 'recomendaciones.html')
+                    # Verificar columnas necesarias
+                    columnas_requeridas = ['humedadsuelo', 'luz', 'temperatura', 'humedadaire', 'nitrogeno', 'fosforo', 'potasio', 'ph','fecha']
+
+                    # Verificar si todas las columnas requeridas están presentes
+                    columnas_faltantes = [col for col in columnas_requeridas if col not in df.columns]
+                    if columnas_faltantes:
+                        messages.error(request, f"El archivo no contiene todas las columnas requeridas. Faltantes: {', '.join(columnas_faltantes)}")
+
+                    # Procesar cada fila y guardar en la base de datos
+                    registros_guardados = 0
+                    errores = 0
+
+                    for index, fila in df.iterrows():
+                        try:
+                            ph_val = float(fila['HumedadSuelo']) if pd.notna(fila['HumedadSuelo']) else None
+                            materiaOrganica_val = float(fila['luz']) if pd.notna(fila['luz']) else None
+                            fosforo_val = float(fila['temperatura']) if pd.notna(fila['temperatura']) else None
+                            azufre_val = float(fila['humedadaire']) if pd.notna(fila['humedadaire']) else None
+                            calcio_val = float(fila['nitrogeno']) if pd.notna(fila['nitrogeno']) else None
+                            magnesio_val = float(fila['fosforo']) if pd.notna(fila['fosforo']) else None
+                            potasio_val = float(fila['potasio']) if pd.notna(fila['potasio']) else None
+                            ph = float(fila['ph']) if pd.notna(fila['ph']) else None
+                            fecha_str = fila['fecha'] if pd.notna(fila['fecha']) else None
+
+                            # Crear y guardar nuevo registro
+                            db.collection("medicion").add({
+                                "user": user,
+                                "HumedadSuelo": ph_val,
+                                "Luz": materiaOrganica_val,
+                                "Temperatura": fosforo_val,
+                                "HumedadAire": azufre_val,
+                                "Nitrogeno": calcio_val,
+                                "Fosforo": magnesio_val,
+                                "Potasio": potasio_val,
+                                "PH": ph,
+                                "fecha": fecha_str
+                            })
+                            registros_guardados += 1
+
+                        except Exception as e:
+                            errores += 1
+                            print(f"Error en fila {index+1}: {e}")
+
+                    if registros_guardados > 0:
+                        mensaje = f"Archivo procesado. {registros_guardados} registros guardados correctamente."
+                        if errores > 0:
+                            mensaje += f" Se encontraron {errores} errores."
+                        messages.success(request, mensaje)
+                        return render(request, 'recomendaciones.html')
+                    else:
+                        messages.error(request, "No se pudo guardar ningún registro del archivo.")
+
                 except Exception as e:
-                    messages.error(request, f'Error al guardar el registro: {e}')
-            
-            # Si es subida de archivo
-            elif accion == 'subir_archivo':
-                archivo = request.FILES.get('archivo_mediciones')
+                    messages.error(request, f"Error al procesar el archivo: {str(e)}")
+            else:
+                messages.error(request, "Por favor seleccione un archivo para subir.")
 
-                # Verificar si se ha subido un archivo
-                if 'archivo_mediciones' in request.FILES:
-                    archivo = request.FILES['archivo_mediciones']
-                    print(f"Archivo subido: {archivo.name}")
-                    try:
-                        # Determinar el tipo de archivo y procesarlo
-                        if archivo.name.endswith('.csv'):
-                            # Procesar CSV
-                            df = pd.read_csv(archivo)
-                        elif archivo.name.endswith(('.xlsx', '.xls')):
-                            # Procesar Excel
-                            df = pd.read_excel(archivo)
-                        else:
-                            messages.error(request, "Formato de archivo no soportado. Use CSV o Excel.")
-                        
-                        # Normalizar nombres de columnas (convertir a minúsculas para comparación)
-                        df.columns = [col.lower().strip() for col in df.columns]
-                        
-                        # Verificar columnas necesarias
-                        columnas_requeridas = ['ph', 'materiaorganica', 'fosforo', 'azufre', 'calcio', 'magnesio', 'potasio', 'sodio', 'hierro', 'cobre', 'manganeso', 'zinc','fecha']
-                        
-                        # Verificar si todas las columnas requeridas están presentes
-                        columnas_faltantes = [col for col in columnas_requeridas if col not in df.columns]
-                        if columnas_faltantes:
-                            messages.error(request, f"El archivo no contiene todas las columnas requeridas. Faltantes: {', '.join(columnas_faltantes)}")
-                        
-                        # Procesar cada fila y guardar en la base de datos
-                        registros_guardados = 0
-                        errores = 0
-                        
-                        for index, fila in df.iterrows():
-                            try:
-                                ph_val = float(fila['ph']) if pd.notna(fila['ph']) else None
-                                materiaOrganica_val = float(fila['materiaorganica']) if pd.notna(fila['materiaorganica']) else None
-                                fosforo_val = float(fila['fosforo']) if pd.notna(fila['fosforo']) else None
-                                azufre_val = float(fila['azufre']) if pd.notna(fila['azufre']) else None
-                                calcio_val = float(fila['calcio']) if pd.notna(fila['calcio']) else None
-                                magnesio_val = float(fila['magnesio']) if pd.notna(fila['magnesio']) else None
-                                potasio_val = float(fila['potasio']) if pd.notna(fila['potasio']) else None
-                                sodio_val = float(fila['sodio']) if pd.notna(fila['sodio']) else None
-                                hierro_val = float(fila['hierro']) if pd.notna(fila['hierro']) else None
-                                cobre_val = float(fila['cobre']) if pd.notna(fila['cobre']) else None
-                                manganeso_val = float(fila['manganeso']) if pd.notna(fila['manganeso']) else None
-                                zinc_val = float(fila['zinc']) if pd.notna(fila['zinc']) else None
-                                fecha_str = fila['fecha'] if pd.notna(fila['fecha']) else None
-                                               
-                                # Crear y guardar nuevo registro
-                                db.collection("medicion").add({
-                                    "user": user,
-                                    "PH": ph_val,
-                                    "MateriaOrganica": materiaOrganica_val,
-                                    "Fosforo": fosforo_val,
-                                    "Azufre": azufre_val,
-                                    "Calcio": calcio_val,
-                                    "Magnesio": magnesio_val,
-                                    "Potasio": potasio_val,
-                                    "Sodio": sodio_val,
-                                    "Hierro": hierro_val,
-                                    "Cobre": cobre_val,
-                                    "Manganeso": manganeso_val,
-                                    "Zinc": zinc_val,
-                                    "fecha": fecha_str
-                                })
-                                registros_guardados += 1
-                                
-                            except Exception as e:
-                                errores += 1
-                                print(f"Error en fila {index+1}: {e}")
-                        
-                        if registros_guardados > 0:
-                            mensaje = f"Archivo procesado. {registros_guardados} registros guardados correctamente."
-                            if errores > 0:
-                                mensaje += f" Se encontraron {errores} errores."
-                            messages.success(request, mensaje)
-                            return render(request, 'recomendaciones.html')
-                        else:
-                            messages.error(request, "No se pudo guardar ningún registro del archivo.")
-                            
-                    except Exception as e:
-                        messages.error(request, f"Error al procesar el archivo: {str(e)}")
-                else:
-                    messages.error(request, "Por favor seleccione un archivo para subir.")
-        
-        # Si la solicitud no es POST
-    return render(request, 'mediciones.html')
+    # Si la solicitud no es POST -> preparar datos para la plantilla
+    # Obtener todas las mediciones del usuario
+    mediciones_raw = obtener_mediciones_firestore(user)
+
+    # Normalizar y transformar mediciones para la plantilla
+    mediciones = []
+    for m in mediciones_raw:
+        # fecha puede ser datetime o string ISO
+        fecha = m.get('fecha')
+        try:
+            fecha_dt = pd.to_datetime(fecha, errors='coerce')
+        except Exception:
+            fecha_dt = None
+
+        # Normalizar nombres (intentar varias claves)
+        temperatura = m.get('Temperatura') or m.get('temperatura') or m.get('temp')
+        humedad = m.get('Humedad') or m.get('humedad') or m.get('HumedadAire') or m.get('humedadaire')
+        humedad_suelo = m.get('HumedadSuelo') or m.get('humedad_suelo')
+
+        # Convertir a float si es posible
+        def to_float(v):
+            try:
+                return float(v)
+            except Exception:
+                return None
+
+        temperatura = to_float(temperatura)
+        humedad = to_float(humedad)
+        humedad_suelo = to_float(humedad_suelo)
+
+        # Determinar si la medición es "óptima" para café (reglas simples)
+        es_optimo = False
+        if temperatura is not None and humedad_suelo is not None:
+            # Rangos de referencia para café arábica (aprox.)
+            if 18.0 <= temperatura <= 24.0 and 40.0 <= humedad_suelo <= 70.0:
+                es_optimo = True
+
+        mediciones.append({
+            'fecha': fecha_dt,
+            'temperatura': temperatura,
+            'humedad': humedad,
+            'humedad_suelo': humedad_suelo,
+            'es_optimo': es_optimo
+        })
+
+    # Calcular última actualización (la más reciente con fecha válida)
+    fecha_vals = [m['fecha'] for m in mediciones if m['fecha'] is not None]
+    if fecha_vals:
+        ultima_fecha = max(fecha_vals)
+        # diferencia respecto a ahora
+        ahora = timezone.now()
+        # convertir ultima_fecha a timezone-naive or aware comparable a ahora
+        try:
+            # pandas Timestamp may be tz-aware or naive
+            if hasattr(ultima_fecha, 'tz_convert'):
+                ultima_fecha_local = pd.to_datetime(ultima_fecha).to_pydatetime()
+            else:
+                ultima_fecha_local = ultima_fecha.to_pydatetime() if hasattr(ultima_fecha, 'to_pydatetime') else ultima_fecha
+        except Exception:
+            try:
+                ultima_fecha_local = pd.to_datetime(ultima_fecha).to_pydatetime()
+            except Exception:
+                ultima_fecha_local = ultima_fecha
+
+        # Compute human readable delta (Spanish)
+        delta = ahora - ultima_fecha_local
+        seconds = int(delta.total_seconds())
+        if seconds < 60:
+            ultima_actualizacion = f'Hace {seconds} seg'
+        elif seconds < 3600:
+            minutos = seconds // 60
+            ultima_actualizacion = f'Hace {minutos} min'
+        elif seconds < 86400:
+            horas = seconds // 3600
+            ultima_actualizacion = f'Hace {horas} h'
+        else:
+            dias = seconds // 86400
+            ultima_actualizacion = f'Hace {dias} días'
+    else:
+        ultima_actualizacion = 'Sin registros'
+
+    # Calcular promedio del día para generar recomendaciones enfocadas al cultivo de café
+    recomendaciones = []
+    try:
+        if fecha_vals:
+            df = pd.DataFrame(mediciones)
+            df = df.dropna(subset=['fecha'])
+            df['fecha'] = pd.to_datetime(df['fecha'])
+            hoy = timezone.now().date()
+            df_today = df[df['fecha'].dt.date == hoy]
+            if not df_today.empty:
+                avg_temp = df_today['temperatura'].dropna().astype(float).mean() if 'temperatura' in df_today else None
+                avg_hum = df_today['humedad'].dropna().astype(float).mean() if 'humedad' in df_today else None
+                avg_hum_suelo = df_today['humedad_suelo'].dropna().astype(float).mean() if 'humedad_suelo' in df_today else None
+
+                # Reglas simples para recomendaciones para café
+                if avg_temp is not None:
+                    if avg_temp < 18:
+                        recomendaciones.append(f'Temperatura media hoy {avg_temp:.1f}°C: Considera proteger plantas del frío o utilizar coberturas.')
+                    elif avg_temp > 24:
+                        recomendaciones.append(f'Temperatura media hoy {avg_temp:.1f}°C: Podría ser alta; revisar riego y sombra parcial para evitar estrés térmico.')
+                    else:
+                        recomendaciones.append(f'Temperatura media hoy {avg_temp:.1f}°C: Adecuada para café.')
+
+                if avg_hum_suelo is not None:
+                    if avg_hum_suelo < 40:
+                        recomendaciones.append(f'Humedad del suelo media hoy {avg_hum_suelo:.1f}%: Suelo seco; aumentar riego y evaluar sistema de riego por goteo.')
+                    elif avg_hum_suelo > 70:
+                        recomendaciones.append(f'Humedad del suelo media hoy {avg_hum_suelo:.1f}%: Suelo muy húmedo; revisar drenaje para prevenir enfermedades radiculares.')
+                    else:
+                        recomendaciones.append(f'Humedad del suelo media hoy {avg_hum_suelo:.1f}%: Dentro del rango adecuado para café.')
+
+                if avg_hum is not None:
+                    if avg_hum < 50:
+                        recomendaciones.append(f'Humedad relativa media hoy {avg_hum:.1f}%: Ambiente seco; considerar sombras o manejo de microclima.')
+                    elif avg_hum > 85:
+                        recomendaciones.append(f'Humedad relativa media hoy {avg_hum:.1f}%: Muy alta; vigilar enfermedades foliares.')
+                    else:
+                        recomendaciones.append(f'Humedad relativa media hoy {avg_hum:.1f}%: Adecuada para cultivo de café.')
+            else:
+                recomendaciones.append('No hay mediciones de hoy para calcular recomendaciones.')
+        else:
+            recomendaciones.append('No hay registros para generar recomendaciones.')
+    except Exception:
+        logging.getLogger(__name__).exception('Error calculando recomendaciones diarias')
+        recomendaciones.append('Error al calcular recomendaciones.')
+
+    return render(request, 'mediciones.html', {
+        'mediciones': mediciones,
+        'ultima_actualizacion': ultima_actualizacion,
+        'recomendaciones': recomendaciones
+    })
 #Función para obtener mediciones desde Firestore
 def obtener_mediciones_firestore(user):
     mediciones = []

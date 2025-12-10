@@ -8,41 +8,28 @@
 </div>
 
 <div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card bg-success text-white h-100">
-            <div class="card-body d-flex align-items-center justify-content-between">
-                <div>
-                    <h6 class="card-title">Estado del Sistema</h6>
-                    <h3 class="fw-bold">Activo</h3>
-                </div>
-                <i class="bi bi-activity fs-1 opacity-50"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-primary text-white h-100">
-            <div class="card-body d-flex align-items-center justify-content-between">
-                <div>
-                    <h6 class="card-title">Sensores Conectados</h6>
-                    <h3 class="fw-bold">4/4</h3>
-                </div>
-                <i class="bi bi-router fs-1 opacity-50"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-4 offset-md-8">
         <div class="card bg-warning text-dark h-100">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <div>
                     <h6 class="card-title">Última Actualización</h6>
-                    <h3 class="fw-bold">Hace 1 min</h3>
+                    <h3 class="fw-bold">{{ ultima_actualizacion }}</h3>
                 </div>
                 <i class="bi bi-clock-history fs-1 opacity-50"></i>
             </div>
         </div>
     </div>
 </div>
-
+<div class="mt-4">
+      <h4>Recomendaciones diarias (Café)</h4>
+      <ul>
+        {% for rec in recomendaciones %}
+          <li>{{ rec }}</li>
+        {% empty %}
+          <li>No hay recomendaciones por ausencia de datos.</li>
+        {% endfor %}
+      </ul>
+    </div>
 <div class="card">
     <div class="card-header bg-white py-3">
         <h5 class="mb-0 text-success"><i class="bi bi-table"></i> Datos en Tiempo Real</h5>
@@ -60,24 +47,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for medicion in mediciones %}
-                    <tr>
-                        <td>{{ medicion.fecha|date:"d M Y H:i" }}</td>
-                        <td>
-                            <span class="badge bg-{% if medicion.temperatura > 30 %}danger{% else %}success{% endif %} rounded-pill">
-                                {{ medicion.temperatura }}°C
-                            </span>
-                        </td>
-                        <td>{{ medicion.humedad }}%</td>
-                        <td>{{ medicion.humedad_suelo }}%</td>
-                        <td>
-                            {% if medicion.es_optimo %}
-                                <i class="bi bi-check-circle-fill text-success"></i> Óptimo
-                            {% else %}
-                                <i class="bi bi-exclamation-triangle-fill text-warning"></i> Revisar
-                            {% endif %}
-                        </td>
-                    </tr>
+                        {% for medicion in mediciones %}
+                        <tr>
+                            <td>{% if medicion.fecha %}{{ medicion.fecha|date:"d M Y H:i" }}{% else %}--{% endif %}</td>
+                            <td>
+                                {% if medicion.temperatura %}
+                                <span class="badge bg-{% if medicion.temperatura > 30 %}danger{% else %}success{% endif %} rounded-pill">
+                                    {{ medicion.temperatura }}°C
+                                </span>
+                                {% else %}
+                                --
+                                {% endif %}
+                            </td>
+                            <td>{% if medicion.humedad %}{{ medicion.humedad }}%{% else %}--{% endif %}</td>
+                            <td>{% if medicion.humedad_suelo %}{{ medicion.humedad_suelo }}%{% else %}--{% endif %}</td>
+                            <td>
+                                {% if medicion.es_optimo %}
+                                    <i class="bi bi-check-circle-fill text-success"></i> Óptimo
+                                {% else %}
+                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i> Revisar
+                                {% endif %}
+                            </td>
+                        </tr>
                     {% empty %}
                     <tr>
                         <td colspan="5" class="text-center py-4 text-muted">
@@ -90,4 +81,6 @@
         </div>
     </div>
 </div>
+ 
+    
 {% endblock %}

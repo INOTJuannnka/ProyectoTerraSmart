@@ -18,37 +18,29 @@
   <table class="table text-center table-bordered w-100 historial-table">
     <thead>
       <tr>
-        <th>{% trans "fecha" %}</th>
-        <th>{% trans "PH" %}</th>
-        <th>{% trans "Materia Organica" %}</th>
-        <th>{% trans "Fósforo" %}</th>
-        <th>{% trans "Azufre" %}</th>
-        <th>{% trans "Calcio" %}</th>
-        <th>{% trans "Magnesio" %}</th>
-        <th>{% trans "Potasio" %}</th>
-        <th>{% trans "Sodio" %}</th>
-        <th>{% trans "Hierro" %}</th>
-        <th>{% trans "Cobre" %}</th>
-        <th>{% trans "Manganeso" %}</th>
-        <th>{% trans "Zinc" %}</th>
+          <th>{% trans "fecha" %}</th>
+          <th>{% trans "Humedad Suelo" %}</th>
+          <th>{% trans "Luz" %}</th>
+          <th>{% trans "Temperatura" %}</th>
+          <th>{% trans "Humedad Aire" %}</th>
+          <th>{% trans "Nitrógeno" %}</th>
+          <th>{% trans "Fósforo" %}</th>
+          <th>{% trans "Potasio" %}</th>
+          <th>{% trans "PH" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for registro in registros %}
       <tr>
         <td>{{ registro.fecha|iso_to_local_datetime:"America/Mexico_City" }}</td>
-        <td>{{ registro.PH}}</td>
-        <td>{{ registro.MateriaOrganica}}</td>
+        <td>{{ registro.HumedadSuelo }}</td>
+        <td>{{ registro.Luz }}</td>
+        <td>{{ registro.Temperatura}}</td>
+        <td>{{ registro.HumedadAire}}</td>
+        <td>{{ registro.Nitrogeno}}</td>
         <td>{{ registro.Fosforo}}</td>
-        <td>{{ registro.Azufre}}</td>
-        <td>{{ registro.Calcio }}</td>
-        <td>{{ registro.Magnesio }}</td>
         <td>{{ registro.Potasio }}</td>
-        <td>{{ registro.Sodio }}</td>
-        <td>{{ registro.Hierro }}</td>
-        <td>{{ registro.Cobre }}</td>
-        <td>{{ registro.Manganeso }}</td>
-        <td>{{ registro.Zinc }}</td>
+        <td>{{ registro.PH}}</td>
       </tr>
       {% endfor %}
     </tbody>
